@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>T-CROSS · Painel de Consumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;--card:#1e2230;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --accent:#e8f040;--blue:#40c8f0;--orange:#f07040;--green:#40f0a8;--purple:#c07af0;--red:#f04060;
+  --text:#f0f2f8;--muted:#6a7090;--muted2:#9aa0c0;
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden;font-size:17px}
+nav{position:sticky;top:0;z-index:200;background:rgba(13,15,20,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;padding:0 16px;gap:16px}
+.nav-brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.nav-logo{width:28px;height:28px;background:var(--accent);border-radius:7px;display:grid;place-items:center;font-size:16px;font-weight:800;color:#0d0f14;flex-shrink:0}
+.brand-name{font-size:16px;font-weight:800;letter-spacing:.07em;color:var(--text)}
+.brand-sub{font-size:17px;color:var(--muted);font-family:var(--mono);letter-spacing:.06em}
+.nav-tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav-tabs::-webkit-scrollbar{display:none}
+.tb{background:none;border:none;color:var(--muted);font-family:var(--font);font-size:17px;font-weight:700;padding:5px 11px;border-radius:6px;cursor:pointer;transition:all .15s;white-space:nowrap;letter-spacing:.05em}
+.tb:hover{color:var(--text);background:var(--bg3)}
+.tb.on{color:#0d0f14;background:var(--accent)}
+.nav-odo{font-family:var(--mono);font-size:17px;color:var(--muted);flex-shrink:0}
+.nav-odo span{color:var(--accent)}
+main{max-width:1020px;margin:0 auto;padding:20px 14px 80px}
+.sec{display:none}
+.sec.on{display:block;animation:fu .22s ease}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.sh-title{font-size:17px;font-family:var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.sh-actions{display:flex;gap:6px}
+.hero{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+@media(max-width:660px){.hero{grid-template-columns:repeat(2,1fr)}}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;transition:border-color .2s}
+.sc:hover{border-color:var(--border2)}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--c,var(--accent))}
+.sc-label{font-size:16px;font-family:var(--mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
+.sc-val{font-size:28px;font-weight:800;color:var(--c,var(--accent));line-height:1}
+.sc-sub{font-size:16px;color:var(--muted);margin-top:5px;font-family:var(--mono)}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:580px){.cgrid{grid-template-columns:1fr}}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+.cc-title{font-size:15px;font-weight:700;margin-bottom:14px}
+.cw{position:relative;width:100%}
+.fb{display:inline-flex;align-items:center;gap:4px;font-size:16px;font-family:var(--mono);padding:2px 8px;border-radius:20px;white-space:nowrap}
+.fb.gas{background:rgba(232,240,64,.12);color:#e8f040}
+.fb.eth{background:rgba(64,240,168,.12);color:#40f0a8}
+.fb .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.fb.gas .dot{background:#e8f040}
+.fb.eth .dot{background:#40f0a8}
+.cbadge{display:inline-flex;align-items:center;font-size:16px;font-family:var(--mono);padding:2px 8px;border-radius:20px}
+.c1b{background:rgba(64,200,240,.12);color:#40c8f0}
+.c2b{background:rgba(192,122,240,.12);color:#c07af0}
+.c3b{background:rgba(240,240,64,.12);color:#e8f040}
+.tw{overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+thead tr{border-bottom:1px solid var(--border)}
+th{text-align:left;padding:12px 14px;font-family:var(--mono);font-size:16px;color:var(--muted);font-weight:500;letter-spacing:.06em;text-transform:uppercase;background:var(--bg2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+td.n{font-family:var(--mono);font-size:17px}
+td.g{color:var(--green);font-family:var(--mono);font-size:17px}
+td.r{color:var(--orange);font-family:var(--mono);font-size:17px}
+.btn{background:none;border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:17px;font-weight:700;padding:6px 13px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn:hover{background:var(--bg3)}
+.btn.pr{background:var(--accent);color:#0d0f14;border-color:transparent}
+.btn.pr:hover{opacity:.85}
+.btn.sm{padding:4px 9px;font-size:16px}
+.btn.danger{border-color:rgba(240,64,96,.3);color:var(--red)}
+.btn.danger:hover{background:rgba(240,64,96,.1)}
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;align-items:center}
+.fsel{background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:17px;padding:5px 10px;outline:none;cursor:pointer}
+.fsel option{background:var(--bg2)}
+.sinp{background:var(--bg3);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:17px;padding:5px 10px;outline:none;width:180px}
+.sinp:focus{border-color:var(--accent)}
+.sinp::placeholder{color:var(--muted)}
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:18px}
+.fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+.fi{display:flex;flex-direction:column;gap:5px}
+.fi label{font-size:16px;font-family:var(--mono);color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.fi input,.fi select{background:var(--bg2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font);font-size:16px;padding:8px 11px;outline:none;transition:border-color .15s;width:100%}
+.fi input:focus,.fi select:focus{border-color:var(--accent)}
+.fi select option{background:var(--bg2)}
+.fi.s2{grid-column:1/-1}
+.factions{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.fbk{font-size:17px;font-family:var(--mono);color:var(--green);display:none}
+.route-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:18px}
+.rc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:border-color .2s}
+.rc:hover{border-color:var(--border2)}
+.rc-name{font-size:17px;font-weight:700;margin-bottom:3px}
+.rc-dist{font-size:17px;font-family:var(--mono);color:var(--muted);margin-bottom:14px}
+.rrow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:15px}
+.rrow:last-child{border-bottom:none}
+.rwin{display:inline-flex;align-items:center;gap:4px;font-size:16px;font-family:var(--mono);background:rgba(64,240,168,.12);color:var(--green);padding:2px 8px;border-radius:20px;margin-top:10px}
+.posto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:18px}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+.pc-name{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.prow{display:flex;justify-content:space-between;font-size:15px;padding:6px 0;border-bottom:1px solid var(--border)}
+.prow:last-child{border-bottom:none}
+.pc.winner{border-color:rgba(64,240,168,.25);background:rgba(64,240,168,.03)}
+.mi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:15px 18px;display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.mi-icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;font-size:16px;flex-shrink:0}
+.mi-title{font-size:16px;font-weight:700;margin-bottom:3px}
+.mi-freq{font-size:17px;font-family:var(--mono);color:var(--muted);margin-bottom:5px}
+.mi-obs{font-size:17px;color:var(--muted2);line-height:1.5}
+.mi-st{display:flex;align-items:center;gap:6px;margin-top:8px}
+.st-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.st-ok .st-dot{background:var(--green)}.st-ok .st-txt{color:var(--green);font-size:16px;font-family:var(--mono)}
+.st-warn .st-dot{background:var(--orange)}.st-warn .st-txt{color:var(--orange);font-size:16px;font-family:var(--mono)}
+.st-crit .st-dot{background:var(--red)}.st-crit .st-txt{color:var(--red);font-size:16px;font-family:var(--mono)}
+.drop-zone{border:2px dashed var(--border2);border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:14px}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--accent);background:rgba(232,240,64,.04)}
+.drop-icon{font-size:32px;margin-bottom:10px}
+.drop-title{font-size:17px;font-weight:700;margin-bottom:5px}
+.drop-sub{font-size:17px;font-family:var(--mono);color:var(--muted)}
+#file-input{display:none}
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+@media(max-width:480px){.exp-grid{grid-template-columns:1fr}}
+.exp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.exp-icon{font-size:28px;margin-bottom:10px}
+.exp-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.exp-desc{font-size:17px;font-family:var(--mono);color:var(--muted);margin-bottom:14px;line-height:1.5}
+.pbar{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px}
+.pbar-fill{height:100%;border-radius:3px;transition:width .4s}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:18px}
+.calc-res{background:var(--bg3);border-radius:10px;padding:16px;text-align:center}
+.calc-res-label{font-size:16px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.calc-res-val{font-size:26px;font-weight:800}
+#toast{position:fixed;bottom:24px;right:20px;background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;font-size:15px;font-family:var(--mono);color:var(--text);z-index:999;opacity:0;transform:translateY(10px);transition:all .25s;pointer-events:none}
+#toast.show{opacity:1;transform:translateY(0)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">T</div>
+    <div><div class="brand-name">T-CROSS</div><div class="brand-sub">Painel de Consumo</div></div>
+  </div>
+  <div class="nav-tabs">
+    <button class="tb on" onclick="go('dashboard')">Dashboard</button>
+    <button class="tb" onclick="go('abastecimentos')">Abastecimentos</button>
+    <button class="tb" onclick="go('trajetos')">Trajetos</button>
+    <button class="tb" onclick="go('postos')">Postos</button>
+    <button class="tb" onclick="go('manutencao')">Manutenção</button>
+    <button class="tb" onclick="go('dados')">Importar / Exportar</button>
+  </div>
+  <div class="nav-odo">⬡ <span id="nav-odo">20.626</span> km</div>
+</nav>
+<main>
+  <div class="sec on" id="sec-dashboard"></div>
+  <div class="sec" id="sec-abastecimentos"></div>
+  <div class="sec" id="sec-trajetos"></div>
+  <div class="sec" id="sec-postos"></div>
+  <div class="sec" id="sec-manutencao"></div>
+  <div class="sec" id="sec-dados"></div>
+</main>
+<div id="toast"></div>
+<script>
+// ══════════════════════════════ DATA ══════════════════════════════
+const C1=[
+  {data:"30/07",odo:2335,km:820,vol:65.04,cons:12.6,comb:"Gasolina",total:254.25,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"01/08",odo:2665,km:330,vol:26.67,cons:12.4,comb:"Gasolina",total:179.73,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"01/08",odo:2837,km:172,vol:13.63,cons:12.6,comb:"Gasolina",total:91.87,pl:6.74,posto:"JetSet",desc:"",ciclo:1},
+  {data:"07/08",odo:3139,km:302,vol:24.16,cons:12.5,comb:"Gasolina",total:119.59,pl:5.51,posto:"Rosa Elze",desc:"",ciclo:1},
+  {data:"07/08",odo:3251,km:112,vol:9.45,cons:11.9,comb:"Etanol",total:49.50,pl:5.24,posto:"JetSet",desc:"",ciclo:1},
+  {data:"09/08",odo:3674,km:423,vol:37.86,cons:11.2,comb:"Etanol",total:181.73,pl:4.80,posto:"Pel",desc:"",ciclo:1},
+  {data:"11/08",odo:3853,km:179,vol:15.59,cons:11.5,comb:"Etanol",total:105.06,pl:5.49,posto:"JetSet",desc:"",ciclo:1},
+  {data:"19/08",odo:4054,km:201,vol:19.57,cons:10.3,comb:"Gasolina",total:124.27,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"21/08",odo:4301,km:247,vol:23.72,cons:10.4,comb:"Gasolina",total:150.62,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"22/08",odo:4489,km:188,vol:15.63,cons:12.0,comb:"Gasolina",total:99.25,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"25/08",odo:4771,km:282,vol:28.24,cons:10.0,comb:"Gasolina",total:179.32,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"29/08",odo:5204,km:433,vol:37.54,cons:11.5,comb:"Gasolina",total:238.38,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"01/09",odo:5459,km:255,vol:19.91,cons:12.8,comb:"Gasolina",total:126.43,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"05/09",odo:5907,km:448,vol:37.16,cons:12.1,comb:"Gasolina",total:178.37,pl:5.51,posto:"Pel",desc:"",ciclo:1},
+  {data:"08/09",odo:6141,km:234,vol:21.61,cons:10.8,comb:"Etanol",total:103.73,pl:4.80,posto:"Pel",desc:"",ciclo:1},
+  {data:"13/09",odo:6457,km:316,vol:29.18,cons:10.8,comb:"Etanol",total:144.44,pl:4.95,posto:"Rosa Elze",desc:"Itabaiana ida e volta",ciclo:1},
+  {data:"15/09",odo:6812,km:355,vol:34.94,cons:10.2,comb:"Etanol",total:167.71,pl:4.80,posto:"Pel",desc:"",ciclo:1},
+  {data:"18/09",odo:7052,km:240,vol:27.85,cons:8.6,comb:"Etanol",total:133.68,pl:4.80,posto:"Pel",desc:"Clínicas com João",ciclo:1},
+  {data:"20/09",odo:7392,km:340,vol:34.15,cons:10.0,comb:"Etanol",total:163.92,pl:4.80,posto:"Pel",desc:"",ciclo:1},
+  {data:"29/09",odo:7788,km:396,vol:42.14,cons:9.4,comb:"Etanol",total:231.35,pl:5.49,posto:"Pel",desc:"",ciclo:1},
+  {data:"03/10",odo:8219,km:431,vol:36.90,cons:11.7,comb:"Gasolina",total:234.32,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"06/10",odo:8410,km:191,vol:16.31,cons:11.7,comb:"Gasolina",total:103.57,pl:6.35,posto:"Pel",desc:"9 km em terra",ciclo:1},
+  {data:"09/10",odo:8649,km:239,vol:19.33,cons:12.4,comb:"Gasolina",total:122.75,pl:6.35,posto:"Pel",desc:"Aracaju ida e volta",ciclo:1},
+  {data:"13/10",odo:9024,km:375,vol:31.31,cons:12.0,comb:"Gasolina",total:198.82,pl:6.35,posto:"Pel",desc:"",ciclo:1},
+  {data:"17/10",odo:9433,km:409,vol:34.67,cons:11.8,comb:"Gasolina",total:191.03,pl:5.51,posto:"Pel",desc:"Aracaju",ciclo:1},
+  {data:"20/10",odo:9655,km:222,vol:20.21,cons:11.0,comb:"Etanol",total:97.01,pl:4.80,posto:"Pel",desc:"",ciclo:1},
+  {data:"22/10",odo:9795,km:140,vol:14.78,cons:9.5,comb:"Etanol",total:70.94,pl:4.80,posto:"Pel",desc:"Igreja Nova 2 dias",ciclo:1},
+  {data:"24/10",odo:10168,km:373,vol:40.22,cons:9.3,comb:"Etanol",total:193.06,pl:4.80,posto:"",desc:"",ciclo:1},
+];
+const C2=[
+  {data:"29/10",odo:10508,km:340,vol:35.85,cons:9.5, combC:"Etanol",  comb:"Etanol",   total:168.50,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"30/10",odo:10748,km:240,vol:27.40,cons:8.8, combC:"Etanol",  comb:"Etanol",   total:128.78,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"03/11",odo:10999,km:251,vol:25.93,cons:9.7, combC:"Etanol",  comb:"Gasolina", total:164.66,pl:6.35,posto:"Pel",         desc:"Padre Cícero",ciclo:2},
+  {data:"08/11",odo:11373,km:374,vol:36.78,cons:10.2,combC:"Gasolina",comb:"Gasolina", total:215.16,pl:5.85,posto:"Canabrava",   desc:"Arapiraca",ciclo:2},
+  {data:"10/11",odo:11631,km:258,vol:22.15,cons:11.6,combC:"Gasolina",comb:"Gasolina", total:140.65,pl:6.35,posto:"Pel",         desc:"",ciclo:2},
+  {data:"14/11",odo:12014,km:383,vol:33.78,cons:11.3,combC:"Gasolina",comb:"Etanol",   total:158.77,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"23/11",odo:12294,km:280,vol:27.17,cons:10.3,combC:"Etanol",  comb:"Etanol",   total:127.70,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"26/11",odo:12572,km:278,vol:30.22,cons:9.2, combC:"Etanol",  comb:"Etanol",   total:142.03,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"27/11",odo:12824,km:252,vol:33.85,cons:7.4, combC:"Etanol",  comb:"Etanol",   total:159.10,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"28/11",odo:13039,km:215,vol:23.48,cons:9.2, combC:"Etanol",  comb:"Etanol",   total:110.36,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"02/12",odo:13394,km:355,vol:37.09,cons:9.6, combC:"Etanol",  comb:"Gasolina", total:235.52,pl:6.35,posto:"Pel",         desc:"",ciclo:2},
+  {data:"04/12",odo:13721,km:327,vol:29.93,cons:10.9,combC:"Gasolina",comb:"Gasolina", total:190.06,pl:6.35,posto:"Pel",         desc:"",ciclo:2},
+  {data:"10/12",odo:14161,km:440,vol:37.71,cons:11.7,combC:"Gasolina",comb:"Etanol",   total:177.24,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"11/12",odo:14475,km:314,vol:33.05,cons:9.5, combC:"Etanol",  comb:"Etanol",   total:155.34,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"17/12",odo:14695,km:220,vol:23.49,cons:9.4, combC:"Etanol",  comb:"Etanol",   total:110.40,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"19/12",odo:14950,km:255,vol:31.25,cons:8.2, combC:"Etanol",  comb:"Etanol",   total:163.75,pl:5.24,posto:"JetSet",      desc:"",ciclo:2},
+  {data:"22/12",odo:15278,km:328,vol:38.67,cons:8.5, combC:"Etanol",  comb:"Gasolina", total:245.55,pl:6.35,posto:"Pel",         desc:"",ciclo:2},
+  {data:"26/12",odo:15693,km:415,vol:37.42,cons:11.1,combC:"Gasolina",comb:"Gasolina", total:225.62,pl:6.35,posto:"Pel",         desc:"",ciclo:2},
+  {data:"06/01",odo:16054,km:361,vol:30.95,cons:11.7,combC:"Gasolina",comb:"Gasolina", total:196.53,pl:6.35,posto:"Pel",         desc:"",ciclo:2},
+  {data:"10/01",odo:16317,km:263,vol:25.17,cons:10.4,combC:"Gasolina",comb:"Gasolina", total:159.83,pl:6.35,posto:"Pel",         desc:"",ciclo:2},
+  {data:"12/01",odo:16769,km:452,vol:37.28,cons:12.1,combC:"Gasolina",comb:"Etanol",   total:175.22,pl:4.70,posto:"Pel",         desc:"Aju-Pir-Lagoa Redonda",ciclo:2},
+  {data:"18/01",odo:17083,km:314,vol:34.65,cons:9.1, combC:"Etanol",  comb:"Etanol",   total:162.86,pl:4.70,posto:"Pel",         desc:"",ciclo:2},
+  {data:"26/01",odo:17428,km:345,vol:42.09,cons:8.2, combC:"Etanol",  comb:"Gasolina", total:258.85,pl:6.15,posto:"São Sebastião",desc:"Arapiraca",ciclo:2},
+  {data:"01/02",odo:17796,km:368,vol:33.39,cons:11.0,combC:"Gasolina",comb:"Etanol",   total:163.61,pl:4.90,posto:"Pel",         desc:"",ciclo:2},
+  {data:"04/02",odo:18073,km:277,vol:32.155,cons:8.6,combC:"Etanol",  comb:"Gasolina", total:204.83,pl:6.37,posto:"JetSet",      desc:"",ciclo:2},
+  {data:"08/02",odo:18408,km:335,vol:36.86,cons:9.1, combC:"Gasolina",comb:"Etanol",   total:180.61,pl:4.90,posto:"Pel",         desc:"",ciclo:2},
+  {data:"11/02",odo:18701,km:293,vol:31.83,cons:9.2, combC:"Etanol",  comb:"Etanol",   total:155.97,pl:4.90,posto:"Pel",         desc:"",ciclo:2},
+  {data:"15/02",odo:18980,km:279,vol:37.51,cons:7.4, combC:"Etanol",  comb:"Etanol",   total:183.80,pl:4.90,posto:"Pel",         desc:"",ciclo:2},
+  {data:"21/02",odo:19148,km:168,vol:23.78,cons:7.1, combC:"Etanol",  comb:"Gasolina", total:153.38,pl:6.45,posto:"JetSet",      desc:"",ciclo:2},
+  {data:"26/02",odo:19505,km:357,vol:39.68,cons:9.0, combC:"Gasolina",comb:"Gasolina", total:256.33,pl:6.46,posto:"JetSet",      desc:"",ciclo:2},
+  {data:"04/03",odo:19763,km:258,vol:25.65,cons:10.1,combC:"Gasolina",comb:"Etanol",   total:125.69,pl:4.90,posto:"Pel",         desc:"",ciclo:2},
+  {data:"05/03",odo:20020,km:257,vol:25.79,cons:10.0,combC:"Etanol",  comb:"Gasolina", total:166.35,pl:6.45,posto:"",            desc:"",ciclo:2},
+];
+const C3=[
+  {data:"04/03",odo:19763,km:258,vol:25.65,cons:10.1,combC:"Gasolina",comb:"Etanol",total:125.69,pl:4.90,posto:"Pel",desc:"",ciclo:3},
+  {data:"05/03",odo:20020,km:257,vol:25.79,cons:10.0,combC:"Etanol",comb:"Gasolina",total:166.35,pl:6.45,posto:"Pel",desc:"",ciclo:3},
+  {data:"10/03",odo:20383,km:363,vol:35.06,cons:10.4,combC:"Gasolina",comb:"Etanol",total:173.55,pl:4.95,posto:"Pel",desc:"",ciclo:3},
+  {data:"18/03",odo:20626,km:243,vol:26.06,cons:9.3,combC:"Etanol",comb:"Etanol",total:129.00,pl:4.95,posto:"Pel",desc:"",ciclo:3},
+  {data:"20/03",odo:20626,km:0,vol:10.10,cons:0,combC:"Etanol",comb:"Etanol",total:50.00,pl:4.95,posto:"Pel",desc:"",ciclo:3},
+];
+let TODOS=[...C1,...C2,...C3].filter(d=>d.vol>0);
+
+// REVISOES
+function loadRevisoes(){
+  try{const s=localStorage.getItem('tcross_revisoes');if(s)return JSON.parse(s)}catch(e){}
+  return [{num:1,data:'23/10/2025',odo:9917,obs:'1ª revisão'},{num:2,data:'26/02/2026',odo:19373,obs:'2ª revisão'}];
+}
+function saveRevisoes(){try{localStorage.setItem('tcross_revisoes',JSON.stringify(REVISOES))}catch(e){}}
+let REVISOES=loadRevisoes();
+
+function recalcCiclos(){
+  const odos=REVISOES.map(r=>r.odo).sort((a,b)=>a-b);
+  TODOS.forEach(d=>{let c=odos.length+1;for(let i=0;i<odos.length;i++){if(d.odo<=odos[i]){c=i+1;break}}d.ciclo=c});
+}
+recalcCiclos();
+
+function cicloAtual(){
+  const maxOdo=Math.max(...TODOS.map(d=>d.odo));
+  const odos=REVISOES.map(r=>r.odo).sort((a,b)=>a-b);
+  let c=odos.length+1;for(let i=0;i<odos.length;i++){if(maxOdo<=odos[i]){c=i+1;break}}return c;
+}
+function infoCiclo(n){
+  const odos=[0,...REVISOES.map(r=>r.odo).sort((a,b)=>a-b)];
+  const inicio=odos[n-1]||0,fimRev=odos[n]||null;
+  return{inicio,fimRev,proxPrev:fimRev||(inicio+10000)};
+}
+function proxRevisaoPrev(){return infoCiclo(cicloAtual()).proxPrev}
+
+function loadChecklist(){try{const s=localStorage.getItem('tcross_checklist');if(s)return JSON.parse(s)}catch(e){}return{}}
+function saveChecklist(cl){try{localStorage.setItem('tcross_checklist',JSON.stringify(cl))}catch(e){}}
+
+function registrarRevisao(){
+  const odoStr=prompt('Odômetro da revisão (km):');
+  const dataStr=prompt('Data da revisão (dd/mm/aaaa):');
+  if(!odoStr||!dataStr)return;
+  const odo=parseInt(odoStr);
+  if(isNaN(odo)){toast('Odômetro inválido');return}
+  const num=REVISOES.length+1;
+  REVISOES.push({num,data:dataStr,odo,obs:num+'ª revisão'});
+  saveRevisoes();
+  recalcCiclos();
+  saveChecklist({});
+  toast('✓ Revisão '+num+' registrada! Ciclo '+( num+1)+' iniciado.');
+  renderManut();
+  renderDash();
+}
+
+let TRAJETOS=[
+  {nome:"Circuito Clínicas Aracaju",dist:227,kmSem:227,gasKmL:10.23,ethKmL:8.07,gasP:7.12,ethP:4.95},
+  {nome:"Baixa Grande por Sapucaia",dist:140,kmSem:0,gasKmL:10.23,ethKmL:8.07,gasP:7.12,ethP:4.95},
+  {nome:"Baixa Grande por Lagoa Redonda",dist:181,kmSem:0,gasKmL:10.23,ethKmL:8.07,gasP:7.12,ethP:4.95},
+  {nome:"Retiro",dist:67.3,kmSem:67.3,gasKmL:10.23,ethKmL:8.07,gasP:7.12,ethP:4.95},
+  {nome:"Pedro Reys",dist:66.8,kmSem:133.6,gasKmL:10.23,ethKmL:8.07,gasP:7.12,ethP:4.95},
+];
+let POSTOS=[
+  {nome:"Preços Preferidos",gasP:7.12,ethP:4.95,gasKmL:10.2,ethKmL:8.1},
+  {nome:"Posto PEL",gasP:6.85,ethP:4.95,gasKmL:10.2,ethKmL:8.1},
+  {nome:"Posto Arthur Melo",gasP:7.12,ethP:5.24,gasKmL:10.2,ethKmL:8.1},
+  {nome:"Posto Orla Propriá",gasP:7.12,ethP:5.24,gasKmL:10.2,ethKmL:8.1},
+];
+let MANUT=[
+  {icon:"🛢️",titulo:"Troca de Óleo e Filtro",freq:"A cada 10.000 km (~3,3 meses)",obs:"Etanol contamina o óleo mais rrápido. Troque imediatamente se o nnível subir.",km:10000,cor:"#f07040"},
+  {icon:"📊",titulo:"Verificação do Nnível de Óleo",freq:"Semanalmente",obs:"Essencial para monitorar diluição por Etanol ou consumo excessivo.",km:0,cor:"#40c8f0"},
+  {icon:"🔄",titulo:"Rodízio e Balanceamento de Pneus",freq:"A cada 10.000 km (junto com óleo)",obs:"Fundamental para desgaste uniforme e segurança.",km:10000,cor:"#e8f040"},
+  {icon:"🔥",titulo:"Italian Tune-up (Limpeza Preventiva)",freq:"A cada 3.000 km",obs:"Crucial para o TSI: combate acúmulo de carbono nas válvulas.",km:3000,cor:"#c07af0"},
+  {icon:"💨",titulo:"Filtro de Ar do Motor",freq:"A cada 10.000 km",obs:"Alta quilometragem e estradas de terra exigem troca regular.",km:10000,cor:"#40f0a8"},
+  {icon:"⛽",titulo:"Filtro de Combustnível",freq:"A cada 10.000 km",obs:"Protege a injeção contra a qualidade variável do Etanol.",km:10000,cor:"#40f0a8"},
+  {icon:"🛑",titulo:"Verificação de Freios",freq:"A cada 10.000 km",obs:"Uso intenso exige inspeção regular de pastilhas e discos.",km:10000,cor:"#f04060"},
+  {icon:"🌡️",titulo:"Fluido de Arrefecimento",freq:"Mensalmente",obs:"Verificar nnível e qualidade do fluido.",km:0,cor:"#40c8f0"},
+  {icon:"✨",titulo:"Velas de Ignição",freq:"A cada 30.000 km",obs:"Etanol exige mais das velas. Inspeção regular recomendada.",km:30000,cor:"#e8f040"},
+];
+
+
+// ══════════════════════════════ UTILS ══════════════════════════════
+const fR=(v,d=2)=>parseFloat(v.toFixed(d));
+const fmtR=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtN=(v,d=2)=>v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmtKm=v=>v.toLocaleString('pt-BR');
+let charts={};
+function dc(id){if(charts[id]){charts[id].destroy();delete charts[id]}}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+
+function go(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  document.querySelectorAll('.tb').forEach(b=>{if(b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('on')});
+  document.getElementById('nav-odo').textContent=fmtKm(Math.max(...TODOS.map(d=>d.odo)));
+  ({dashboard:renderDash,abastecimentos:renderAbast,trajetos:renderTrajetos,postos:renderPostos,manutencao:renderManut,dados:renderDados}[id]||function(){})();
+}
+
+function calcS(arr){
+  const v=arr.filter(d=>d.km>0&&d.vol>0&&d.cons>0);
+  const gas=v.filter(d=>d.comb==='Gasolina'),eth=v.filter(d=>d.comb==='Etanol');
+  const tKm=arr.reduce((a,d)=>a+d.km,0),tVol=arr.reduce((a,d)=>a+d.vol,0),tGasto=arr.reduce((a,d)=>a+d.total,0);
+  const consG=tVol>0?tKm/tVol:0;
+  // Médias por COMBUSTÍVEL CONSUMIDO (combC), não pelo abastecido
+  // Usa combC se disponível, senão comb (ciclos antigos)
+  const gasC=v.filter(d=>(d.combC||d.comb)==='Gasolina');
+  const ethC=v.filter(d=>(d.combC||d.comb)==='Etanol');
+  // Média ponderada: km totais / litros totais por combustível consumido
+  const gasKm=gasC.reduce((a,d)=>a+d.km,0),gasVol=gasC.reduce((a,d)=>a+d.vol,0);
+  const ethKm=ethC.reduce((a,d)=>a+d.km,0),ethVol=ethC.reduce((a,d)=>a+d.vol,0);
+  const mGas=gasVol>0?gasKm/gasVol:0;
+  const mEth=ethVol>0?ethKm/ethVol:0;
+  // Preço médio ponderado pelo volume do combustível ABASTECIDO
+  const pGas=gasVol>0?gas.reduce((a,d)=>a+(d.pl*d.vol),0)/Math.max(gas.reduce((a,d)=>a+d.vol,0),1):0;
+  const pEth=ethVol>0?eth.reduce((a,d)=>a+(d.pl*d.vol),0)/Math.max(eth.reduce((a,d)=>a+d.vol,0),1):0;
+  const corteReal=mGas>0&&mEth>0?mEth/mGas:0.704;
+  return{v,gas,eth,tKm,tVol,tGasto,consG,mGas,mEth,pGas,pEth,ckGas:pGas&&mGas?pGas/mGas:0,ckEth:pEth&&mEth?pEth/mEth:0,corteReal};
+}
+
+// Médias editáveis pelo usuário (alimentam todos os cálculos)
+function loadMediasUser(){
+  try{const s=localStorage.getItem('tcross_medias');if(s)return JSON.parse(s)}catch(e){}
+  return{gasManual:null,ethManual:null};
+}
+function saveMediasUser(m){try{localStorage.setItem('tcross_medias',JSON.stringify(m))}catch(e){}}
+let MEDIAS_USER=loadMediasUser();
+
+// C1+C2 fixos (consolidados). C3 calculado dinamicamente — igual à planilha SUMIFS
+function mediasEfetivas(){
+  // CORRIGIDO: Calcular dinamicamente a partir de TODOS os dados (sem valores consolidados errados)
+  const s=calcS(TODOS.filter(d=>d.vol>0&&d.km>0&&d.cons>0));
+  return{
+    mGas: MEDIAS_USER.gasManual!==null ? MEDIAS_USER.gasManual : s.mGas,
+    mEth: MEDIAS_USER.ethManual!==null ? MEDIAS_USER.ethManual : s.mEth,
+    pGas: s.pGas, pEth: s.pEth,
+    gasManual: MEDIAS_USER.gasManual!==null,
+    ethManual: MEDIAS_USER.ethManual!==null,
+    sGas: s.mGas, sEth: s.mEth
+  };
+}
+
+// ══════════════════════════════ DASHBOARD ══════════════════════════════
+function editMedia(tipo){
+  const m=mediasEfetivas();
+  const atual=tipo==='gas'?m.mGas:m.mEth;
+  const calc=tipo==='gas'?m.sGas:m.sEth;
+  const label=tipo==='gas'?'Gasolina':'Etanol';
+  const val=prompt(
+    label+' — média ponderada calculada: '+fmtN(calc)+' km/L\nDigite um valor manual ou deixe vazio para usar a média calculada:',
+    tipo==='gas'?(MEDIAS_USER.gasManual||''):(MEDIAS_USER.ethManual||'')
+  );
+  if(val===null)return;
+  if(val.trim()===''){
+    if(tipo==='gas')MEDIAS_USER.gasManual=null;
+    else MEDIAS_USER.ethManual=null;
+    toast('Voltando para média ponderada calculada');
+  } else {
+    const n=parseFloat(val.replace(',','.'));
+    if(isNaN(n)||n<=0){toast('Valor inválido');return}
+    if(tipo==='gas')MEDIAS_USER.gasManual=n;
+    else MEDIAS_USER.ethManual=n;
+    toast('✓ Consumo '+label+' definido como '+fmtN(n)+' km/L');
+  }
+  saveMediasUser(MEDIAS_USER);
+  renderDash();
+}
+
+function renderDash(){
+  const el=document.getElementById('sec-dashboard');
+  const s=calcS(TODOS),maxOdo=Math.max(...TODOS.map(d=>d.odo));
+  const c=cicloAtual(),inf=infoCiclo(c),proxRev=inf.proxPrev;
+  const pct=Math.min(100,Math.max(0,((maxOdo-inf.inicio)/(proxRev-inf.inicio))*100));
+  // Ciclos dinamicos baseados nas revisoes reais
+  const ciclosData=[];
+  for(let n=1;n<=c;n++){
+    const inf2=infoCiclo(n);
+    const abast=TODOS.filter(d=>d.ciclo===n&&d.vol>0);
+    ciclosData.push({n,inf:inf2,s:calcS(abast),rev:REVISOES.find(r=>r.num===n)||null});
+  }
+  const s1=calcS(TODOS.filter(d=>d.ciclo===1)),s2=calcS(TODOS.filter(d=>d.ciclo===2)),s3=calcS(TODOS.filter(d=>d.ciclo===c));
+  const ckMin=Math.min(s.ckGas,s.ckEth);
+
+  el.innerHTML=`
+<div id="cards-medias"></div>
+  <div class="hero" style="grid-template-columns:repeat(3,1fr)">
+    <div class="sc" style="--c:var(--accent)"><div class="sc-label">Odômetro atual</div><div class="sc-val">${fmtKm(maxOdo)}</div><div class="sc-sub">km totais · ${TODOS.filter(d=>d.vol>0).length} abastecimentos</div></div>
+    <div class="sc" style="--c:var(--blue)"><div class="sc-label">Total investido</div><div class="sc-val" style="font-size:22px">${fmtR(s.tGasto)}</div><div class="sc-sub">custo est. ${fmtR(ckMin*1350)}/mês</div></div>
+    <div class="sc" style="--c:var(--orange)"><div class="sc-label">Custo/km atual</div><div class="sc-val" style="font-size:22px">R$${fmtN(ckMin)}</div><div class="sc-sub">${s.ckEth<s.ckGas?'Etanol':'Gasolina'} mais econômico agora</div></div>
+  </div>
+
+  <div class="cgrid">
+    <div class="cc">
+      <div class="cc-title">Próxima revisão</div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px">
+        <span style="color:var(--muted);font-family:var(--mono)">Km restantes</span>
+        <span style="font-family:var(--mono);font-weight:700;color:${(proxRev-maxOdo)<2000?'var(--red)':(proxRev-maxOdo)<4000?'var(--orange)':'var(--green)'}">${fmtKm(proxRev-maxOdo)} km</span>
+      </div>
+      <div class="pbar"><div class="pbar-fill" style="width:${pct.toFixed(0)}%;background:${pct>80?'var(--red)':pct>60?'var(--orange)':'var(--blue)'}"></div></div>
+      <div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-top:5px">${fmtKm(maxOdo)} / ${fmtKm(proxRev)} km · ${pct.toFixed(0)}%</div>
+    </div>
+    <div class="cc">
+      <div class="cc-title">Combustível mais econômico agora</div>
+      <div style="display:flex;gap:20px;align-items:flex-end;margin-bottom:10px">
+        <div><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:3px">GASOLINA</div><div style="font-size:20px;font-weight:800;color:var(--accent)">R$${fmtN(s.ckGas)}/km</div></div>
+        <div style="color:var(--muted);font-size:16px;margin-bottom:2px">vs</div>
+        <div><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:3px">ETANOL</div><div style="font-size:20px;font-weight:800;color:var(--green)">R$${fmtN(s.ckEth)}/km</div></div>
+      </div>
+      <div style="font-size:14px;font-family:var(--mono);color:var(--green)">✓ ${s.ckEth<s.ckGas?'Etanol':'Gasolina'} vence · economia est. ${fmtR(Math.abs(s.ckGas-s.ckEth)*1350)} R$/mês</div>
+      <div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-top:4px">Ponto de corte real do seu carro: <b style="color:var(--blue)">${fmtN(s.corteReal*100,1)}%</b> (INMETRO: 70,4%)</div>
+    </div>
+  </div>
+
+  <div class="sh"><span class="sh-title">Comparativo por ciclo</span></div>
+  <div style="display:grid;grid-template-columns:repeat(${Math.min(ciclosData.length,4)},1fr);gap:12px;margin-bottom:18px">
+    ${ciclosData.map(({n,inf:inf2,s:sx,rev})=>{
+      const cors=['var(--blue)','var(--purple)','var(--accent)','var(--green)','var(--orange)'];
+      const cls=['c1b','c2b','c3b','c1b','c2b'];
+      const cor=cors[(n-1)%cors.length],cl=cls[(n-1)%cls.length];
+      const isCurr=n===c;
+      return '<div class="cc">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">'
+        +'<div style="font-size:12px;font-weight:700">'+n+'º Ciclo'+(isCurr?' ↗':rev?' ✓':'')+'</div>'
+        +'<span class="cbadge '+cl+'">'+fmtKm(sx.tKm)+' km</span>'
+        +'</div>'
+        +'<div style="display:flex;flex-direction:column;gap:6px;font-size:12px">'
+        +'<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Total gasto</span><span style="font-family:var(--mono)">'+fmtR(sx.tGasto)+'</span></div>'
+        +'<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Cons. geral</span><span style="font-family:var(--mono);color:'+cor+'">'+fmtN(sx.consG)+' km/L</span></div>'
+        +'<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Gasolina</span><span style="font-family:var(--mono)">'+fmtN(sx.mGas)+' km/L</span></div>'
+        +'<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Etanol</span><span style="font-family:var(--mono)">'+fmtN(sx.mEth)+' km/L</span></div>'
+        +'<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Abastecimentos</span><span style="font-family:var(--mono)">'+sx.v.length+'</span></div>'
+        +(rev?'<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Revisão</span><span style="font-family:var(--mono);color:var(--green)">'+rev.data+'</span></div>':'')
+        +'</div></div>';
+    }).join('')}
+  </div>
+
+  <div class="sh"><span class="sh-title">Consumo km/L — todos os abastecimentos</span></div>
+  <div class="cc" style="margin-bottom:18px"><div class="cw" style="height:240px"><canvas id="ch-all"></canvas></div></div>
+
+  <div class="cgrid">
+    <div class="cc"><div class="cc-title">Gasto por mês (R$)</div><div class="cw" style="height:200px"><canvas id="ch-mes"></canvas></div></div>
+    <div class="cc"><div class="cc-title">Volume por combustível</div><div class="cw" style="height:200px"><canvas id="ch-pz"></canvas></div></div>
+  </div>`;
+
+  // Preenche cards de médias separadamente para evitar problemas com template literals aninhados
+  const mEf=mediasEfetivas();
+  const sCicloM=calcS(TODOS.filter(d=>d.ciclo===c&&d.vol>0));
+  const divM=document.getElementById('cards-medias');
+  if(divM){
+    divM.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px';
+    divM.innerHTML=
+      '<div class="sc" style="--c:#e8f040">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">'
+      +'<div class="sc-label" style="margin-bottom:0">Consumo médio — Gasolina</div>'
+      +'<span style="font-size:13px;font-family:var(--mono);color:'+(mEf.gasManual?'var(--orange)':'var(--muted)')+';cursor:pointer" onclick="editMedia(\'gas\')">'+(mEf.gasManual?'✏ manual':'✏ editar')+'</span>'
+      +'</div>'
+      +'<div style="display:flex;align-items:baseline;gap:8px">'
+      +'<div class="sc-val">'+fmtN(mEf.mGas)+'</div>'
+      +'<div style="font-size:16px;color:var(--muted);font-weight:600">km/L</div>'
+      +'</div>'
+      +'<div class="sc-sub">Preço méd. ponderado: R$ '+fmtN(mEf.pGas)+' · '+sCicloM.gas.length+' abast. ciclo '+c
+      +(mEf.gasManual?' · <span style="color:var(--orange)">manual</span> (calc: '+fmtN(mEf.sGas)+' km/L)':' · ponderada')
+      +'</div></div>'
+      +'<div class="sc" style="--c:#40f0a8">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">'
+      +'<div class="sc-label" style="margin-bottom:0">Consumo médio — Etanol</div>'
+      +'<span style="font-size:13px;font-family:var(--mono);color:'+(mEf.ethManual?'var(--orange)':'var(--muted)')+';cursor:pointer" onclick="editMedia(\'eth\')">'+(mEf.ethManual?'✏ manual':'✏ editar')+'</span>'
+      +'</div>'
+      +'<div style="display:flex;align-items:baseline;gap:8px">'
+      +'<div class="sc-val" style="color:#40f0a8">'+fmtN(mEf.mEth)+'</div>'
+      +'<div style="font-size:16px;color:var(--muted);font-weight:600">km/L</div>'
+      +'</div>'
+      +'<div class="sc-sub">Preço méd. ponderado: R$ '+fmtN(mEf.pEth)+' · '+sCicloM.eth.length+' abast. ciclo '+c
+      +(mEf.ethManual?' · <span style="color:var(--orange)">manual</span> (calc: '+fmtN(mEf.sEth)+' km/L)':' · ponderada')
+      +'</div></div>';
+  }
+
+  // Chart all
+  dc('ch-all');
+  const vv=TODOS.filter(d=>d.km>0&&d.cons>0);
+  charts['ch-all']=new Chart(document.getElementById('ch-all'),{type:'line',data:{labels:vv.map(d=>d.data),datasets:[{data:vv.map(d=>d.cons),borderColor:'rgba(232,240,64,0.5)',backgroundColor:'rgba(232,240,64,0.04)',pointBackgroundColor:vv.map(d=>d.comb==='Gasolina'?'#e8f040':'#40f0a8'),pointBorderColor:'transparent',pointRadius:5,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw} km/L — ${vv[c.dataIndex].comb} (${vv[c.dataIndex].ciclo}º ciclo)`}}},scales:{x:{ticks:{color:'#6a7090',font:{size:9},maxRotation:60,autoSkip:true,maxTicksLimit:18},grid:{color:'rgba(255,255,255,0.03)'}},y:{ticks:{color:'#6a7090',font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'},min:6}}}});
+
+  // Mensal
+  dc('ch-mes');
+  const mm={};
+  TODOS.filter(d=>d.total>0).forEach(d=>{
+    const pts=d.data.split('/');
+    const mn=parseInt(pts[pts.length-1]||pts[0]);
+    const nome=['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'][mn]||'?';
+    mm[nome]=(mm[nome]||0)+d.total;
+  });
+  charts['ch-mes']=new Chart(document.getElementById('ch-mes'),{type:'bar',data:{labels:Object.keys(mm),datasets:[{data:Object.values(mm),backgroundColor:'rgba(64,200,240,0.75)',borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6a7090',font:{size:10}},grid:{display:false}},y:{ticks:{color:'#6a7090',font:{size:10},callback:v=>'R$'+v},grid:{color:'rgba(255,255,255,0.04)'}}}}});
+
+  // Pizza
+  dc('ch-pz');
+  const sTodos=calcS(TODOS);
+  const gV=sTodos.gas.reduce((a,d)=>a+d.vol,0),eV=sTodos.eth.reduce((a,d)=>a+d.vol,0);
+  charts['ch-pz']=new Chart(document.getElementById('ch-pz'),{type:'doughnut',data:{labels:['Gasolina','Etanol'],datasets:[{data:[fR(gV),fR(eV)],backgroundColor:['rgba(232,240,64,0.85)','rgba(64,240,168,0.85)'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{color:'#f0f2f8',font:{size:12},padding:14}},tooltip:{callbacks:{label:c=>`${c.label}: ${fmtN(c.raw)} L`}}}}});
+}
+
+// ══════════════════════════════ ABASTECIMENTOS ══════════════════════════════
+let fCiclo='todos',fComb='todos',fBusca='',fOrdem='desc';
+function renderAbast(){
+  document.getElementById('sec-abastecimentos').innerHTML=`
+  <div class="sh">
+    <span class="sh-title">Abastecimentos</span>
+    <div class="sh-actions">
+      <button class="btn sm" onclick="toggleForm()">+ Novo</button>
+      <button class="btn sm" onclick="exportCSV()">↓ CSV</button>
+      <button class="btn sm" onclick="exportGSheets()">↑ Sheets</button>
+    </div>
+  </div>
+  <div id="form-abast" style="display:none">
+    <div class="form-card">
+      <div class="fg">
+        <div class="fi"><label>Data</label><input id="f-dt" placeholder="dd/mm"></div>
+        <div class="fi"><label>Odômetro (km)</label><input id="f-odo" type="number" placeholder="20700"></div>
+        <div class="fi"><label>Volume (L)</label><input id="f-vol" type="number" step="0.01"></div>
+        <div class="fi"><label>Preço/L (R$)</label><input id="f-pl" type="number" step="0.01"></div>
+        <div class="fi"><label>Combustível abastecido</label><select id="f-comb"><option value="Gasolina">Gasolina</option><option value="Etanol">Etanol</option></select></div>
+        <div class="fi"><label>Combustível consumido</label><select id="f-combc"><option value="Gasolina">Gasolina</option><option value="Etanol">Etanol</option></select></div>
+        <div class="fi"><label>Posto</label><input id="f-posto" placeholder="Pel"></div>
+        <div class="fi s2"><label>Descrição</label><input id="f-desc"></div>
+      </div>
+      <div class="factions">
+        <button class="btn pr" onclick="salvarAbast()">Salvar registro</button>
+        <button class="btn" onclick="toggleForm()">Cancelar</button>
+        <span class="fbk" id="fbk">✓ Salvo!</span>
+      </div>
+    </div>
+  </div>
+  <div class="filters">
+    <select class="fsel" onchange="fCiclo=this.value;renderTabela()">
+      <option value="todos">Todos os ciclos</option>
+      <option value="1">1º Ciclo</option>
+      <option value="2">2º Ciclo</option>
+      <option value="3">3º Ciclo</option>
+    </select>
+    <select class="fsel" onchange="fComb=this.value;renderTabela()">
+      <option value="todos">Todos combustíveis</option>
+      <option value="Gasolina">Gasolina</option>
+      <option value="Etanol">Etanol</option>
+    </select>
+    <input class="sinp" placeholder="Buscar posto ou descrição…" oninput="fBusca=this.value;renderTabela()">
+    <button id="btn-ordem" class="btn sm" onclick="toggleOrdem()" style="font-family:var(--mono)">↓ Mais recente</button>
+    <span id="cnt-lbl" style="font-size:14px;font-family:var(--mono);color:var(--muted)"></span>
+  </div>
+  <div class="tw"><table><thead><tr><th>#</th><th>Ciclo</th><th>Data</th><th>Odômetro</th><th>Km</th><th>Vol L</th><th>Consumo</th><th>Comb.</th><th>Preço/L</th><th>Total</th><th>Posto</th><th>Descrição</th><th></th></tr></thead><tbody id="tby"></tbody></table></div>
+  <div id="sts-pills" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>`;
+  renderTabela();
+}
+function toggleForm(){const f=document.getElementById('form-abast');f.style.display=f.style.display==='none'?'block':'none'}
+function toggleOrdem(){
+  fOrdem=fOrdem==='desc'?'asc':'desc';
+  const btn=document.getElementById('btn-ordem');
+  if(btn) btn.textContent=fOrdem==='desc'?'↓ Mais recente':'↑ Mais antigo';
+  renderTabela();
+}
+function renderTabela(){
+  let d=TODOS.filter(d=>d.vol>0);
+  if(fCiclo!=='todos')d=d.filter(x=>x.ciclo===parseInt(fCiclo));
+  if(fComb!=='todos')d=d.filter(x=>x.comb===fComb);
+  if(fBusca)d=d.filter(x=>(x.posto+x.desc).toLowerCase().includes(fBusca.toLowerCase()));
+  d=fOrdem==='desc'?[...d].reverse():d;
+  document.getElementById('cnt-lbl').textContent=d.length+' registros';
+  const s=calcS(d);
+  document.getElementById('tby').innerHTML=d.map((x,i)=>{
+    const cl=x.ciclo===1?'c1b':x.ciclo===2?'c2b':'c3b';
+    const cv=x.cons>0?(x.cons>=s.consG?'g':'r'):'';
+    return`<tr><td class="n" style="color:var(--muted)">${i+1}</td><td><span class="cbadge ${cl}">${x.ciclo}º</span></td><td><b>${x.data}</b></td><td class="n">${fmtKm(x.odo)}</td><td class="n">${x.km}</td><td class="n">${fmtN(x.vol)}</td><td class="${cv}">${x.cons>0?fmtN(x.cons)+' km/L':'—'}</td><td><span class="fb ${x.comb==='Gasolina'?'gas':'eth'}"><span class="dot"></span>${x.comb}</span></td><td class="n">${fmtN(x.pl)}</td><td class="n">${fmtR(x.total)}</td><td style="font-size:14px;color:var(--muted2)">${x.posto||'—'}</td><td style="font-size:14px;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis">${x.desc||'—'}</td><td><button class="btn sm danger" onclick="del(${TODOS.indexOf(x)})">✕</button></td></tr>`;
+  }).join('');
+  const pill=v=>`<div style="font-size:14px;font-family:var(--mono);background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:5px 11px;color:var(--muted)">${v}</div>`;
+  document.getElementById('sts-pills').innerHTML=[
+    pill(`Total: <span style="color:var(--text)">${fmtR(s.tGasto)}</span>`),
+    pill(`Km: <span style="color:var(--text)">${fmtKm(s.tKm)}</span>`),
+    pill(`Litros: <span style="color:var(--text)">${fmtN(s.tVol)}</span>`),
+    pill(`Média: <span style="color:var(--accent)">${fmtN(s.consG)} km/L</span>`),
+    pill(`Custo/km: <span style="color:var(--blue)">R$${fmtN(s.tGasto/Math.max(1,s.tKm))}</span>`),
+    pill(`Gas: <span style="color:#e8f040">${s.gas.length} abast.</span>`),
+    pill(`Eth: <span style="color:#40f0a8">${s.eth.length} abast.</span>`),
+  ].join('');
+}
+function salvarAbast(){
+  const dt=document.getElementById('f-dt').value.trim();
+  const odo=parseFloat(document.getElementById('f-odo').value);
+  const vol=parseFloat(document.getElementById('f-vol').value);
+  const pl=parseFloat(document.getElementById('f-pl').value);
+  if(!dt||isNaN(odo)||isNaN(vol)||isNaN(pl)){toast('⚠ Preencha data, odômetro, volume e preço/L');return}
+  const prev=TODOS.filter(d=>d.odo<odo);
+  const kmCalc=prev.length?odo-Math.max(...prev.map(d=>d.odo)):0;
+  const cons=kmCalc>0?fR(kmCalc/vol):0;
+  const combAbast=document.getElementById('f-comb').value;
+  const combCons=document.getElementById('f-combc')?.value||combAbast;
+  TODOS.push({data:dt,odo,km:Math.max(0,kmCalc),vol,cons,combC:combCons,comb:combAbast,total:fR(vol*pl),pl,posto:document.getElementById('f-posto').value.trim(),desc:document.getElementById('f-desc').value.trim(),ciclo:3});
+  TODOS.sort((a,b)=>a.odo-b.odo);
+  document.getElementById('fbk').style.display='inline';setTimeout(()=>document.getElementById('fbk').style.display='none',2000);
+  ['f-dt','f-odo','f-vol','f-pl','f-posto','f-desc'].forEach(id=>document.getElementById(id).value='');
+  renderTabela();toast('✓ Registrado!');
+}
+function del(i){if(!confirm('Excluir?'))return;TODOS.splice(i,1);renderTabela();toast('Removido')}
+
+// ══════════════════════════════ TRAJETOS ══════════════════════════════
+function saveTrajetos(){try{localStorage.setItem('tcross_trajetos',JSON.stringify(TRAJETOS))}catch(e){}}
+function loadTrajetos(){try{const s=localStorage.getItem('tcross_trajetos');if(s)TRAJETOS=JSON.parse(s)}catch(e){}}
+loadTrajetos();
+
+function editTrajeto(i){
+  const t=TRAJETOS[i];
+  const nome=prompt('Nome do trajeto:',t.nome);if(nome===null)return;
+  const dist=parseFloat(prompt('Distância ida/volta (km):',t.dist));if(isNaN(dist))return;
+  const kmSem=parseFloat(prompt('km/semana neste trajeto (0 se eventual):',t.kmSem));if(isNaN(kmSem))return;
+  const gasP=parseFloat(prompt('Preço gasolina (R$/L):',t.gasP));if(isNaN(gasP))return;
+  const ethP=parseFloat(prompt('Preço etanol (R$/L):',t.ethP));if(isNaN(ethP))return;
+  TRAJETOS[i]={...t,nome,dist,kmSem,gasP,ethP};
+  saveTrajetos();
+  toast('✓ Trajeto atualizado!');
+  renderTrajetos();
+}
+
+function addTrajeto(){
+  const nome=prompt('Nome do novo trajeto:');if(!nome)return;
+  const dist=parseFloat(prompt('Distância ida/volta (km):'));if(isNaN(dist))return;
+  const kmSem=parseFloat(prompt('km/semana (0 se eventual):'))||0;
+  const gasP=parseFloat(prompt('Preço gasolina (R$/L):',TRAJETOS[0]?.gasP||7.12));if(isNaN(gasP))return;
+  const ethP=parseFloat(prompt('Preço etanol (R$/L):',TRAJETOS[0]?.ethP||4.95));if(isNaN(ethP))return;
+  TRAJETOS.push({nome,dist,kmSem,gasKmL:10.23,ethKmL:8.07,gasP,ethP});
+  saveTrajetos();
+  toast('✓ Trajeto adicionado!');
+  renderTrajetos();
+}
+
+function delTrajeto(i){
+  if(!confirm('Excluir trajeto "'+TRAJETOS[i].nome+'"?'))return;
+  TRAJETOS.splice(i,1);
+  saveTrajetos();
+  renderTrajetos();
+  toast('Trajeto removido');
+}
+
+async function syncTrajetos(){
+  try{
+    const token=await gsGetToken();
+    await gsGarantirAba(token);
+    const header=['Nome','Distância (km)','km/Semana','Preço Gas R$/L','Preço Eth R$/L','Gas km/L','Eth km/L'];
+    const rows=TRAJETOS.map(t=>[t.nome,t.dist,t.kmSem,t.gasP,t.ethP,t.gasKmL,t.ethKmL]);
+    const range=encodeURIComponent('App_Dados!M1:S'+(rows.length+1));
+    await fetch('https://sheets.googleapis.com/v4/spreadsheets/'+GS.SHEET_ID+'/values/'+range+'?valueInputOption=USER_ENTERED',{
+      method:'PUT',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
+      body:JSON.stringify({values:[header,...rows]})
+    });
+    toast('✓ Trajetos salvos no Sheets!');
+  }catch(e){toast('Salvo localmente. Sheets: '+e.message)}
+}
+
+function renderTrajetos(){
+  const el=document.getElementById('sec-trajetos');
+  // totais dinamicos
+  const kmSemTotal=TRAJETOS.reduce((a,t)=>a+t.kmSem,0);
+  const kmMesTotal=fR(kmSemTotal*4.33);
+  const gasP0=TRAJETOS[0]?.gasP||7.12,ethP0=TRAJETOS[0]?.ethP||4.95;
+  const me=mediasEfetivas();
+  const mGas=me.mGas||10.23,mEth=me.mEth||8.07;
+  const rMesGas=fR(kmMesTotal/mGas*gasP0),rMesEth=fR(kmMesTotal/mEth*ethP0);
+  let html=`
+  <div class="sh">
+    <span class="sh-title">Trajetos e rotas</span>
+    <div class="sh-actions">
+      <button class="btn sm" onclick="addTrajeto()">+ Novo</button>
+      <button class="btn sm" onclick="syncTrajetos()">↑ Sheets</button>
+    </div>
+  </div>
+  <div class="cc" style="margin-bottom:18px">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center">
+      <div><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:4px">KM/SEMANA</div><div style="font-size:25px;font-weight:800;color:var(--accent)">${fmtN(kmSemTotal,0)}</div></div>
+      <div><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:4px">KM/MÊS</div><div style="font-size:25px;font-weight:800;color:var(--blue)">${fmtN(kmMesTotal,0)}</div></div>
+      <div><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:4px">R$/MÊS GAS</div><div style="font-size:25px;font-weight:800;color:var(--accent)">${fmtN(rMesGas,0)}</div></div>
+      <div><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:4px">R$/MÊS ETH</div><div style="font-size:25px;font-weight:800;color:var(--green)">${fmtN(rMesEth,0)}</div></div>
+    </div>
+  </div>
+  <div class="route-grid">`;
+  TRAJETOS.forEach((t,i)=>{
+    const gV=fR((t.dist/mGas)*t.gasP),eV=fR((t.dist/mEth)*t.ethP);
+    const gM=t.kmSem>0?fR(gV*(t.kmSem/t.dist)*4.33):0,eM=t.kmSem>0?fR(eV*(t.kmSem/t.dist)*4.33):0;
+    const w=eV<gV?'Etanol':'Gasolina';
+    html+=`<div class="rc">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px">
+        <div class="rc-name">${t.nome}</div>
+        <div style="display:flex;gap:4px">
+          <button class="btn sm" onclick="editTrajeto(${i})" style="padding:2px 7px;font-size:13px">✏</button>
+          <button class="btn sm danger" onclick="delTrajeto(${i})" style="padding:2px 7px;font-size:13px">✕</button>
+        </div>
+      </div>
+      <div class="rc-dist">${t.dist} km ida/volta${t.kmSem>0?' · '+t.kmSem+' km/sem':' · eventual'}</div>
+      <div class="rrow"><span style="color:var(--muted)">Custo/viagem Gas</span><span class="fb gas"><span class="dot"></span>${fmtR(gV)}</span></div>
+      <div class="rrow"><span style="color:var(--muted)">Custo/viagem Eth</span><span class="fb eth"><span class="dot"></span>${fmtR(eV)}</span></div>
+      ${t.kmSem>0?'<div class="rrow"><span style="color:var(--muted)">Custo mensal Gas</span><span style="font-family:var(--mono);font-size:14px">'+fmtR(gM)+'</span></div><div class="rrow"><span style="color:var(--muted)">Custo mensal Eth</span><span style="font-family:var(--mono);font-size:14px">'+fmtR(eM)+'</span></div>':''}
+      <div class="rrow"><span style="color:var(--muted)">Volume/viagem Gas</span><span style="font-family:var(--mono);font-size:14px">${fmtN(t.dist/mGas)} L</span></div>
+      <div class="rrow"><span style="color:var(--muted)">Volume/viagem Eth</span><span style="font-family:var(--mono);font-size:14px">${fmtN(t.dist/mEth)} L</span></div>
+      <div><span class="rwin">✓ ${w} mais econômico</span></div>
+    </div>`;
+  });
+  html+=`</div>
+  <div class="sh"><span class="sh-title">Custo por viagem — comparativo</span></div>
+  <div class="cc"><div class="cw" style="height:260px"><canvas id="ch-traj"></canvas></div></div>`;
+  el.innerHTML=html;
+  dc('ch-traj');
+  charts['ch-traj']=new Chart(document.getElementById('ch-traj'),{type:'bar',data:{labels:TRAJETOS.map(t=>t.nome.split(' ').slice(0,2).join(' ')),datasets:[{label:'Gasolina',data:TRAJETOS.map(t=>fR((t.dist/mGas)*t.gasP)),backgroundColor:'rgba(232,240,64,0.8)',borderRadius:4},{label:'Etanol',data:TRAJETOS.map(t=>fR((t.dist/mEth)*t.ethP)),backgroundColor:'rgba(64,240,168,0.8)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#f0f2f8',font:{size:12}}}},scales:{x:{ticks:{color:'#6a7090',font:{size:10}},grid:{display:false}},y:{ticks:{color:'#6a7090',callback:v=>'R$'+v},grid:{color:'rgba(255,255,255,0.04)'}}}}});
+}
+
+// ══════════════════════════════ POSTOS ══════════════════════════════
+function savePostos(){try{localStorage.setItem('tcross_postos',JSON.stringify(POSTOS))}catch(e){}}
+function loadPostos(){try{const s=localStorage.getItem('tcross_postos');if(s)POSTOS=JSON.parse(s)}catch(e){}}
+loadPostos();
+
+function editPosto(i){
+  const p=POSTOS[i];
+  const nome=prompt('Nome do posto:',p.nome);if(nome===null)return;
+  const gasP=parseFloat(prompt('Preço Gasolina (R$/L):',p.gasP));if(isNaN(gasP))return;
+  const ethP=parseFloat(prompt('Preço Etanol (R$/L):',p.ethP));if(isNaN(ethP))return;
+  POSTOS[i]={...p,nome,gasP,ethP};
+  savePostos();
+  toast('✓ Posto atualizado!');
+  renderPostos();
+}
+
+function addPosto(){
+  const nome=prompt('Nome do posto:');if(!nome)return;
+  const gasP=parseFloat(prompt('Preço Gasolina (R$/L):',POSTOS[0]?.gasP||7.12));if(isNaN(gasP))return;
+  const ethP=parseFloat(prompt('Preço Etanol (R$/L):',POSTOS[0]?.ethP||4.95));if(isNaN(ethP))return;
+  const s=calcS(TODOS);
+  POSTOS.push({nome,gasP,ethP,gasKmL:s.mGas||10.2,ethKmL:s.mEth||8.1});
+  savePostos();
+  toast('✓ Posto adicionado!');
+  renderPostos();
+}
+
+function delPosto(i){
+  if(!confirm('Excluir posto "'+POSTOS[i].nome+'"?'))return;
+  POSTOS.splice(i,1);
+  savePostos();
+  renderPostos();
+  toast('Posto removido');
+}
+
+async function syncPostos(){
+  try{
+    const token=await gsGetToken();
+    await gsGarantirAba(token);
+    const header=['Posto','Gas R$/L','Eth R$/L','Gas km/L','Eth km/L'];
+    const rows=POSTOS.map(p=>[p.nome,p.gasP,p.ethP,p.gasKmL,p.ethKmL]);
+    const range=encodeURIComponent('App_Dados!U1:Y'+(rows.length+1));
+    await fetch('https://sheets.googleapis.com/v4/spreadsheets/'+GS.SHEET_ID+'/values/'+range+'?valueInputOption=USER_ENTERED',{
+      method:'PUT',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
+      body:JSON.stringify({values:[header,...rows]})
+    });
+    toast('✓ Postos salvos no Sheets!');
+  }catch(e){toast('Salvo localmente. Sheets: '+e.message)}
+}
+
+function renderPostos(){
+  const el=document.getElementById('sec-postos');
+  const sP=calcS(TODOS.filter(d=>d.ciclo===cicloAtual()&&d.vol>0));
+  const me=mediasEfetivas();
+  const corteRealP=me.mGas>0&&me.mEth>0?me.mEth/me.mGas:0.704;
+  const limiarP=corteRealP*100;
+  let html=`
+  <div class="sh">
+    <span class="sh-title">Postos e preços</span>
+    <div class="sh-actions">
+      <button class="btn sm" onclick="addPosto()">+ Novo</button>
+      <button class="btn sm" onclick="syncPostos()">↑ Sheets</button>
+    </div>
+  </div>
+  <div class="posto-grid">`;
+  POSTOS.forEach((p,i)=>{
+    const gC=fR(p.gasP/p.gasKmL),eC=fR(p.ethP/p.ethKmL);
+    const rel=(p.ethP/p.gasP)*100,corte=p.gasP*corteRealP,w=eC<gC;
+    html+=`<div class="pc ${w?'winner':''}">
+      <div class="pc-name" style="display:flex;justify-content:space-between;align-items:center">
+        <span>${p.nome}${w?' <span class="fb eth"><span class="dot"></span>Eth vence</span>':''}</span>
+        <div style="display:flex;gap:4px;flex-shrink:0">
+          <button class="btn sm" onclick="editPosto(${i})" style="padding:2px 7px;font-size:13px">✏</button>
+          <button class="btn sm danger" onclick="delPosto(${i})" style="padding:2px 7px;font-size:13px">✕</button>
+        </div>
+      </div>
+      <div class="prow"><span style="color:var(--muted)">Gasolina</span><span class="fb gas"><span class="dot"></span>R$ ${fmtN(p.gasP)}/L</span></div>
+      <div class="prow"><span style="color:var(--muted)">Etanol</span><span class="fb eth"><span class="dot"></span>R$ ${fmtN(p.ethP)}/L</span></div>
+      <div class="prow"><span style="color:var(--muted)">Custo/km Gas</span><span style="font-family:var(--mono);font-size:14px">R$ ${fmtN(gC)}</span></div>
+      <div class="prow"><span style="color:var(--muted)">Custo/km Eth</span><span style="font-family:var(--mono);font-size:14px">R$ ${fmtN(eC)}</span></div>
+      <div class="prow"><span style="color:var(--muted)">Preço relativo</span><span style="font-family:var(--mono);font-size:14px;color:${rel<limiarP?'var(--green)':'var(--orange)'}">${fmtN(rel,1)}% ${rel<limiarP?'✓ abaixo do corte':'⚠ acima do corte'}</span></div>
+      <div class="prow"><span style="color:var(--muted)">Preço corte Eth</span><span style="font-family:var(--mono);font-size:14px">R$ ${fmtN(corte)}</span></div>
+    </div>`;
+  });
+  html+=`</div>
+  <div class="sh"><span class="sh-title">Calculadora de ponto de corte — médias reais do seu carro</span></div>
+  <div class="calc-card">
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding:10px 14px;background:var(--bg3);border-radius:8px;font-size:14px;font-family:var(--mono)">
+      <span style="color:var(--muted)">Gasolina: <b style="color:var(--accent)">${fmtN(me.mGas)} km/L</b>${me.gasManual?' <span style="color:var(--orange)">(manual)</span>':' (pond.)'}</span>
+      <span style="color:var(--muted)">Etanol: <b style="color:var(--green)">${fmtN(me.mEth)} km/L</b>${me.ethManual?' <span style="color:var(--orange)">(manual)</span>':' (pond.)'}</span>
+      <span style="color:var(--muted)">Corte real: <b style="color:var(--blue)">${fmtN(limiarP,1)}%</b> vs 70,4% INMETRO</span>
+    </div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:14px;font-family:var(--mono)">Se preço relativo Eth/Gas estiver abaixo de ${fmtN(limiarP,1)}% → Etanol vence no seu carro</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div class="fi"><label>Preço Gasolina (R$/L)</label><input id="c-gas" type="number" step="0.01" value="${fmtN(POSTOS[0]?.gasP||7.12)}" oninput="calcCorte()"></div>
+      <div class="fi"><label>Preço Etanol (R$/L)</label><input id="c-eth" type="number" step="0.01" value="${fmtN(POSTOS[0]?.ethP||4.95)}" oninput="calcCorte()"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+      <div class="calc-res"><div class="calc-res-label">Relação Eth/Gas</div><div class="calc-res-val" id="cr-rel">—</div></div>
+      <div class="calc-res"><div class="calc-res-label">Ponto de corte real</div><div class="calc-res-val" id="cr-limiar" style="color:var(--blue)">—</div></div>
+      <div class="calc-res"><div class="calc-res-label">Preço corte Eth</div><div class="calc-res-val" id="cr-corte" style="color:var(--blue)">—</div></div>
+      <div class="calc-res"><div class="calc-res-label">Mais econômico</div><div class="calc-res-val" id="cr-win" style="font-size:16px">—</div><div style="font-size:14px;font-family:var(--mono);margin-top:4px" id="cr-eco">—</div></div>
+    </div>
+  </div>
+  <div class="sh"><span class="sh-title">Custo/km por posto</span></div>
+  <div class="cc"><div class="cw" style="height:200px"><canvas id="ch-postos"></canvas></div></div>`;
+  el.innerHTML=html;
+  calcCorte();
+  dc('ch-postos');
+  charts['ch-postos']=new Chart(document.getElementById('ch-postos'),{type:'bar',data:{labels:POSTOS.map(p=>p.nome.replace('Posto ','').replace('Preços Preferidos','Prefer.')),datasets:[{label:'Gas R$/km',data:POSTOS.map(p=>fR(p.gasP/p.gasKmL)),backgroundColor:'rgba(232,240,64,0.8)',borderRadius:4},{label:'Eth R$/km',data:POSTOS.map(p=>fR(p.ethP/p.ethKmL)),backgroundColor:'rgba(64,240,168,0.8)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#f0f2f8',font:{size:12}}}},scales:{x:{ticks:{color:'#6a7090'},grid:{display:false}},y:{ticks:{color:'#6a7090',callback:v=>'R$'+v.toFixed(3)},grid:{color:'rgba(255,255,255,0.04)'}}}}});
+}
+function calcCorte(){
+  const gas=parseFloat(document.getElementById('c-gas').value)||0,eth=parseFloat(document.getElementById('c-eth').value)||0;
+  if(!gas||!eth)return;
+  // Usa medias reais do carro, nao o valor fixo do INMETRO
+  const s=calcS(TODOS);
+  const mGas=s.mGas||11.8,mEth=s.mEth||10.1;
+  const corteReal=mEth/mGas; // ponto de corte baseado nas medias reais
+  const rel=(eth/gas)*100;
+  const limiar=corteReal*100;
+  const w=rel<limiar;
+  const cortePreco=gas*corteReal;
+  const eco=Math.abs((gas/mGas-eth/mEth)*1350);
+  document.getElementById('cr-rel').textContent=fmtN(rel,1)+'%';
+  document.getElementById('cr-rel').style.color=w?'var(--green)':'var(--orange)';
+  document.getElementById('cr-corte').textContent='R$ '+fmtN(cortePreco);
+  document.getElementById('cr-limiar').textContent=fmtN(limiar,1)+'%';
+  document.getElementById('cr-win').textContent=(w?'Etanol':'Gasolina')+' ✓';
+  document.getElementById('cr-win').style.color=w?'var(--green)':'var(--accent)';
+  document.getElementById('cr-eco').textContent='Economia: R$ '+fmtN(eco,0)+'/mês';
+}
+
+// ══════════════════════════════ MANUTENÇÃO ══════════════════════════════
+function renderManut(){
+  const el=document.getElementById('sec-manutencao');
+  const odo=Math.max(...TODOS.map(d=>d.odo));
+  const c=cicloAtual(),inf=infoCiclo(c);
+  const proxRev=inf.proxPrev;
+  const pct=Math.min(100,Math.max(0,((odo-inf.inicio)/(proxRev-inf.inicio))*100));
+  const falta=proxRev-odo;
+  const cl=loadChecklist();
+
+  // Histórico de revisões
+  let histHtml=REVISOES.map((r,i)=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="width:28px;height:28px;border-radius:50%;background:rgba(64,240,168,.15);display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--green);flex-shrink:0">${r.num}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700">${r.num}ª Revisão</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--muted)">${r.data} · ${fmtKm(r.odo)} km · ${r.obs}</div>
+      </div>
+      <span style="font-size:13px;font-family:var(--mono);background:rgba(64,240,168,.1);color:var(--green);padding:2px 8px;border-radius:20px">✓ Concluída</span>
+    </div>`).join('');
+
+  // Checklist do ciclo atual
+  const checkItems=MANUT.filter(m=>m.km>0);
+  let checkHtml=checkItems.map((m,i)=>{
+    const done=!!cl[i];
+    return `<label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer">
+      <input type="checkbox" id="ck-${i}" ${done?'checked':''} onchange="toggleCheck(${i})" style="width:16px;height:16px;accent-color:var(--green);cursor:pointer;flex-shrink:0">
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;opacity:.5':''}">${m.icon} ${m.titulo}</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--muted)">${m.freq}</div>
+      </div>
+    </label>`;
+  }).join('');
+
+  const doneCt=checkItems.filter((m,i)=>!!cl[i]).length;
+  const allDone=doneCt===checkItems.length;
+
+  let html=`
+  <div class="sh">
+    <span class="sh-title">Manutenção · ${fmtKm(odo)} km · Ciclo ${c}</span>
+    <button class="btn sm" onclick="registrarRevisao()" style="border-color:rgba(64,240,168,.4);color:var(--green)">+ Registrar revisão</button>
+  </div>
+
+  <div class="cc" style="margin-bottom:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
+      <div>
+        <div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:4px">PRÓXIMA REVISÃO PREVISTA</div>
+        <div style="font-size:34px;font-weight:800;color:${falta<1000?'var(--red)':falta<3000?'var(--orange)':'var(--accent)'}">${fmtKm(proxRev)} km</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--muted);margin-top:3px">Faltam <b style="color:${falta<1000?'var(--red)':falta<3000?'var(--orange)':'var(--text)'}">${fmtKm(falta)} km</b> · Ciclo ${c}: ${fmtKm(inf.inicio)} → ${fmtKm(proxRev)}</div>
+      </div>
+      <div style="flex:1;max-width:320px">
+        <div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:6px">PROGRESSO DO CICLO ${c} (${fmtKm(odo-inf.inicio)} km percorridos)</div>
+        <div class="pbar" style="height:8px"><div class="pbar-fill" style="width:${pct.toFixed(0)}%;background:${pct>80?'var(--red)':pct>60?'var(--orange)':'var(--blue)'}"></div></div>
+        <div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-top:4px">${pct.toFixed(0)}%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh"><span class="sh-title">Checklist da próxima revisão · ${doneCt}/${checkItems.length} itens</span></div>
+  <div class="cc" style="margin-bottom:18px">
+    <div style="margin-bottom:10px">
+      <div class="pbar" style="height:6px"><div class="pbar-fill" style="width:${(doneCt/checkItems.length*100).toFixed(0)}%;background:var(--green)"></div></div>
+    </div>
+    ${checkHtml}
+    ${allDone?`<div style="margin-top:14px;padding:12px 16px;background:rgba(64,240,168,.08);border:1px solid rgba(64,240,168,.2);border-radius:8px;font-size:12px;font-family:var(--mono);color:var(--green)">
+      ✓ Todos os itens verificados! Pronto para registrar a revisão.
+      <button class="btn sm" onclick="registrarRevisao()" style="margin-left:10px;border-color:rgba(64,240,168,.4);color:var(--green)">Registrar agora →</button>
+    </div>`:''}
+  </div>
+
+  <div class="sh"><span class="sh-title">Alertas por quilometragem</span></div>`;
+
+  MANUT.forEach(m=>{
+    let st,scl;
+    if(m.km===0){st='Verificação periódica';scl='st-ok'}
+    else{
+      const base=inf.inicio;
+      const kmNoCiclo=odo-base;
+      const proxNoCiclo=Math.ceil(kmNoCiclo/m.km)*m.km;
+      const faltaItem=proxNoCiclo-kmNoCiclo;
+      st=faltaItem<500?`⚠ Vence em ${fmtKm(faltaItem)} km`:faltaItem<2000?`Próximo em ${fmtKm(faltaItem)} km`:`OK · próximo em ${fmtKm(faltaItem)} km`;
+      scl=faltaItem<500?'st-crit':faltaItem<2000?'st-warn':'st-ok';
+    }
+    html+=`<div class="mi"><div class="mi-icon" style="background:${m.cor}22;color:${m.cor}">${m.icon}</div><div style="flex:1"><div class="mi-title">${m.titulo}</div><div class="mi-freq">${m.freq}</div><div class="mi-obs">${m.obs}</div><div class="mi-st ${scl}"><span class="st-dot"></span><span class="st-txt">${st}</span></div></div></div>`;
+  });
+
+  html+=`
+  <div class="sh" style="margin-top:6px"><span class="sh-title">Histórico de revisões (${REVISOES.length})</span></div>
+  <div class="cc" style="margin-bottom:18px">${histHtml||'<div style="font-size:12px;color:var(--muted)">Nenhuma revisão registrada ainda.</div>'}</div>
+
+  <div class="sh"><span class="sh-title">Pendências anotadas</span></div>
+  <div class="cc"><ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
+    ${['Vidro porta direita não sobe com o 1º toque','Luz no painel — lâmpada ruim','Conexão app Meu Volkswagen','Luz de injeção','Ruído na suspensão e nos freios'].map(p=>`<li style="display:flex;align-items:center;gap:10px;font-size:13px"><span style="width:7px;height:7px;border-radius:50%;background:var(--orange);flex-shrink:0"></span>${p}</li>`).join('')}
+  </ul></div>`;
+
+  el.innerHTML=html;
+}
+
+function toggleCheck(i){
+  const cl=loadChecklist();
+  if(cl[i]) delete cl[i]; else cl[i]=true;
+  saveChecklist(cl);
+  renderManut();
+}
+
+// ══════════════════════════════ DADOS ══════════════════════════════
+function renderDados(){
+  document.getElementById('sec-dados').innerHTML=`
+  <div class="sh"><span class="sh-title">Importar dados</span></div>
+  <div class="drop-zone" id="dz" onclick="document.getElementById('fi').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)">
+    <div class="drop-icon">📂</div>
+    <div class="drop-title">Arraste o CSV aqui ou clique para selecionar</div>
+    <div class="drop-sub">Compatível com os CSVs exportados da planilha Consumo T-CROSS Aprimorado</div>
+  </div>
+  <input type="file" id="fi" accept=".csv" onchange="handleFile(event)">
+  <div id="imp-msg" style="margin-bottom:18px"></div>
+  <div class="sh"><span class="sh-title">Exportar dados</span></div>
+  <div class="exp-grid">
+    <div class="exp-card"><div class="exp-icon">📄</div><div class="exp-title">Exportar CSV</div><div class="exp-desc">Baixa todos os abastecimentos (3 ciclos) em .csv no formato da planilha original.</div><button class="btn pr" onclick="exportCSV()">↓ Baixar CSV</button></div>
+    <div class="exp-card"><div class="exp-icon">📊</div><div class="exp-title">Abrir no Google Sheets</div><div class="exp-desc">Gera o CSV e abre o Google Sheets. Use Arquivo → Importar para carregar.</div><button class="btn pr" onclick="exportGSheets()">↑ Exportar para Sheets</button></div>
+  </div>
+  <div class="sh"><span class="sh-title">Situação atual dos dados</span></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+    <div class="cc"><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:5px">REGISTROS TOTAIS</div><div style="font-size:34px;font-weight:800;color:var(--accent)">${TODOS.filter(d=>d.vol>0).length}</div></div>
+    <div class="cc"><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:5px">CICLOS</div><div style="font-size:34px;font-weight:800;color:var(--blue)">3</div></div>
+    <div class="cc"><div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:5px">ODÔMETRO ATUAL</div><div style="font-size:34px;font-weight:800;color:var(--green)">${fmtKm(Math.max(...TODOS.map(d=>d.odo)))}</div></div>
+  </div>`;
+}
+function handleDrop(e){e.preventDefault();document.getElementById('dz').classList.remove('drag');if(e.dataTransfer.files[0])processCSV(e.dataTransfer.files[0])}
+function handleFile(e){if(e.target.files[0])processCSV(e.target.files[0])}
+function parseCSVLine(l){const r=[];let c='',q=false;for(let i=0;i<l.length;i++){if(l[i]==='"')q=!q;else if(l[i]===','&&!q){r.push(c);c=''}else c+=l[i]}r.push(c);return r}
+function processCSV(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const lines=e.target.result.split(/\r?\n/).filter(l=>l.trim());
+    let ciclo=3;
+    if(file.name.includes('1º')||file.name.includes('1o'))ciclo=1;
+    else if(file.name.includes('2º')||file.name.includes('2o'))ciclo=2;
+    const novos=[];
+    for(let i=1;i<lines.length;i++){
+      const v=parseCSVLine(lines[i]);
+      if(!v[0]||['TOTAL','Estatísticas','DASHBOARD'].some(x=>v[0].includes(x)))continue;
+      const km=parseFloat((v[2]||'').replace(',','.'));
+      const vol=parseFloat((v[3]||'').replace(',','.'));
+      if(!v[0].trim()||isNaN(vol)||vol<=0)continue;
+      novos.push({data:v[0].trim(),odo:parseInt(v[1])||0,km:isNaN(km)?0:km,vol,cons:parseFloat((v[4]||'0').replace(',','.'))||0,combC:(v[6]||'').trim()||undefined,comb:(v[7]||v[6]||'Gasolina').trim(),total:parseFloat((v[8]||'0').replace(',','.'))||0,pl:parseFloat((v[2]||'0').replace(',','.'))||0,posto:(v[9]||'').trim(),desc:(v[10]||'').trim(),ciclo});
+    }
+    if(novos.length){
+      TODOS=[...TODOS,...novos];TODOS.sort((a,b)=>a.odo-b.odo);
+      const seen=new Set();TODOS=TODOS.filter(d=>{const k=`${d.odo}-${d.vol}`;if(seen.has(k))return false;seen.add(k);return true});
+      document.getElementById('imp-msg').innerHTML=`<div style="background:rgba(64,240,168,.08);border:1px solid rgba(64,240,168,.2);border-radius:10px;padding:12px 16px;font-size:12px;font-family:var(--mono);color:var(--green)">✓ ${novos.length} registros importados de "${file.name}"</div>`;
+      toast(`✓ ${novos.length} registros importados!`);
+    }else{
+      document.getElementById('imp-msg').innerHTML=`<div style="background:rgba(240,64,64,.08);border:1px solid rgba(240,64,64,.2);border-radius:10px;padding:12px 16px;font-size:12px;font-family:var(--mono);color:var(--red)">⚠ Nenhum dado válido. Verifique o formato do arquivo.</div>`;
+    }
+  };
+  reader.readAsText(file,'UTF-8');
+}
+function exportCSV(){
+  const rows=[['Data','Odômetro','Km Percorridos','Volume (L)','Consumo (km/L)','Combustível abastecido','Preço Total (R$)','Preço/L (R$)','Posto','Descrição da Viagem','Ciclo']];
+  TODOS.filter(d=>d.vol>0).forEach(d=>{rows.push([d.data,d.odo,d.km,d.vol.toFixed(2).replace('.',','),d.cons.toFixed(1).replace('.',','),d.comb,d.total.toFixed(2).replace('.',','),d.pl.toFixed(2).replace('.',','),d.posto,d.desc,d.ciclo+'º Ciclo'])});
+  const csv=rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));a.download='Consumo_T-CROSS_Todos_Ciclos.csv';a.click();
+  toast('✓ CSV baixado!');
+}
+function exportGSheets(){exportCSV();setTimeout(()=>{window.open('https://docs.google.com/spreadsheets/create','_blank');toast('Sheets aberto! Use Arquivo → Importar para carregar o CSV.')},600)}
+
+// ══════════════════════════════ GOOGLE SHEETS ══════════════════════════════
+const GS = {
+  CLIENT_ID: '496219109127-tbrslv85o7log7ek6j4occ2fd6dmdf75.apps.googleusercontent.com',
+  SHEET_ID:  '1iNoNQLDc31qLDyBfdz05v8RFsMda94xCxiFrdbUpkbg',
+  SHEET_NAME: 'Abastecimentos - T-Cross',
+  SCOPES: 'https://www.googleapis.com/auth/spreadsheets',
+  token: null,
+  tokenExpiry: 0,
+};
+
+// Carrega o script da Google Identity Services dinamicamente
+function gsLoadGIS(){
+  return new Promise(res=>{
+    if(window.google && window.google.accounts){res();return}
+    const s=document.createElement('script');
+    s.src='https://accounts.google.com/gsi/client';
+    s.onload=res;
+    document.head.appendChild(s);
+  });
+}
+
+// Solicita token OAuth via popup
+function gsAuth(){
+  return new Promise((res,rej)=>{
+    gsLoadGIS().then(()=>{
+      const client = google.accounts.oauth2.initTokenClient({
+        client_id: GS.CLIENT_ID,
+        scope: GS.SCOPES,
+        callback: resp => {
+          if(resp.error){rej(resp.error);return}
+          GS.token = resp.access_token;
+          GS.tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+          res(resp.access_token);
+        }
+      });
+      client.requestAccessToken();
+    });
+  });
+}
+
+async function gsGetToken(){
+  if(GS.token && Date.now() < GS.tokenExpiry) return GS.token;
+  return await gsAuth();
+}
+
+// Lê a aba de abastecimentos da planilha
+async function gsLerAbastecimentos(){
+  const token = await gsGetToken();
+  const range = encodeURIComponent(`${GS.SHEET_NAME}!A2:K200`);
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${GS.SHEET_ID}/values/${range}`;
+  const resp = await fetch(url, {headers:{Authorization:`Bearer ${token}`}});
+  if(!resp.ok) throw new Error('Erro ao ler planilha: '+resp.status);
+  const data = await resp.json();
+  return data.values || [];
+}
+
+// Escreve uma nova linha no final da aba
+async function gsEscreverLinha(linha){
+  const token = await gsGetToken();
+  const range = encodeURIComponent(`${GS.SHEET_NAME}!A:K`);
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${GS.SHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+  const resp = await fetch(url,{
+    method:'POST',
+    headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+    body: JSON.stringify({values:[linha]})
+  });
+  if(!resp.ok) throw new Error('Erro ao salvar: '+resp.status);
+  return await resp.json();
+}
+
+// Sincroniza todos os dados locais de volta para a planilha
+async function gsGarantirAba(token){
+  const resp=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${GS.SHEET_ID}?fields=sheets.properties`,{headers:{Authorization:`Bearer ${token}`}});
+  const data=await resp.json();
+  const existe=(data.sheets||[]).some(s=>s.properties.title==='App_Dados');
+  if(!existe){
+    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${GS.SHEET_ID}:batchUpdate`,{
+      method:'POST',
+      headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+      body:JSON.stringify({requests:[{addSheet:{properties:{title:'App_Dados'}}}]})
+    });
+    if(!r.ok) throw new Error('Erro ao criar aba: '+r.status);
+  }
+}
+
+async function gsSyncTodos(){
+  const token = await gsGetToken();
+  await gsGarantirAba(token);
+  const header=['Data','Odômetro','Km Percorridos','Volume (L)','Consumo (km/L)','Combustível','Preço Total (R$)','Preço/L (R$)','Posto','Descrição','Ciclo'];
+  const rows = TODOS.filter(d=>d.vol>0).map(d=>[
+    d.data, d.odo, d.km,
+    d.vol.toFixed(2).replace('.',','),
+    d.cons.toFixed(1).replace('.',','),
+    d.comb,
+    d.total.toFixed(2).replace('.',','),
+    d.pl.toFixed(2).replace('.',','),
+    d.posto, d.desc, d.ciclo+'º Ciclo'
+  ]);
+  const range=encodeURIComponent(`App_Dados!A1:K${rows.length+1}`);
+  const url=`https://sheets.googleapis.com/v4/spreadsheets/${GS.SHEET_ID}/values/${range}?valueInputOption=USER_ENTERED`;
+  const resp=await fetch(url,{
+    method:'PUT',
+    headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+    body:JSON.stringify({values:[header,...rows]})
+  });
+  if(!resp.ok) throw new Error('Erro ao sincronizar: '+resp.status);
+  return await resp.json();
+}
+
+// Converte linha do Sheets para objeto
+function gsLinhaParaObj(v, ciclo){
+  const km = parseFloat((v[2]||'0').replace(',','.'));
+  const vol = parseFloat((v[3]||'0').replace(',','.'));
+  if(!v[0]||isNaN(vol)||vol<=0) return null;
+  return {
+    data:(v[0]||'').trim(), odo:parseInt(v[1])||0,
+    km:isNaN(km)?0:km, vol,
+    cons:parseFloat((v[4]||'0').replace(',','.'))||0,
+    comb:(v[6]||v[5]||'Gasolina').trim(),
+    total:parseFloat((v[7]||'0').replace(',','.'))||0,
+    pl:parseFloat((v[8]||'0').replace(',','.'))||0,
+    posto:(v[9]||'').trim(), desc:(v[10]||'').trim(),
+    ciclo: ciclo||3
+  };
+}
+
+// ── UI de sincronização ──
+function gsStatusEl(id){return document.getElementById(id)}
+
+async function gsImportar(){
+  const btn=document.getElementById('btn-gs-import');
+  const msg=document.getElementById('gs-msg');
+  btn.textContent='⏳ Conectando…';btn.disabled=true;
+  msg.innerHTML='';
+  try{
+    const rows = await gsLerAbastecimentos();
+    const novos=[];
+    rows.forEach(v=>{
+      if(!v[0]||['TOTAL','Estatísticas','Data'].includes(v[0].trim()))return;
+      const obj=gsLinhaParaObj(v,3);
+      if(obj) novos.push(obj);
+    });
+    if(novos.length){
+      TODOS=[...TODOS,...novos];
+      TODOS.sort((a,b)=>a.odo-b.odo);
+      const seen=new Set();
+      TODOS=TODOS.filter(d=>{const k=`${d.odo}-${d.vol}`;if(seen.has(k))return false;seen.add(k);return true});
+      msg.innerHTML=`<div class="gs-ok">✓ ${novos.length} registros importados do Google Sheets!</div>`;
+      toast(`✓ ${novos.length} registros importados!`);
+    } else {
+      msg.innerHTML=`<div class="gs-warn">⚠ Nenhum dado novo encontrado na aba "${GS.SHEET_NAME}".</div>`;
+    }
+    btn.textContent='↓ Importar do Sheets';btn.disabled=false;
+  }catch(e){
+    msg.innerHTML=`<div class="gs-err">✕ Erro: ${e.message}</div>`;
+    btn.textContent='↓ Importar do Sheets';btn.disabled=false;
+    toast('Erro ao importar: '+e.message);
+  }
+}
+
+async function gsExportar(){
+  const btn=document.getElementById('btn-gs-export');
+  const msg=document.getElementById('gs-msg');
+  btn.textContent='⏳ Salvando…';btn.disabled=true;
+  msg.innerHTML='';
+  try{
+    await gsSyncTodos();
+    const total=TODOS.filter(d=>d.vol>0).length;
+    msg.innerHTML=`<div class="gs-ok">✓ ${total} registros salvos na planilha Google Sheets!</div>`;
+    toast('✓ Dados salvos no Google Sheets!');
+    btn.textContent='↑ Exportar para Sheets';btn.disabled=false;
+  }catch(e){
+    msg.innerHTML=`<div class="gs-err">✕ Erro: ${e.message}</div>`;
+    btn.textContent='↑ Exportar para Sheets';btn.disabled=false;
+    toast('Erro ao exportar: '+e.message);
+  }
+}
+
+async function gsSalvarUm(d){
+  try{
+    const linha=[d.data,d.odo,d.km,
+      d.vol.toFixed(2).replace('.',','),
+      d.cons.toFixed(1).replace('.',','),
+      d.comb,d.comb,
+      d.total.toFixed(2).replace('.',','),
+      d.pl.toFixed(2).replace('.',','),
+      d.posto,d.desc];
+    await gsEscreverLinha(linha);
+    toast('✓ Salvo no Google Sheets!');
+  }catch(e){
+    toast('⚠ Salvo localmente. Sheets: '+e.message);
+  }
+}
+
+// Sobrescreve renderDados para incluir painel Google Sheets
+const _renderDadosOrig = renderDados;
+renderDados = function(){
+  _renderDadosOrig();
+  const el=document.getElementById('sec-dados');
+  const gsPanel=document.createElement('div');
+  gsPanel.innerHTML=`
+  <style>
+    .gs-panel{background:var(--card);border:1px solid rgba(66,133,244,.3);border-radius:12px;padding:20px;margin-bottom:18px}
+    .gs-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .gs-logo{width:32px;height:32px;border-radius:8px;background:rgba(66,133,244,.15);display:grid;place-items:center;font-size:16px}
+    .gs-title{font-size:14px;font-weight:700}
+    .gs-sub{font-size:14px;font-family:var(--mono);color:var(--muted)}
+    .gs-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .btn-gs{background:none;border:1px solid rgba(66,133,244,.4);border-radius:7px;color:#6ab0f5;font-family:var(--font);font-size:12px;font-weight:700;padding:8px 16px;cursor:pointer;transition:all .15s}
+    .btn-gs:hover{background:rgba(66,133,244,.1)}
+    .btn-gs:disabled{opacity:.5;cursor:not-allowed}
+    .btn-gs.primary{background:rgba(66,133,244,.15);border-color:rgba(66,133,244,.6)}
+    .gs-ok{background:rgba(64,240,168,.08);border:1px solid rgba(64,240,168,.2);border-radius:8px;padding:10px 14px;font-size:12px;font-family:var(--mono);color:var(--green)}
+    .gs-err{background:rgba(240,64,64,.08);border:1px solid rgba(240,64,64,.2);border-radius:8px;padding:10px 14px;font-size:12px;font-family:var(--mono);color:var(--red)}
+    .gs-warn{background:rgba(240,160,64,.08);border:1px solid rgba(240,160,64,.2);border-radius:8px;padding:10px 14px;font-size:12px;font-family:var(--mono);color:var(--orange)}
+    .gs-info{font-size:14px;font-family:var(--mono);color:var(--muted);line-height:1.7;margin-bottom:12px}
+    .gs-info span{color:var(--muted2)}
+  </style>
+  <div class="sh" style="margin-top:4px"><span class="sh-title">Google Sheets — sincronização direta</span></div>
+  <div class="gs-panel">
+    <div class="gs-header">
+      <div class="gs-logo">📊</div>
+      <div><div class="gs-title">Consumo T-CROSS Aprimorado</div><div class="gs-sub">Sincronização bidirecional com sua planilha</div></div>
+    </div>
+    <div class="gs-info">
+      Planilha: <span>Consumo T-CROSS Aprimorado</span><br>
+      Exportação → aba <span>App_Dados</span> (criada automaticamente, abas originais nunca são alteradas)<br>
+      Importação → lê da aba <span>Abastecimentos - T-Cross</span><br>
+      Ao clicar, o Google vai pedir autorização uma vez.
+    </div>
+    <div class="gs-btns">
+      <button class="btn-gs primary" id="btn-gs-import" onclick="gsImportar()">↓ Importar do Sheets</button>
+      <button class="btn-gs primary" id="btn-gs-export" onclick="gsExportar()">↑ Exportar para Sheets</button>
+    </div>
+    <div id="gs-msg"></div>
+  </div>`;
+  el.insertBefore(gsPanel, el.querySelector('.sh'));
+};
+
+// Sobrescreve salvarAbast para também salvar no Sheets se autenticado
+const _salvarOrig = salvarAbast;
+salvarAbast = async function(){
+  _salvarOrig();
+  if(GS.token && Date.now() < GS.tokenExpiry){
+    const ultimo = TODOS[TODOS.length-1];
+    if(ultimo) await gsSalvarUm(ultimo);
+  }
+};
+
+// INIT
+go('dashboard');
+</script>
+</body>
+</html>
