@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-CROSS Painel de Consumo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg: #0a0e27;
+      --bg2: #141829;
+      --text: #e0e0e0;
+      --muted: #888;
+      --border: #333;
+      --primary: #ffd700;
+      --success: #4ade80;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    
+    nav {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .nav-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    
+    .tb {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    
+    .tb:hover { color: var(--text); border-color: var(--text); }
+    .tb.on { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+    
+    .nav-odo {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .sec { display: none; }
+    .sec.on { display: block; }
+    
+    .sh {
+      background: var(--bg2);
+      border-left: 3px solid var(--primary);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+    }
+    
+    .sh-title {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    
+    .stat {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .stat-item {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .editable {
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    
+    .editable:hover {
+      background: var(--border);
+    }
+    
+    .editable input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--primary);
+      color: var(--text);
+      padding: 4px;
+      border-radius: 4px;
+      font-size: inherit;
+    }
+    
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .list-item {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .list-item-title {
+      flex: 1;
+    }
+    
+    .list-item-value {
+      font-weight: bold;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    
+    .btn {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover { background: var(--border); }
+    .btn.pr { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+    .btn.pr:hover { background: #ffed4e; }
+    .btn.danger { background: var(--danger); border-color: var(--danger); }
+    .btn.danger:hover { background: #dc2626; }
+    
+    .form-group {
+      margin-bottom: 12px;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: var(--muted);
+    }
+    
+    .form-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    
+    .form-input:focus { outline: none; border-color: var(--primary); }
+    
+    .maint-item {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .maint-check {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+    
+    .maint-content {
+      flex: 1;
+    }
+    
+    .maint-title {
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    
+    .maint-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    
+    .maint-item.done {
+      opacity: 0.6;
+      background: var(--bg2);
+    }
+    
+    .maint-item.done .maint-title {
+      text-decoration: line-through;
+    }
+    
+    .maint-km {
+      background: var(--bg2);
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--success);
+      color: var(--bg);
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    
+    #toast.show { opacity: 1; }
+    
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-left: 4px;
+    }
+    
+    .badge.best {
+      background: var(--success);
+      color: var(--bg);
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-tabs {
+        width: 100%;
+        overflow-x: auto;
+      }
+      
+      .stat {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      main {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-title">
+    <span>⬡ T-CROSS</span>
+    <span style="font-size: 12px; color: var(--muted);">Painel de Consumo</span>
+  </div>
+  <div class="nav-tabs">
+    <button class="tb on" onclick="go('dashboard')">Dashboard</button>
+    <button class="tb" onclick="go('abastecimentos')">Abastecimentos</button>
+    <button class="tb" onclick="go('manutencao')">Manutenção</button>
+    <button class="tb" onclick="go('config')">Config</button>
+    <button class="tb" onclick="go('sync')">Sincronizar</button>
+  </div>
+  <div class="nav-odo">⬡ <span id="nav-odo">21.100</span> km</div>
+</nav>
+
+<main>
+  <div class="sec on" id="sec-dashboard"></div>
+  <div class="sec" id="sec-abastecimentos"></div>
+  <div class="sec" id="sec-manutencao"></div>
+  <div class="sec" id="sec-config"></div>
+  <div class="sec" id="sec-sync"></div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════ DADOS ══════════════════════════════
+let TODOS = [
+  {data: '25/03', odo: 20626, km: 257, vol: 25.79, cons: 10.1, comb: 'Gasolina', total: 166.35, pl: 6.45, posto: 'Pel', desc: ''},
+  {data: '5/3', odo: 20020, km: 257, vol: 25.79, cons: 10.0, comb: 'Etanol', total: 166.35, pl: 6.45, posto: 'Pel', desc: ''},
+  {data: '18/03', odo: 20388, km: 363, vol: 35.08, cons: 10.4, comb: 'Gasolina', total: 173.55, pl: 4.95, posto: 'Pel', desc: ''},
+  {data: '18/03', odo: 20626, km: 243, vol: 26.06, cons: 9.3, comb: 'Etanol', total: 129.00, pl: 4.95, posto: 'Pel', desc: ''},
+  {data: '20/3', odo: 20700, km: 74, vol: 10.1, cons: 7.33, comb: 'Etanol', total: 50.00, pl: 4.95, posto: '', desc: ''},
+  {data: '22/3', odo: 20850, km: 224, vol: 19.8, cons: 11.31, comb: 'Etanol', total: 99.99, pl: 5.05, posto: '', desc: ''},
+  {data: '25/03', odo: 21100, km: 474, vol: 26.06, cons: 8.5, comb: 'Etanol', total: 131.60, pl: 5.05, posto: 'Pel', desc: ''}
+];
+
+let CONFIG = {
+  gasPrice: 7.12,
+  ethPrice: 5.05,
+  gasConsume: 10.21,
+  ethConsume: 9.25,
+  nextReview: 29373
+};
+
+let MANUTENCAO = [
+  {title: 'Troca de Óleo e Filtro', freq: 10000, desc: 'Essencial para manter o motor saudável', done: false},
+  {title: 'Verificação do Nível de Óleo', freq: 1000, desc: 'Verificar se está no nível correto', done: false},
+  {title: 'Nivelação e Balanceamento de Pneus', freq: 10000, desc: 'Junto com a troca de óleo', done: false},
+  {title: 'Italian Tune-up (Limpeza Preventiva)', freq: 3000, desc: 'Crucial para o TSI: Combate o acúmulo de carbono nas válvulas', done: false},
+  {title: 'Troca do Ar do Motor', freq: 10000, desc: 'Manter o filtro limpo', done: false},
+  {title: 'Filtro de Combustível', freq: 10000, desc: 'Essencial para injeção', done: false},
+  {title: 'Verificação do Freio', freq: 10000, desc: 'Pastilhas e discos', done: false},
+  {title: 'Verificação de Fluído de Arrefecimento', freq: 1000, desc: 'Manter no nível correto', done: false},
+  {title: 'Verificação das Velas de Ignição', freq: 30000, desc: 'Conforme manual', done: false}
+];
+
+// ══════════════════════════════ STORAGE ══════════════════════════════
+function saveData() {
+  localStorage.setItem('tcross-todos', JSON.stringify(TODOS));
+  localStorage.setItem('tcross-config', JSON.stringify(CONFIG));
+  localStorage.setItem('tcross-manutencao', JSON.stringify(MANUTENCAO));
+}
+
+function loadData() {
+  const t = localStorage.getItem('tcross-todos');
+  const c = localStorage.getItem('tcross-config');
+  const m = localStorage.getItem('tcross-manutencao');
+  if (t) TODOS = JSON.parse(t);
+  if (c) CONFIG = JSON.parse(c);
+  if (m) MANUTENCAO = JSON.parse(m);
+}
+
+// ══════════════════════════════ NAVIGATION ══════════════════════════════
+function go(id) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.getElementById('sec-' + id).classList.add('on');
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  document.querySelector(`[onclick="go('${id}')"]`).classList.add('on');
+  
+  const maxOdo = Math.max(...TODOS.map(d => d.odo));
+  document.getElementById('nav-odo').textContent = maxOdo.toLocaleString('pt-BR');
+  
+  ({dashboard: renderDash, abastecimentos: renderAbast, manutencao: renderMaint, config: renderConfig, sync: renderSync}[id] || function(){})();
+}
+
+// ══════════════════════════════ HELPERS ══════════════════════════════
+function getLastAbastecimento() {
+  return TODOS.length > 0 ? TODOS[TODOS.length - 1] : null;
+}
+
+function getAverageConsumption(comb) {
+  const filtered = TODOS.filter(d => d.comb === comb && d.km > 0);
+  if (filtered.length === 0) return 0;
+  return (filtered.reduce((a, d) => a + d.km, 0) / filtered.reduce((a, d) => a + d.vol, 0)).toFixed(2);
+}
+
+function getCostPerKm(comb) {
+  const filtered = TODOS.filter(d => d.comb === comb);
+  const totalCost = filtered.reduce((a, d) => a + d.total, 0);
+  const totalKm = filtered.reduce((a, d) => a + d.km, 0);
+  if (totalKm === 0) return 0;
+  return (totalCost / totalKm).toFixed(3);
+}
+
+function getBestFuel() {
+  const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 0;
+  const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 0;
+  if (gasAvg === 0 && ethAvg === 0) return null;
+  return gasAvg > ethAvg ? 'Gasolina' : 'Etanol';
+}
+
+// ══════════════════════════════ DASHBOARD ══════════════════════════════
+function renderDash() {
+  const gasAvg = getAverageConsumption('Gasolina');
+  const ethAvg = getAverageConsumption('Etanol');
+  const gasCostPerKm = getCostPerKm('Gasolina');
+  const ethCostPerKm = getCostPerKm('Etanol');
+  const bestFuel = getBestFuel();
+  
+  const lastAbast = getLastAbastecimento();
+  const lastData = lastAbast ? lastAbast.data : '-';
+  const lastComb = lastAbast ? lastAbast.comb : '-';
+  const lastConsumption = lastAbast && lastAbast.km > 0 ? (lastAbast.km / lastAbast.vol).toFixed(2) : '0.00';
+  const lastPrice = lastAbast ? lastAbast.pl.toFixed(2) : '0.00';
+  
+  const totalGas = TODOS.filter(d => d.comb === 'Gasolina').reduce((a, d) => a + d.total, 0).toFixed(2);
+  const totalEth = TODOS.filter(d => d.comb === 'Etanol').reduce((a, d) => a + d.total, 0).toFixed(2);
+  const totalCost = (parseFloat(totalGas) + parseFloat(totalEth)).toFixed(2);
+  
+  const currentOdo = Math.max(...TODOS.map(d => d.odo));
+  const kmFaltam = CONFIG.nextReview - currentOdo;
+  
+  const html = `
+    <div class="sh"><span class="sh-title">📊 Dashboard</span></div>
+    
+    <div class="card">
+      <div class="card-title">Consumo Médio</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Gasolina</div>
+          <div class="stat-value">${gasAvg} km/L</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Etanol</div>
+          <div class="stat-value">${ethAvg} km/L</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">Último Abastecimento</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Data</div>
+          <div class="stat-value">${lastData}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Combustível</div>
+          <div class="stat-value">${lastComb}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Média</div>
+          <div class="stat-value">${lastConsumption} km/L</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Preço</div>
+          <div class="stat-value">R$ ${lastPrice}/L</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">Custo por km</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Gasolina</div>
+          <div class="stat-value">R$ ${gasCostPerKm}/km ${bestFuel === 'Gasolina' ? '<span class="badge best">MELHOR</span>' : ''}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Etanol</div>
+          <div class="stat-value">R$ ${ethCostPerKm}/km ${bestFuel === 'Etanol' ? '<span class="badge best">MELHOR</span>' : ''}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">Próxima Revisão</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Faltam</div>
+          <div class="stat-value">${kmFaltam.toLocaleString('pt-BR')} km</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Próxima em</div>
+          <div class="stat-value">${CONFIG.nextReview.toLocaleString('pt-BR')} km</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">Custo Total</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Gasolina</div>
+          <div class="stat-value">R$ ${parseFloat(totalGas).toFixed(2)}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Etanol</div>
+          <div class="stat-value">R$ ${parseFloat(totalEth).toFixed(2)}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Total</div>
+          <div class="stat-value">R$ ${totalCost}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('sec-dashboard').innerHTML = html;
+}
+
+// ══════════════════════════════ ABASTECIMENTOS ══════════════════════════════
+let sortOrder = 'asc';
+
+function renderAbast() {
+  let html = `
+    <div class="sh"><span class="sh-title">⛽ Abastecimentos</span></div>
+    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <button class="btn pr" style="flex: 1;" onclick="addAbast()">+ Adicionar</button>
+      <button class="btn" onclick="toggleSort()" title="Inverter ordem">↕ Ordem</button>
+    </div>
+    <div class="list">
+  `;
+  
+  const sorted = sortOrder === 'asc' ? TODOS : [...TODOS].reverse();
+  sorted.forEach((d, i) => {
+    const realIndex = sortOrder === 'asc' ? i : TODOS.length - 1 - i;
+    const consumo = d.km > 0 ? (d.km / d.vol).toFixed(2) : '0.00';
+    
+    html += `
+      <div class="list-item">
+        <div class="list-item-title">
+          <div style="font-weight: bold;">${d.data} - ${d.comb}</div>
+          <div style="font-size: 12px; color: var(--muted);">
+            ${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L | Média: ${consumo} km/L | ${d.km} km
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn" onclick="editAbast(${realIndex})">✎</button>
+          <button class="btn danger" onclick="delAbast(${realIndex})">✕</button>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `</div>`;
+  document.getElementById('sec-abastecimentos').innerHTML = html;
+}
+
+function toggleSort() {
+  sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+  renderAbast();
+  toast(sortOrder === 'asc' ? '↑ Ordem cronológica' : '↓ Ordem reversa');
+}
+
+function addAbast() {
+  const data = prompt('Data (dd/mm):');
+  if (!data) return;
+  if (!/^\d{1,2}\/\d{1,2}$/.test(data)) {
+    toast('⚠ Formato inválido. Use dd/mm');
+    return;
+  }
+  
+  const odo = prompt('Odômetro (km):');
+  if (!odo || isNaN(odo)) {
+    toast('⚠ Odômetro deve ser um número');
+    return;
+  }
+  
+  const vol = prompt('Volume (L):');
+  if (!vol || isNaN(vol) || parseFloat(vol) <= 0) {
+    toast('⚠ Volume deve ser maior que 0');
+    return;
+  }
+  
+  const comb = prompt('Combustível (Gasolina/Etanol):');
+  if (!comb || !['Gasolina', 'Etanol'].includes(comb)) {
+    toast('⚠ Combustível deve ser Gasolina ou Etanol');
+    return;
+  }
+  
+  const pl = prompt('Preço do Combustível (R$/L):');
+  if (!pl || isNaN(pl) || parseFloat(pl) <= 0) {
+    toast('⚠ Preço deve ser um número maior que 0');
+    return;
+  }
+  
+  const lastOdo = TODOS.length > 0 ? TODOS[TODOS.length - 1].odo : 0;
+  const km = parseInt(odo) - lastOdo;
+  
+  TODOS.push({
+    data, 
+    odo: parseInt(odo), 
+    km: km, 
+    vol: parseFloat(vol), 
+    cons: km > 0 ? (km / parseFloat(vol)).toFixed(2) : 0,
+    comb, 
+    total: (parseFloat(vol) * parseFloat(pl)).toFixed(2), 
+    pl: parseFloat(pl), 
+    posto: '', 
+    desc: ''
+  });
+  
+  saveData();
+  toast('✓ Abastecimento adicionado');
+  renderAbast();
+  renderDash();
+}
+
+function editAbast(i) {
+  if (i < 0 || i >= TODOS.length) {
+    toast('⚠ Abastecimento não encontrado');
+    return;
+  }
+  
+  const d = TODOS[i];
+  const data = prompt('Data:', d.data);
+  if (data === null) return;
+  if (!/^\d{1,2}\/\d{1,2}$/.test(data)) {
+    toast('⚠ Formato inválido. Use dd/mm');
+    return;
+  }
+  
+  const odo = prompt('Odômetro:', d.odo);
+  if (odo === null) return;
+  if (isNaN(odo)) {
+    toast('⚠ Odômetro deve ser um número');
+    return;
+  }
+  
+  const vol = prompt('Volume:', d.vol);
+  if (vol === null) return;
+  if (isNaN(vol) || parseFloat(vol) <= 0) {
+    toast('⚠ Volume deve ser maior que 0');
+    return;
+  }
+  
+  const pl = prompt('Preço:', d.pl);
+  if (pl === null) return;
+  if (isNaN(pl) || parseFloat(pl) <= 0) {
+    toast('⚠ Preço deve ser um número maior que 0');
+    return;
+  }
+  
+  const lastOdo = i > 0 ? TODOS[i - 1].odo : 0;
+  const km = parseInt(odo) - lastOdo;
+  
+  TODOS[i] = {
+    ...d, 
+    data, 
+    odo: parseInt(odo), 
+    vol: parseFloat(vol),
+    pl: parseFloat(pl),
+    km: km,
+    cons: km > 0 ? (km / parseFloat(vol)).toFixed(2) : 0,
+    total: (parseFloat(vol) * parseFloat(pl)).toFixed(2)
+  };
+  
+  saveData();
+  toast('✓ Abastecimento atualizado');
+  renderAbast();
+  renderDash();
+}
+
+function delAbast(i) {
+  if (i < 0 || i >= TODOS.length) {
+    toast('⚠ Abastecimento não encontrado');
+    return;
+  }
+  
+  if (confirm('Remover abastecimento?')) {
+    TODOS.splice(i, 1);
+    saveData();
+    toast('✓ Abastecimento removido');
+    renderAbast();
+    renderDash();
+  }
+}
+
+// ══════════════════════════════ MANUTENÇÃO ══════════════════════════════
+function renderMaint() {
+  const currentOdo = Math.max(...TODOS.map(d => d.odo));
+  
+  let html = `
+    <div class="sh"><span class="sh-title">🔧 Manutenção</span></div>
+    <div class="list">
+  `;
+  
+  MANUTENCAO.forEach((m, i) => {
+    const nextKm = m.freq;
+    const kmFaltam = nextKm - (currentOdo % nextKm);
+    const percentual = ((currentOdo % nextKm) / nextKm * 100).toFixed(0);
+    
+    html += `
+      <div class="maint-item ${m.done ? 'done' : ''}">
+        <input type="checkbox" class="maint-check" ${m.done ? 'checked' : ''} onchange="toggleMaint(${i})">
+        <div class="maint-content">
+          <div class="maint-title">${m.title}</div>
+          <div class="maint-desc">${m.desc}</div>
+          <div class="maint-km">
+            <strong>Próxima em:</strong> ${nextKm.toLocaleString('pt-BR')} km | 
+            <strong>Faltam:</strong> ${kmFaltam.toLocaleString('pt-BR')} km | 
+            <strong>Progresso:</strong> ${percentual}%
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `</div>`;
+  document.getElementById('sec-manutencao').innerHTML = html;
+}
+
+function toggleMaint(i) {
+  if (i < 0 || i >= MANUTENCAO.length) return;
+  MANUTENCAO[i].done = !MANUTENCAO[i].done;
+  saveData();
+  renderMaint();
+}
+
+// ══════════════════════════════ CONFIGURAÇÃO ══════════════════════════════
+function renderConfig() {
+  const html = `
+    <div class="sh"><span class="sh-title">⚙️ Configuração</span></div>
+    
+    <div class="card">
+      <div class="card-title">Preços de Combustível</div>
+      <div class="form-group">
+        <label class="form-label">Gasolina (R$/L)</label>
+        <input type="number" class="form-input" id="cfg-gas" value="${CONFIG.gasPrice}" step="0.01" min="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Etanol (R$/L)</label>
+        <input type="number" class="form-input" id="cfg-eth" value="${CONFIG.ethPrice}" step="0.01" min="0">
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">Próxima Revisão</div>
+      <div class="form-group">
+        <label class="form-label">Próxima revisão em (km)</label>
+        <input type="number" class="form-input" id="cfg-review" value="${CONFIG.nextReview}" min="0">
+      </div>
+      <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px;">
+        <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Odômetro atual</div>
+        <div style="font-size: 18px; font-weight: bold; color: var(--primary);">${Math.max(...TODOS.map(d => d.odo)).toLocaleString('pt-BR')} km</div>
+      </div>
+      <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
+        <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Faltam</div>
+        <div style="font-size: 18px; font-weight: bold; color: var(--success);">${(CONFIG.nextReview - Math.max(...TODOS.map(d => d.odo))).toLocaleString('pt-BR')} km</div>
+      </div>
+    </div>
+    
+    <button class="btn pr" style="width: 100%;" onclick="saveConfig()">✓ Salvar Configurações</button>
+  `;
+  
+  document.getElementById('sec-config').innerHTML = html;
+}
+
+function saveConfig() {
+  const gasPrice = parseFloat(document.getElementById('cfg-gas').value);
+  const ethPrice = parseFloat(document.getElementById('cfg-eth').value);
+  const nextReview = parseInt(document.getElementById('cfg-review').value);
+  
+  if (isNaN(gasPrice) || gasPrice < 0 || isNaN(ethPrice) || ethPrice < 0) {
+    toast('⚠ Preços inválidos');
+    return;
+  }
+  if (isNaN(nextReview) || nextReview <= 0) {
+    toast('⚠ Quilometragem inválida');
+    return;
+  }
+  
+  CONFIG.gasPrice = gasPrice;
+  CONFIG.ethPrice = ethPrice;
+  CONFIG.nextReview = nextReview;
+  
+  saveData();
+  toast('✓ Configurações salvas');
+  renderDash();
+}
+
+// ══════════════════════════════ SINCRONIZAÇÃO ══════════════════════════════
+function renderSync() {
+  const html = `
+    <div class="sh"><span class="sh-title">📥 Importar da Planilha</span></div>
+    
+    <div class="card">
+      <div class="card-title">Cole os dados da planilha aqui</div>
+      <textarea id="csv-input" class="form-input" style="height: 150px; font-family: monospace; font-size: 12px;" placeholder="Data,Odômetro,Preço/L,Volume,Km,Consumo,Combustível,Preço Total,Posto,Descrição"></textarea>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">
+        ℹ️ Suporta CSV (vírgula) ou TSV (tab). Primeira linha será ignorada.
+      </div>
+      <button class="btn pr" style="margin-top: 12px; width: 100%;" onclick="importCSV()">✓ Importar</button>
+    </div>
+  `;
+  
+  document.getElementById('sec-sync').innerHTML = html;
+}
+
+function detectSeparator(text) {
+  const lines = text.split('\n');
+  if (lines.length < 2) return ',';
+  
+  const firstLine = lines[0];
+  const tabCount = (firstLine.match(/\t/g) || []).length;
+  const commaCount = (firstLine.match(/,/g) || []).length;
+  
+  return tabCount > commaCount ? '\t' : ',';
+}
+
+function importCSV() {
+  const csv = document.getElementById('csv-input').value.trim();
+  if (!csv) { 
+    toast('⚠ Cole os dados'); 
+    return; 
+  }
+  
+  const separator = detectSeparator(csv);
+  const lines = csv.split('\n').slice(1);
+  const newTodos = [];
+  
+  for (let line of lines) {
+    if (!line.trim()) continue;
+    const cols = line.split(separator).map(c => c.trim());
+    if (cols.length < 7) continue;
+    
+    const vol = parseFloat(cols[3]) || 0;
+    if (vol <= 0) continue;
+    
+    const odo = parseInt(cols[1]) || 0;
+    const km = parseInt(cols[4]) || 0;
+    const pl = parseFloat(cols[2]) || 0;
+    const total = parseFloat(cols[7]) || 0;
+    
+    if (odo < 0 || km < 0 || pl < 0 || total < 0) continue;
+    
+    newTodos.push({
+      data: cols[0],
+      odo: odo,
+      km: km,
+      vol: vol,
+      cons: km > 0 ? (km / vol).toFixed(2) : 0,
+      comb: cols[6] || 'Etanol',
+      total: total,
+      pl: pl,
+      posto: cols[8] || '',
+      desc: cols[9] || ''
+    });
+  }
+  
+  if (newTodos.length === 0) { 
+    toast('⚠ Nenhum dado válido'); 
+    return; 
+  }
+  
+  TODOS = newTodos;
+  TODOS.sort((a, b) => a.odo - b.odo);
+  saveData();
+  toast('✓ ' + TODOS.length + ' abastecimentos importados');
+  document.getElementById('csv-input').value = '';
+  renderAbast();
+  renderDash();
+}
+
+// ══════════════════════════════ UTILS ══════════════════════════════
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ══════════════════════════════ INIT ══════════════════════════════
+loadData();
+renderDash();
+</script>
+
+</body>
+</html>
