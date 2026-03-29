@@ -329,7 +329,7 @@
 
 <nav>
   <div class="nav-title">
-    <span>Ã¢Â¬Â¡ T-CROSS</span>
+    <span>ÃÂ¢ÃÂ¬ÃÂ¡ T-CROSS</span>
     <span style="font-size: 12px; color: var(--muted);">Painel de Consumo</span>
   </div>
   <div class="nav-tabs">
@@ -339,11 +339,11 @@
     <button class="tb" onclick="go('postos')">Postos</button>
     <button class="tb" onclick="go('ciclo1')">Ciclo 1</button>
     <button class="tb" onclick="go('ciclo2')">Ciclo 2</button>
-    <button class="tb" onclick="go('manutencao')">ManutenÃÂ§ÃÂ£o</button>
+    <button class="tb" onclick="go('manutencao')">ManutenÃÂÃÂ§ÃÂÃÂ£o</button>
     <button class="tb" onclick="go('config')">Config</button>
     <button class="tb" onclick="go('sync')">Sincronizar</button>
   </div>
-  <div class="nav-odo">Ã¢Â¬Â¡ <span id="nav-odo">0</span> km</div>
+  <div class="nav-odo">ÃÂ¢ÃÂ¬ÃÂ¡ <span id="nav-odo">0</span> km</div>
 </nav>
 
 <main>
@@ -361,21 +361,21 @@
 <div id="toast"></div>
 
 <script>
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ DADOS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ DADOS ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 let HISTORICO_CICLOS = [];
 let TODOS = [];
 let TRAJETOS = [
-  {nome:'Circuito ClÃÂ­nicas Aracaju', dist:227, kmSem:227, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Circuito ClÃÂÃÂ­nicas Aracaju', dist:227, kmSem:227, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
   {nome:'Baixa Grande por Sapucaia', dist:140, kmSem:0,   gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
   {nome:'Baixa Grande por Lagoa Redonda', dist:181, kmSem:0, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
   {nome:'Retiro',      dist:67.3,  kmSem:67.3,  gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
   {nome:'Pedro Reys',  dist:66.8,  kmSem:133.6, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07}
 ];
 let POSTOS = [
-  {nome:'PreÃÂ§os Preferidos', gasP:7.12, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
+  {nome:'PreÃÂÃÂ§os Preferidos', gasP:7.12, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
   {nome:'Posto PEL',         gasP:6.85, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
   {nome:'Posto Arthur Melo', gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1},
-  {nome:'Posto Orla PropriÃÂ¡',gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1}
+  {nome:'Posto Orla PropriÃÂÃÂ¡',gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1}
 ];
 let CICLO1 = [
   {data:'30/07',odo:2335, km:820, vol:65.04,cons:12.6,comb:'Gasolina',total:254.25,pl:6.35,posto:'Pel',desc:''},
@@ -395,7 +395,7 @@ let CICLO1 = [
   {data:'08/09',odo:6141, km:234, vol:21.61,cons:10.8,comb:'Etanol',  total:103.73,pl:4.80,posto:'Pel',desc:''},
   {data:'13/09',odo:6457, km:316, vol:29.18,cons:10.8,comb:'Etanol',  total:144.44,pl:4.95,posto:'Rosa Elze',desc:'Itabaiana ida e volta'},
   {data:'15/09',odo:6812, km:355, vol:34.94,cons:10.2,comb:'Etanol',  total:167.71,pl:4.80,posto:'Pel',desc:''},
-  {data:'18/09',odo:7052, km:240, vol:27.85,cons:8.6, comb:'Etanol',  total:133.68,pl:4.80,posto:'Pel',desc:'ClÃÂ­nicas com JoÃÂ£o e Ar.'},
+  {data:'18/09',odo:7052, km:240, vol:27.85,cons:8.6, comb:'Etanol',  total:133.68,pl:4.80,posto:'Pel',desc:'ClÃÂÃÂ­nicas com JoÃÂÃÂ£o e Ar.'},
   {data:'20/09',odo:7392, km:340, vol:34.15,cons:10.0,comb:'Etanol',  total:163.92,pl:4.80,posto:'Pel',desc:''},
   {data:'29/09',odo:7788, km:396, vol:42.14,cons:9.4, comb:'Etanol',  total:231.35,pl:5.49,posto:'Pel',desc:''},
   {data:'03/10',odo:8219, km:431, vol:36.90,cons:11.7,comb:'Gasolina',total:234.32,pl:6.35,posto:'Pel',desc:''},
@@ -410,7 +410,7 @@ let CICLO1 = [
 let CICLO2 = [
   {data:'29/10',odo:10508,km:340,vol:35.85,cons:9.5, comb:'Etanol',  total:168.50,pl:4.70,posto:'Pel',desc:''},
   {data:'30/10',odo:10748,km:240,vol:27.40,cons:8.8, comb:'Etanol',  total:128.78,pl:4.70,posto:'Pel',desc:''},
-  {data:'03/11',odo:10999,km:251,vol:25.93,cons:9.7, comb:'Gasolina',total:164.66,pl:6.35,posto:'Pel',desc:'Padre CÃÂ­cero'},
+  {data:'03/11',odo:10999,km:251,vol:25.93,cons:9.7, comb:'Gasolina',total:164.66,pl:6.35,posto:'Pel',desc:'Padre CÃÂÃÂ­cero'},
   {data:'08/11',odo:11373,km:374,vol:36.78,cons:10.2,comb:'Gasolina',total:215.16,pl:5.85,posto:'Canabrava',desc:'Arapiraca'},
   {data:'10/11',odo:11631,km:258,vol:22.15,cons:11.6,comb:'Gasolina',total:140.65,pl:6.35,posto:'Pel',desc:''},
   {data:'14/11',odo:12014,km:383,vol:33.78,cons:11.3,comb:'Etanol',  total:158.77,pl:4.70,posto:'Pel',desc:''},
@@ -430,7 +430,7 @@ let CICLO2 = [
   {data:'10/01',odo:16317,km:263,vol:25.17,cons:10.4,comb:'Gasolina',total:159.83,pl:6.35,posto:'Pel',desc:''},
   {data:'12/01',odo:16769,km:452,vol:37.28,cons:12.1,comb:'Etanol',  total:175.22,pl:4.70,posto:'Pel',desc:'Aju-Pir-Lagoa Redonda'},
   {data:'18/01',odo:17083,km:314,vol:34.65,cons:9.1, comb:'Etanol',  total:162.86,pl:4.70,posto:'Pel',desc:''},
-  {data:'26/01',odo:17428,km:345,vol:42.09,cons:8.2, comb:'Gasolina',total:258.85,pl:6.15,posto:'SÃÂ£o SebastiÃÂ£o',desc:'Arapiraca'},
+  {data:'26/01',odo:17428,km:345,vol:42.09,cons:8.2, comb:'Gasolina',total:258.85,pl:6.15,posto:'SÃÂÃÂ£o SebastiÃÂÃÂ£o',desc:'Arapiraca'},
   {data:'01/02',odo:17796,km:368,vol:33.39,cons:11.0,comb:'Etanol',  total:163.61,pl:4.90,posto:'Pel',desc:''},
   {data:'04/02',odo:18073,km:277,vol:32.155,cons:8.6,comb:'Gasolina',total:204.83,pl:6.37,posto:'JetSet',desc:''},
   {data:'08/02',odo:18408,km:335,vol:36.86,cons:9.1, comb:'Etanol',  total:180.61,pl:4.90,posto:'Pel',desc:''},
@@ -453,16 +453,16 @@ let CONFIG = {
 };
 
 let MANUTENCAO = [
-  {title: 'Troca de ÃÂleo e Filtro', freq: 10000, desc: 'Essencial para manter o motor saudÃÂ¡vel', done: false},
-  {title: 'VerificaÃÂ§ÃÂ£o do NÃÂ­vel de ÃÂleo', freq: 1000, desc: 'Verificar se estÃÂ¡ no nÃÂ­vel correto', done: false},
-  {title: 'NivelaÃÂ§ÃÂ£o e Balanceamento de Pneus', freq: 10000, desc: 'Junto com a troca de ÃÂ³leo', done: false},
-  {title: 'Italian Tune-up (Limpeza Preventiva)', freq: 3000, desc: 'Crucial para o TSI: Combate o acÃÂºmulo de carbono nas vÃÂ¡lvulas', done: false},
+  {title: 'Troca de ÃÂÃÂleo e Filtro', freq: 10000, desc: 'Essencial para manter o motor saudÃÂÃÂ¡vel', done: false},
+  {title: 'VerificaÃÂÃÂ§ÃÂÃÂ£o do NÃÂÃÂ­vel de ÃÂÃÂleo', freq: 1000, desc: 'Verificar se estÃÂÃÂ¡ no nÃÂÃÂ­vel correto', done: false},
+  {title: 'NivelaÃÂÃÂ§ÃÂÃÂ£o e Balanceamento de Pneus', freq: 10000, desc: 'Junto com a troca de ÃÂÃÂ³leo', done: false},
+  {title: 'Italian Tune-up (Limpeza Preventiva)', freq: 3000, desc: 'Crucial para o TSI: Combate o acÃÂÃÂºmulo de carbono nas vÃÂÃÂ¡lvulas', done: false},
   {title: 'Troca do Ar do Motor', freq: 10000, desc: 'Manter o filtro limpo', done: false},
-  {title: 'Filtro de CombustÃÂ­vel', freq: 10000, desc: 'Essencial para injeÃÂ§ÃÂ£o', done: false},
-  {title: 'VerificaÃÂ§ÃÂ£o do Freio', freq: 10000, desc: 'Pastilhas e discos', done: false}
+  {title: 'Filtro de CombustÃÂÃÂ­vel', freq: 10000, desc: 'Essencial para injeÃÂÃÂ§ÃÂÃÂ£o', done: false},
+  {title: 'VerificaÃÂÃÂ§ÃÂÃÂ£o do Freio', freq: 10000, desc: 'Pastilhas e discos', done: false}
 ];
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ STORAGE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ STORAGE ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function saveData() {
   localStorage.setItem('tcross-todos', JSON.stringify(TODOS));
   localStorage.setItem('tcross-config', JSON.stringify(CONFIG));
@@ -492,11 +492,11 @@ function loadData() {
   if (c1) CICLO1 = JSON.parse(c1);
   if (c2) CICLO2 = JSON.parse(c2);
   
-  // Garante ordenaÃÂ§ÃÂ£o cronolÃÂ³gica ao carregar
+  // Garante ordenaÃÂÃÂ§ÃÂÃÂ£o cronolÃÂÃÂ³gica ao carregar
   sortTodosChronologically();
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ NAVIGATION Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ NAVIGATION ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function go(id) {
   document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
   document.getElementById('sec-' + id).classList.add('on');
@@ -510,7 +510,7 @@ function go(id) {
   ({dashboard:renderDash, abastecimentos:renderAbast, manutencao:renderMaint, config:renderConfig, sync:renderSync, trajetos:renderTrajetos, postos:renderPostos, ciclo1:renderCiclo1, ciclo2:renderCiclo2}[id] || function(){})();
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ HELPERS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ HELPERS ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function parseDate(dateStr) {
   if (!dateStr) return new Date(0);
   const parts = dateStr.split('/');
@@ -571,7 +571,7 @@ function getRelacaoPrecos() {
   return ((ethPl / gasPl) * 100).toFixed(1);
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ DASHBOARD Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ DASHBOARD ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function renderDash() {
   const gasAvg = getAverageConsumption('Gasolina');
   const ethAvg = getAverageConsumption('Etanol');
@@ -598,10 +598,10 @@ function renderDash() {
   const cicloNum = HISTORICO_CICLOS.length + 1;
 
   const html = `
-    <div class="sh"><span class="sh-title">Ã°ÂÂÂ Dashboard ÃÂ· Ciclo ${cicloNum}</span></div>
+    <div class="sh"><span class="sh-title">ÃÂ°ÃÂÃÂÃÂ Dashboard ÃÂÃÂ· Ciclo ${cicloNum}</span></div>
     
     <div class="card">
-      <div class="card-title">Ã¢ÂÂ¡ Consumo MÃÂ©dio por CombustÃÂ­vel</div>
+      <div class="card-title">ÃÂ¢ÃÂÃÂ¡ Consumo MÃÂÃÂ©dio por CombustÃÂÃÂ­vel</div>
       <div class="stat">
         <div class="stat-item">
           <div class="stat-label">Gasolina</div>
@@ -610,65 +610,65 @@ function renderDash() {
         <div class="stat-item">
           <div class="stat-label">Etanol</div>
           <div class="stat-value">${ethAvg} km/L</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">EficiÃÂªncia relativa: ${eficRel}% da gasolina</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">EficiÃÂÃÂªncia relativa: ${eficRel}% da gasolina</div>
         </div>
       </div>
     </div>
     
     <div class="card">
-      <div class="card-title">Ã¢ÂÂ½ ÃÂltimo Abastecimento</div>
+      <div class="card-title">ÃÂ¢ÃÂÃÂ½ ÃÂÃÂltimo Abastecimento</div>
       <div class="stat">
         <div class="stat-item">
           <div class="stat-label">Data</div>
           <div class="stat-value">${lastData}</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">OdÃÂ´metro</div>
+          <div class="stat-label">OdÃÂÃÂ´metro</div>
           <div class="stat-value">${lastOdo} km</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">CombustÃÂ­vel</div>
+          <div class="stat-label">CombustÃÂÃÂ­vel</div>
           <div class="stat-value">${lastComb}</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">MÃÂ©dia</div>
+          <div class="stat-label">MÃÂÃÂ©dia</div>
           <div class="stat-value">${lastConsumption} km/L</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">PreÃÂ§o/L</div>
+          <div class="stat-label">PreÃÂÃÂ§o/L</div>
           <div class="stat-value">R$ ${lastPrice}</div>
         </div>
       </div>
     </div>
     
     <div class="card">
-      <div class="card-title">Ã°ÂÂÂ° Custo por km ÃÂ· CombustÃÂ­vel mais econÃÂ´mico</div>
+      <div class="card-title">ÃÂ°ÃÂÃÂÃÂ° Custo por km ÃÂÃÂ· CombustÃÂÃÂ­vel mais econÃÂÃÂ´mico</div>
       <div class="stat">
         <div class="stat-item">
           <div class="stat-label">Gasolina</div>
-          <div class="stat-value">R$ ${gasCostPerKm}/km ${bestFuel === 'Gasolina' ? '<span class="badge best">Ã¢ÂÂ MELHOR</span>' : ''}</div>
+          <div class="stat-value">R$ ${gasCostPerKm}/km ${bestFuel === 'Gasolina' ? '<span class="badge best">ÃÂ¢ÃÂÃÂ MELHOR</span>' : ''}</div>
         </div>
         <div class="stat-item">
           <div class="stat-label">Etanol</div>
-          <div class="stat-value">R$ ${ethCostPerKm}/km ${bestFuel === 'Etanol' ? '<span class="badge best">Ã¢ÂÂ MELHOR</span>' : ''}</div>
+          <div class="stat-value">R$ ${ethCostPerKm}/km ${bestFuel === 'Etanol' ? '<span class="badge best">ÃÂ¢ÃÂÃÂ MELHOR</span>' : ''}</div>
         </div>
       </div>
       <div style="font-size:12px;color:var(--muted);margin-top:8px;padding:8px;background:var(--bg);border-radius:4px;">
-        EficiÃÂªncia relativa: <strong style="color:var(--primary)">${eficRel}%</strong> ÃÂ· 
-        RelaÃÂ§ÃÂ£o de preÃÂ§os: <strong style="color:var(--primary)">${relPrecos}%</strong> ÃÂ· 
-        DecisÃÂ£o baseada em custo real por km rodado
+        EficiÃÂÃÂªncia relativa: <strong style="color:var(--primary)">${eficRel}%</strong> ÃÂÃÂ· 
+        RelaÃÂÃÂ§ÃÂÃÂ£o de preÃÂÃÂ§os: <strong style="color:var(--primary)">${relPrecos}%</strong> ÃÂÃÂ· 
+        DecisÃÂÃÂ£o baseada em custo real por km rodado
       </div>
     </div>
     
     <div class="card">
-      <div class="card-title">Ã°ÂÂÂ§ PrÃÂ³xima RevisÃÂ£o</div>
+      <div class="card-title">ÃÂ°ÃÂÃÂÃÂ§ PrÃÂÃÂ³xima RevisÃÂÃÂ£o</div>
       <div class="stat">
         <div class="stat-item">
-          <div class="stat-label">OdÃÂ´metro atual</div>
+          <div class="stat-label">OdÃÂÃÂ´metro atual</div>
           <div class="stat-value">${currentOdo.toLocaleString('pt-BR')} km</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">RevisÃÂ£o prevista</div>
+          <div class="stat-label">RevisÃÂÃÂ£o prevista</div>
           <div class="stat-value">${CONFIG.nextReview.toLocaleString('pt-BR')} km</div>
         </div>
         <div class="stat-item">
@@ -679,7 +679,7 @@ function renderDash() {
     </div>
     
     <div class="card">
-      <div class="card-title">Ã°ÂÂÂ Custo Total do Ciclo ${cicloNum}</div>
+      <div class="card-title">ÃÂ°ÃÂÃÂÃÂ Custo Total do Ciclo ${cicloNum}</div>
       <div class="stat">
         <div class="stat-item">
           <div class="stat-label">Gasolina</div>
@@ -700,39 +700,39 @@ function renderDash() {
   document.getElementById('sec-dashboard').innerHTML = html;
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ ABASTECIMENTOS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
-let sortOrder = 'desc'; // PadrÃÂ£o: mais recentes primeiro
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ ABASTECIMENTOS ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
+let sortOrder = 'desc'; // PadrÃÂÃÂ£o: mais recentes primeiro
 
 function renderAbast() {
   let html = `
-    <div class="sh"><span class="sh-title">Ã¢ÂÂ½ Abastecimentos</span></div>
+    <div class="sh"><span class="sh-title">ÃÂ¢ÃÂÃÂ½ Abastecimentos</span></div>
     <div style="display: flex; gap: 8px; margin-bottom: 16px;">
       <button class="btn pr" style="flex: 1;" onclick="addAbast()">+ Adicionar</button>
-      <button class="btn" onclick="toggleSort()" title="Inverter ordem">Ã¢ÂÂ Ordem (${sortOrder === 'asc' ? 'Antigos' : 'Recentes'})</button>
+      <button class="btn" onclick="toggleSort()" title="Inverter ordem">ÃÂ¢ÃÂÃÂ Ordem (${sortOrder === 'asc' ? 'Antigos' : 'Recentes'})</button>
     </div>
     <div class="list">
   `;
   
-  // Cria uma cÃÂ³pia para exibiÃÂ§ÃÂ£o sem alterar o array original que deve estar sempre em ordem cronolÃÂ³gica para cÃÂ¡lculos
+  // Cria uma cÃÂÃÂ³pia para exibiÃÂÃÂ§ÃÂÃÂ£o sem alterar o array original que deve estar sempre em ordem cronolÃÂÃÂ³gica para cÃÂÃÂ¡lculos
   const displayList = [...TODOS];
   if (sortOrder === 'desc') displayList.reverse();
 
   displayList.forEach((d) => {
-    // Encontra o ÃÂ­ndice real no array TODOS para ediÃÂ§ÃÂ£o/exclusÃÂ£o
+    // Encontra o ÃÂÃÂ­ndice real no array TODOS para ediÃÂÃÂ§ÃÂÃÂ£o/exclusÃÂÃÂ£o
     const realIndex = TODOS.indexOf(d);
     const consumo = d.km > 0 ? (d.km / d.vol).toFixed(2) : '0.00';
     
     html += `
       <div class="list-item">
         <div class="list-item-title">
-          <div style="font-weight: bold;">${d.data} ÃÂ· ${d.comb} ÃÂ· ${d.odo.toLocaleString('pt-BR')} km</div>
+          <div style="font-weight: bold;">${d.data} ÃÂÃÂ· ${d.comb} ÃÂÃÂ· ${d.odo.toLocaleString('pt-BR')} km</div>
           <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">
-            ${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L ÃÂ· MÃÂ©dia: <strong style="color:var(--primary)">${consumo} km/L</strong> ÃÂ· ${d.km} km percorridos
+            ${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L ÃÂÃÂ· MÃÂÃÂ©dia: <strong style="color:var(--primary)">${consumo} km/L</strong> ÃÂÃÂ· ${d.km} km percorridos
           </div>
         </div>
         <div style="display: flex; gap: 8px;">
-          <button class="btn" onclick="editAbast(${realIndex})">Ã¢ÂÂ</button>
-          <button class="btn danger" onclick="delAbast(${realIndex})">Ã¢ÂÂ</button>
+          <button class="btn" onclick="editAbast(${realIndex})">ÃÂ¢ÃÂÃÂ</button>
+          <button class="btn danger" onclick="delAbast(${realIndex})">ÃÂ¢ÃÂÃÂ</button>
         </div>
       </div>
     `;
@@ -749,23 +749,23 @@ function renderAbast() {
 function toggleSort() {
   sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
   renderAbast();
-  toast(sortOrder === 'asc' ? 'Ã¢ÂÂ Ordem cronolÃÂ³gica' : 'Ã¢ÂÂ Ordem reversa');
+  toast(sortOrder === 'asc' ? 'ÃÂ¢ÃÂÃÂ Ordem cronolÃÂÃÂ³gica' : 'ÃÂ¢ÃÂÃÂ Ordem reversa');
 }
 
 function addAbast() {
   const data = prompt('Data (dd/mm):');
   if (!data) return;
   
-  const odo = prompt('OdÃÂ´metro (km):');
+  const odo = prompt('OdÃÂÃÂ´metro (km):');
   if (!odo || isNaN(odo)) return;
   
   const vol = prompt('Volume (L):');
   if (!vol || isNaN(vol)) return;
   
-  const comb = prompt('CombustÃÂ­vel (Gasolina/Etanol):', 'Etanol');
+  const comb = prompt('CombustÃÂÃÂ­vel (Gasolina/Etanol):', 'Etanol');
   if (!comb) return;
   
-  const pl = prompt('PreÃÂ§o do CombustÃÂ­vel (R$/L):');
+  const pl = prompt('PreÃÂÃÂ§o do CombustÃÂÃÂ­vel (R$/L):');
   if (!pl || isNaN(pl)) return;
   
   const newAbast = {
@@ -785,7 +785,7 @@ function addAbast() {
   sortTodosChronologically();
   recalculateKm();
   saveData();
-  toast('Ã¢ÂÂ Adicionado');
+  toast('ÃÂ¢ÃÂÃÂ Adicionado');
   renderAbast();
   renderDash();
   // Auto-sync com GitHub se token configurado
@@ -796,7 +796,7 @@ function addAbast() {
 
 function recalculateKm() {
   for (let i = 0; i < TODOS.length; i++) {
-    // SÃÂ³ recalcula km se estiver vazio (0), preservando km importado
+    // SÃÂÃÂ³ recalcula km se estiver vazio (0), preservando km importado
     if (TODOS[i].km === 0) {
       const lastOdo = i > 0 ? TODOS[i - 1].odo : 0;
       TODOS[i].km = TODOS[i].odo - lastOdo;
@@ -811,13 +811,13 @@ function editAbast(i) {
   const data = prompt('Data:', d.data);
   if (data === null) return;
   
-  const odo = prompt('OdÃÂ´metro:', d.odo);
+  const odo = prompt('OdÃÂÃÂ´metro:', d.odo);
   if (odo === null) return;
   
   const vol = prompt('Volume:', d.vol);
   if (vol === null) return;
   
-  const pl = prompt('PreÃÂ§o:', d.pl);
+  const pl = prompt('PreÃÂÃÂ§o:', d.pl);
   if (pl === null) return;
   
   TODOS[i] = {
@@ -832,7 +832,7 @@ function editAbast(i) {
   sortTodosChronologically();
   recalculateKm();
   saveData();
-  toast('Ã¢ÂÂ Atualizado');
+  toast('ÃÂ¢ÃÂÃÂ Atualizado');
   renderAbast();
   renderDash();
 }
@@ -842,13 +842,13 @@ function delAbast(i) {
     TODOS.splice(i, 1);
     recalculateKm();
     saveData();
-    toast('Ã¢ÂÂ Removido');
+    toast('ÃÂ¢ÃÂÃÂ Removido');
     renderAbast();
     renderDash();
   }
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ MANUTENÃÂÃÂO Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ MANUTENÃÂÃÂÃÂÃÂO ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function renderMaint() {
   const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
   const cicloNum = HISTORICO_CICLOS.length + 1;
@@ -857,17 +857,17 @@ function renderMaint() {
   const totalCount = MANUTENCAO.length;
   
   let html = `
-    <div class="sh"><span class="sh-title">Ã°ÂÂÂ§ ManutenÃÂ§ÃÂ£o ÃÂ· Ciclo ${cicloNum}</span></div>
+    <div class="sh"><span class="sh-title">ÃÂ°ÃÂÃÂÃÂ§ ManutenÃÂÃÂ§ÃÂÃÂ£o ÃÂÃÂ· Ciclo ${cicloNum}</span></div>
     
     <div class="card">
-      <div class="card-title">PrÃÂ³xima RevisÃÂ£o</div>
+      <div class="card-title">PrÃÂÃÂ³xima RevisÃÂÃÂ£o</div>
       <div class="stat">
         <div class="stat-item">
-          <div class="stat-label">OdÃÂ´metro atual</div>
+          <div class="stat-label">OdÃÂÃÂ´metro atual</div>
           <div class="stat-value">${currentOdo.toLocaleString('pt-BR')} km</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">RevisÃÂ£o prevista em</div>
+          <div class="stat-label">RevisÃÂÃÂ£o prevista em</div>
           <div class="stat-value">${CONFIG.nextReview.toLocaleString('pt-BR')} km</div>
         </div>
         <div class="stat-item">
@@ -879,8 +879,8 @@ function renderMaint() {
     
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <div class="card-title" style="margin-bottom:0">Checklist ÃÂ· ${doneCount}/${totalCount} concluÃÂ­dos</div>
-        <button class="btn" onclick="renovarChecklist()" title="Renovar para novo ciclo">Ã°ÂÂÂ Novo ciclo</button>
+        <div class="card-title" style="margin-bottom:0">Checklist ÃÂÃÂ· ${doneCount}/${totalCount} concluÃÂÃÂ­dos</div>
+        <button class="btn" onclick="renovarChecklist()" title="Renovar para novo ciclo">ÃÂ°ÃÂÃÂÃÂ Novo ciclo</button>
       </div>
       <div class="list">
   `;
@@ -898,8 +898,8 @@ function renderMaint() {
           <div class="maint-title">${m.title}</div>
           <div class="maint-desc">${m.desc}</div>
           <div class="maint-km" style="${urgente && !m.done ? 'border-left: 3px solid var(--danger); padding-left: 8px;' : ''}">
-            <strong>FrequÃÂªncia:</strong> a cada ${m.freq.toLocaleString('pt-BR')} km ÃÂ· 
-            <strong>Faltam:</strong> <span style="color:${urgente ? 'var(--danger)' : 'var(--success)'}">${kmFaltamItem.toLocaleString('pt-BR')} km</span> ÃÂ· 
+            <strong>FrequÃÂÃÂªncia:</strong> a cada ${m.freq.toLocaleString('pt-BR')} km ÃÂÃÂ· 
+            <strong>Faltam:</strong> <span style="color:${urgente ? 'var(--danger)' : 'var(--success)'}">${kmFaltamItem.toLocaleString('pt-BR')} km</span> ÃÂÃÂ· 
             <strong>Progresso:</strong> ${percentual}%
           </div>
         </div>
@@ -923,7 +923,7 @@ function renovarChecklist() {
   MANUTENCAO = MANUTENCAO.map(m => ({...m, done: false}));
   CONFIG.nextReview = (TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0) + 10000;
   saveData();
-  toast('Ã¢ÂÂ Novo ciclo iniciado!');
+  toast('ÃÂ¢ÃÂÃÂ Novo ciclo iniciado!');
   renderMaint();
   renderDash();
 }
@@ -934,13 +934,13 @@ function toggleMaint(i) {
   renderMaint();
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ CONFIGURAÃÂÃÂO Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ CONFIGURAÃÂÃÂÃÂÃÂO ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function renderConfig() {
   const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
   const html = `
-    <div class="sh"><span class="sh-title">Ã¢ÂÂÃ¯Â¸Â ConfiguraÃÂ§ÃÂ£o</span></div>
+    <div class="sh"><span class="sh-title">ÃÂ¢ÃÂÃÂÃÂ¯ÃÂ¸ÃÂ ConfiguraÃÂÃÂ§ÃÂÃÂ£o</span></div>
     <div class="card">
-      <div class="card-title">PreÃÂ§os de CombustÃÂ­vel</div>
+      <div class="card-title">PreÃÂÃÂ§os de CombustÃÂÃÂ­vel</div>
       <div class="form-group">
         <label class="form-label">Gasolina (R$/L)</label>
         <input type="number" class="form-input" id="cfg-gas" value="${CONFIG.gasPrice}" step="0.01">
@@ -951,17 +951,17 @@ function renderConfig() {
       </div>
     </div>
     <div class="card">
-      <div class="card-title">PrÃÂ³xima RevisÃÂ£o</div>
+      <div class="card-title">PrÃÂÃÂ³xima RevisÃÂÃÂ£o</div>
       <div class="form-group">
-        <label class="form-label">PrÃÂ³xima revisÃÂ£o em (km)</label>
+        <label class="form-label">PrÃÂÃÂ³xima revisÃÂÃÂ£o em (km)</label>
         <input type="number" class="form-input" id="cfg-review" value="${CONFIG.nextReview}">
       </div>
       <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px;">
-        <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">OdÃÂ´metro atual</div>
+        <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">OdÃÂÃÂ´metro atual</div>
         <div style="font-size: 18px; font-weight: bold; color: var(--primary);">${currentOdo.toLocaleString('pt-BR')} km</div>
       </div>
     </div>
-    <button class="btn pr" style="width: 100%;" onclick="saveConfig()">Ã¢ÂÂ Salvar ConfiguraÃÂ§ÃÂµes</button>
+    <button class="btn pr" style="width: 100%;" onclick="saveConfig()">ÃÂ¢ÃÂÃÂ Salvar ConfiguraÃÂÃÂ§ÃÂÃÂµes</button>
   `;
   document.getElementById('sec-config').innerHTML = html;
 }
@@ -971,12 +971,12 @@ function saveConfig() {
   CONFIG.ethPrice = parseFloat(document.getElementById('cfg-eth').value);
   CONFIG.nextReview = parseInt(document.getElementById('cfg-review').value);
   saveData();
-  toast('Ã¢ÂÂ Salvo');
+  toast('ÃÂ¢ÃÂÃÂ Salvo');
   renderDash();
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ SINCRONIZAÃÂÃÂO Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ GITHUB SYNC Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ SINCRONIZAÃÂÃÂÃÂÃÂO ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ GITHUB SYNC ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 const GH = {
   owner: 'acmandacaru4-web',
   repo: 'tcross',
@@ -994,11 +994,11 @@ async function ghGetFileSha() {
 }
 
 async function ghSaveData() {
-  if (!GH.token) { toast('Ã¢ÂÂ  Configure o token GitHub primeiro'); return; }
+  if (!GH.token) { toast('ÃÂ¢ÃÂÃÂ  Configure o token GitHub primeiro'); return; }
   try {
-    toast('Ã¢ÂÂ³ Sincronizando com GitHub...');
+    toast('ÃÂ¢ÃÂÃÂ³ Sincronizando com GitHub...');
     const {sha, content} = await ghGetFileSha();
-    // Injeta os dados atuais no HTML do repositÃÂ³rio
+    // Injeta os dados atuais no HTML do repositÃÂÃÂ³rio
     const dadosJSON = JSON.stringify({
       todos: TODOS, config: CONFIG, manutencao: MANUTENCAO,
       historico: HISTORICO_CICLOS, trajetos: TRAJETOS, postos: POSTOS,
@@ -1027,24 +1027,24 @@ async function ghSaveData() {
       body: JSON.stringify({message: 'sync: ' + new Date().toLocaleString('pt-BR'), content: encoded, sha})
     });
     if (!r.ok) throw new Error('Erro ao salvar: ' + r.status);
-    toast('Ã¢ÂÂ Dados sincronizados com GitHub!');
+    toast('ÃÂ¢ÃÂÃÂ Dados sincronizados com GitHub!');
     renderSync();
   } catch(e) {
-    toast('Ã¢ÂÂ Erro: ' + e.message);
+    toast('ÃÂ¢ÃÂÃÂ Erro: ' + e.message);
     console.error(e);
   }
 }
 
 async function ghLoadData() {
-  if (!GH.token) { toast('Ã¢ÂÂ  Configure o token GitHub primeiro'); return; }
+  if (!GH.token) { toast('ÃÂ¢ÃÂÃÂ  Configure o token GitHub primeiro'); return; }
   try {
-    toast('Ã¢ÂÂ³ Carregando do GitHub...');
+    toast('ÃÂ¢ÃÂÃÂ³ Carregando do GitHub...');
     const {content} = await ghGetFileSha();
     const marker_start = '/*__SYNC_DATA_START__*/';
     const marker_end = '/*__SYNC_DATA_END__*/';
-    if (!content.includes(marker_start)) { toast('Ã¢ÂÂ  Nenhum dado sincronizado ainda'); return; }
+    if (!content.includes(marker_start)) { toast('ÃÂ¢ÃÂÃÂ  Nenhum dado sincronizado ainda'); return; }
     const match = content.match(/\/\*__SYNC_DATA_START__\*\/var __SYNC_DATA__=([\s\S]*?);\/\*__SYNC_DATA_END__\*\//);
-    if (!match) { toast('Ã¢ÂÂ  Erro ao ler dados'); return; }
+    if (!match) { toast('ÃÂ¢ÃÂÃÂ  Erro ao ler dados'); return; }
     const data = JSON.parse(match[1]);
     if (data.todos)      TODOS = data.todos;
     if (data.config)     CONFIG = data.config;
@@ -1056,19 +1056,19 @@ async function ghLoadData() {
     if (data.ciclo2)     CICLO2 = data.ciclo2;
     sortTodosChronologically();
     saveData();
-    toast('Ã¢ÂÂ Dados carregados do GitHub!');
+    toast('ÃÂ¢ÃÂÃÂ Dados carregados do GitHub!');
     go('dashboard');
   } catch(e) {
-    toast('Ã¢ÂÂ Erro: ' + e.message);
+    toast('ÃÂ¢ÃÂÃÂ Erro: ' + e.message);
     console.error(e);
   }
 }
 
 function saveGhToken() {
   const t = document.getElementById('gh-token-input').value.trim();
-  if (!t) { toast('Ã¢ÂÂ  Digite o token'); return; }
+  if (!t) { toast('ÃÂ¢ÃÂÃÂ  Digite o token'); return; }
   GH.token = t;
-  toast('Ã¢ÂÂ Token salvo!');
+  toast('ÃÂ¢ÃÂÃÂ Token salvo!');
   renderSync();
 }
 
@@ -1076,42 +1076,42 @@ function renderSync() {
   const temToken = !!GH.token;
   const tokenMasked = temToken ? GH.token.substring(0,8) + '...' + GH.token.slice(-4) : '';
   const html = `
-    <div class="sh"><span class="sh-title">Ã°ÂÂÂ SincronizaÃÂ§ÃÂ£o</span></div>
+    <div class="sh"><span class="sh-title">ÃÂ°ÃÂÃÂÃÂ SincronizaÃÂÃÂ§ÃÂÃÂ£o</span></div>
 
     <div class="card">
-      <div class="card-title">Ã¢ÂÂÃ¯Â¸Â GitHub ÃÂ· SincronizaÃÂ§ÃÂ£o entre dispositivos</div>
+      <div class="card-title">ÃÂ¢ÃÂÃÂÃÂ¯ÃÂ¸ÃÂ GitHub ÃÂÃÂ· SincronizaÃÂÃÂ§ÃÂÃÂ£o entre dispositivos</div>
       <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">
-        Salva e carrega seus dados diretamente do repositÃÂ³rio GitHub.<br>
-        Use <strong>Salvar</strong> apÃÂ³s registrar abastecimentos ÃÂ· Use <strong>Carregar</strong> em outro dispositivo para receber os dados.
+        Salva e carrega seus dados diretamente do repositÃÂÃÂ³rio GitHub.<br>
+        Use <strong>Salvar</strong> apÃÂÃÂ³s registrar abastecimentos ÃÂÃÂ· Use <strong>Carregar</strong> em outro dispositivo para receber os dados.
       </div>
       ${temToken ? `
-        <div style="font-size:12px;color:var(--success);margin-bottom:12px;">Ã¢ÂÂ Token configurado: ${tokenMasked}</div>
+        <div style="font-size:12px;color:var(--success);margin-bottom:12px;">ÃÂ¢ÃÂÃÂ Token configurado: ${tokenMasked}</div>
         <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <button class="btn pr" style="flex:1" onclick="ghSaveData()">Ã¢ÂÂÃ¯Â¸Â Salvar no GitHub</button>
-          <button class="btn" style="flex:1" onclick="ghLoadData()">Ã¢Â¬ÂÃ¯Â¸Â Carregar do GitHub</button>
+          <button class="btn pr" style="flex:1" onclick="ghSaveData()">ÃÂ¢ÃÂÃÂÃÂ¯ÃÂ¸ÃÂ Salvar no GitHub</button>
+          <button class="btn" style="flex:1" onclick="ghLoadData()">ÃÂ¢ÃÂ¬ÃÂÃÂ¯ÃÂ¸ÃÂ Carregar do GitHub</button>
         </div>
         <button class="btn" style="width:100%;font-size:11px;" onclick="localStorage.removeItem('gh_token');renderSync()">Remover token</button>
       ` : `
         <div class="form-group">
           <label class="form-label">Personal Access Token do GitHub</label>
           <input type="password" class="form-input" id="gh-token-input" placeholder="ghp_...">
-          <div style="font-size:11px;color:var(--muted);margin-top:4px;">O token fica salvo apenas neste dispositivo, nunca no cÃÂ³digo pÃÂºblico.</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">O token fica salvo apenas neste dispositivo, nunca no cÃÂÃÂ³digo pÃÂÃÂºblico.</div>
         </div>
-        <button class="btn pr" style="width:100%;" onclick="saveGhToken()">Ã¢ÂÂ Salvar token</button>
+        <button class="btn pr" style="width:100%;" onclick="saveGhToken()">ÃÂ¢ÃÂÃÂ Salvar token</button>
       `}
     </div>
 
     <div class="card">
-      <div class="card-title">Ã°ÂÂÂ Importar da Planilha (CSV/TSV)</div>
+      <div class="card-title">ÃÂ°ÃÂÃÂÃÂ Importar da Planilha (CSV/TSV)</div>
       <textarea id="csv-input" class="form-input" style="height: 130px; font-family: monospace; font-size: 12px;" placeholder="Cole aqui os dados copiados da planilha..."></textarea>
       <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">
-        Ã¢ÂÂ¹Ã¯Â¸Â Suporta copiar e colar direto da planilha (TSV ou CSV). Primeira linha ignorada.
+        ÃÂ¢ÃÂÃÂ¹ÃÂ¯ÃÂ¸ÃÂ Suporta copiar e colar direto da planilha (TSV ou CSV). Primeira linha ignorada.
       </div>
-      <button class="btn pr" style="margin-top: 12px; width: 100%;" onclick="importCSV()">Ã¢ÂÂ Importar</button>
+      <button class="btn pr" style="margin-top: 12px; width: 100%;" onclick="importCSV()">ÃÂ¢ÃÂÃÂ Importar</button>
     </div>
   `;
   document.getElementById('sec-sync').innerHTML = html;
-  // Preenche token se jÃÂ¡ tiver
+  // Preenche token se jÃÂÃÂ¡ tiver
   if (!temToken && document.getElementById('gh-token-input')) {
     // campo vazio mesmo
   }
@@ -1119,7 +1119,7 @@ function renderSync() {
 
 function importCSV() {
   const csv = document.getElementById('csv-input').value.trim();
-  if (!csv) { toast('Ã¢ÂÂ  Cole os dados'); return; }
+  if (!csv) { toast('ÃÂ¢ÃÂÃÂ  Cole os dados'); return; }
 
   const lines = csv.split('\n');
   const newTodos = [];
@@ -1129,12 +1129,12 @@ function importCSV() {
     const line = lines[i];
     if (!line.trim()) continue;
     
-    // Detecta separador (Tab ou VÃÂ­rgula)
+    // Detecta separador (Tab ou VÃÂÃÂ­rgula)
     const sep = line.includes('\t') ? '\t' : ',';
     const cols = line.split(sep).map(c => c.trim().replace('R$', '').replace(/\./g, '').replace(',', '.'));
 
-    // Mapeamento baseado na estrutura da planilha do usuÃÂ¡rio:
-    // 0:Data, 1:OdÃÂ´metro, 2:PreÃÂ§o/L, 3:Vol Parcial, 4:Vol Completar, 5:Consumo, 6:Km, 7:Comb Consumido, 8:Comb Abastecido, 9:Total, 10:Posto
+    // Mapeamento baseado na estrutura da planilha do usuÃÂÃÂ¡rio:
+    // 0:Data, 1:OdÃÂÃÂ´metro, 2:PreÃÂÃÂ§o/L, 3:Vol Parcial, 4:Vol Completar, 5:Consumo, 6:Km, 7:Comb Consumido, 8:Comb Abastecido, 9:Total, 10:Posto
     
     const data = cols[0];
     const odo = parseInt(cols[1]) || 0;
@@ -1148,10 +1148,10 @@ function importCSV() {
     
     console.log(`Linha ${i}: data=${data}, odo=${odo}, pl=${pl}, volParcial=${volParcial}, volCompletar=${volCompletar}, km=${km}, comb=${comb}, total=${total}`);
 
-    // Se nÃÂ£o tem km (abastecimento parcial), acumula volume
+    // Se nÃÂÃÂ£o tem km (abastecimento parcial), acumula volume
     if (km === 0 && volParcial > 0) {
       volumeParcialAcumulado += volParcial;
-      continue; // Pula para prÃÂ³xima linha
+      continue; // Pula para prÃÂÃÂ³xima linha
     }
 
     // Se tem km (abastecimento completo), soma com parciais acumulados
@@ -1166,12 +1166,12 @@ function importCSV() {
         total: total > 0 ? parseFloat(total.toFixed(2)) : (volTotal * pl),
         pl, posto, desc: ''
       });
-      volumeParcialAcumulado = 0; // Reset para prÃÂ³ximo ciclo
+      volumeParcialAcumulado = 0; // Reset para prÃÂÃÂ³ximo ciclo
     }
   }
 
   if (newTodos.length === 0) {
-    toast('Ã¢ÂÂ  Nenhum dado vÃÂ¡lido encontrado.');
+    toast('ÃÂ¢ÃÂÃÂ  Nenhum dado vÃÂÃÂ¡lido encontrado.');
     return;
   }
 
@@ -1179,13 +1179,13 @@ function importCSV() {
   sortTodosChronologically();
   recalculateKm();
   saveData();
-  toast('Ã¢ÂÂ ' + TODOS.length + ' registros importados!');
+  toast('ÃÂ¢ÃÂÃÂ ' + TODOS.length + ' registros importados!');
   document.getElementById('csv-input').value = '';
   go('abastecimentos');
 }
 
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ TRAJETOS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ TRAJETOS ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function renderTrajetos() {
   const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.23;
   const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.07;
@@ -1193,7 +1193,7 @@ function renderTrajetos() {
   const kmMesTotal = (kmSemTotal * 4.33).toFixed(0);
 
   let html = `
-    <div class="sh"><span class="sh-title">Ã°ÂÂÂºÃ¯Â¸Â Trajetos</span></div>
+    <div class="sh"><span class="sh-title">ÃÂ°ÃÂÃÂÃÂºÃÂ¯ÃÂ¸ÃÂ Trajetos</span></div>
     <div style="display:flex;gap:8px;margin-bottom:16px;">
       <button class="btn pr" style="flex:1" onclick="addTrajeto()">+ Adicionar trajeto</button>
     </div>
@@ -1201,9 +1201,9 @@ function renderTrajetos() {
       <div class="card-title">Totais</div>
       <div class="stat">
         <div class="stat-item"><div class="stat-label">km/semana</div><div class="stat-value">${kmSemTotal.toFixed(1)}</div></div>
-        <div class="stat-item"><div class="stat-label">km/mÃÂªs</div><div class="stat-value">${kmMesTotal}</div></div>
-        <div class="stat-item"><div class="stat-label">R$/mÃÂªs Gasolina</div><div class="stat-value">R$ ${(kmMesTotal / gasAvg * CONFIG.gasPrice).toFixed(2)}</div></div>
-        <div class="stat-item"><div class="stat-label">R$/mÃÂªs Etanol</div><div class="stat-value">R$ ${(kmMesTotal / ethAvg * CONFIG.ethPrice).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">km/mÃÂÃÂªs</div><div class="stat-value">${kmMesTotal}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/mÃÂÃÂªs Gasolina</div><div class="stat-value">R$ ${(kmMesTotal / gasAvg * CONFIG.gasPrice).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/mÃÂÃÂªs Etanol</div><div class="stat-value">R$ ${(kmMesTotal / ethAvg * CONFIG.ethPrice).toFixed(2)}</div></div>
       </div>
     </div>
     <div class="list">
@@ -1212,25 +1212,25 @@ function renderTrajetos() {
   TRAJETOS.forEach((t, i) => {
     const gasViagem = (t.dist / gasAvg * t.gasP).toFixed(2);
     const ethViagem = (t.dist / ethAvg * t.ethP).toFixed(2);
-    const gasMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / gasAvg * t.gasP).toFixed(2) : 'Ã¢ÂÂ';
-    const ethMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / ethAvg * t.ethP).toFixed(2) : 'Ã¢ÂÂ';
+    const gasMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / gasAvg * t.gasP).toFixed(2) : 'ÃÂ¢ÃÂÃÂ';
+    const ethMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / ethAvg * t.ethP).toFixed(2) : 'ÃÂ¢ÃÂÃÂ';
     const melhor = parseFloat(ethViagem) < parseFloat(gasViagem) ? 'Etanol' : 'Gasolina';
     html += `
       <div class="list-item" style="flex-direction:column;align-items:stretch;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div style="font-weight:bold;">${t.nome}</div>
           <div style="display:flex;gap:6px;">
-            <button class="btn" onclick="editTrajeto(${i})">Ã¢ÂÂ</button>
-            <button class="btn danger" onclick="delTrajeto(${i})">Ã¢ÂÂ</button>
+            <button class="btn" onclick="editTrajeto(${i})">ÃÂ¢ÃÂÃÂ</button>
+            <button class="btn danger" onclick="delTrajeto(${i})">ÃÂ¢ÃÂÃÂ</button>
           </div>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">${t.dist} km ida/volta ÃÂ· ${t.kmSem > 0 ? t.kmSem + ' km/sem' : 'eventual'}</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">${t.dist} km ida/volta ÃÂÃÂ· ${t.kmSem > 0 ? t.kmSem + ' km/sem' : 'eventual'}</div>
         <div class="stat" style="margin-bottom:0;">
           <div class="stat-item"><div class="stat-label">Viagem Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${gasViagem}</div></div>
           <div class="stat-item"><div class="stat-label">Viagem Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${ethViagem}</div></div>
-          <div class="stat-item"><div class="stat-label">MÃÂªs Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${gasMes}</div></div>
-          <div class="stat-item"><div class="stat-label">MÃÂªs Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${ethMes}</div></div>
-          <div class="stat-item"><div class="stat-label">Mais econÃÂ´mico</div><div class="stat-value" style="font-size:14px;color:var(--success);">Ã¢ÂÂ ${melhor}</div></div>
+          <div class="stat-item"><div class="stat-label">MÃÂÃÂªs Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${gasMes}</div></div>
+          <div class="stat-item"><div class="stat-label">MÃÂÃÂªs Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${ethMes}</div></div>
+          <div class="stat-item"><div class="stat-label">Mais econÃÂÃÂ´mico</div><div class="stat-value" style="font-size:14px;color:var(--success);">ÃÂ¢ÃÂÃÂ ${melhor}</div></div>
         </div>
       </div>`;
   });
@@ -1242,47 +1242,47 @@ function renderTrajetos() {
 
 function addTrajeto() {
   const nome = prompt('Nome do trajeto:'); if (!nome) return;
-  const dist = parseFloat(prompt('DistÃÂ¢ncia ida/volta (km):')); if (isNaN(dist)) return;
+  const dist = parseFloat(prompt('DistÃÂÃÂ¢ncia ida/volta (km):')); if (isNaN(dist)) return;
   const kmSem = parseFloat(prompt('km/semana neste trajeto (0 se eventual):', '0')) || 0;
-  const gasP = parseFloat(prompt('PreÃÂ§o gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
-  const ethP = parseFloat(prompt('PreÃÂ§o etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
+  const gasP = parseFloat(prompt('PreÃÂÃÂ§o gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('PreÃÂÃÂ§o etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
   TRAJETOS.push({nome, dist, kmSem, gasP, ethP, gasKmL:10.23, ethKmL:8.07});
-  saveData(); toast('Ã¢ÂÂ Trajeto adicionado'); renderTrajetos();
+  saveData(); toast('ÃÂ¢ÃÂÃÂ Trajeto adicionado'); renderTrajetos();
 }
 
 function editTrajeto(i) {
   const t = TRAJETOS[i];
   const nome = prompt('Nome:', t.nome); if (nome === null) return;
-  const dist = parseFloat(prompt('DistÃÂ¢ncia ida/volta (km):', t.dist)); if (isNaN(dist)) return;
+  const dist = parseFloat(prompt('DistÃÂÃÂ¢ncia ida/volta (km):', t.dist)); if (isNaN(dist)) return;
   const kmSem = parseFloat(prompt('km/semana (0 se eventual):', t.kmSem)) || 0;
-  const gasP = parseFloat(prompt('PreÃÂ§o gasolina R$/L:', t.gasP)); if (isNaN(gasP)) return;
-  const ethP = parseFloat(prompt('PreÃÂ§o etanol R$/L:', t.ethP)); if (isNaN(ethP)) return;
+  const gasP = parseFloat(prompt('PreÃÂÃÂ§o gasolina R$/L:', t.gasP)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('PreÃÂÃÂ§o etanol R$/L:', t.ethP)); if (isNaN(ethP)) return;
   TRAJETOS[i] = {...t, nome, dist, kmSem, gasP, ethP};
-  saveData(); toast('Ã¢ÂÂ Atualizado'); renderTrajetos();
+  saveData(); toast('ÃÂ¢ÃÂÃÂ Atualizado'); renderTrajetos();
 }
 
 function delTrajeto(i) {
   if (confirm('Remover trajeto "' + TRAJETOS[i].nome + '"?')) {
-    TRAJETOS.splice(i, 1); saveData(); toast('Ã¢ÂÂ Removido'); renderTrajetos();
+    TRAJETOS.splice(i, 1); saveData(); toast('ÃÂ¢ÃÂÃÂ Removido'); renderTrajetos();
   }
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ POSTOS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ POSTOS ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function renderPostos() {
   const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.2;
   const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.1;
   const corteReal = gasAvg > 0 ? (ethAvg / gasAvg * 100).toFixed(1) : 70.4;
 
   let html = `
-    <div class="sh"><span class="sh-title">Ã¢ÂÂ½ Postos de CombustÃÂ­vel</span></div>
+    <div class="sh"><span class="sh-title">ÃÂ¢ÃÂÃÂ½ Postos de CombustÃÂÃÂ­vel</span></div>
     <div style="display:flex;gap:8px;margin-bottom:16px;">
       <button class="btn pr" style="flex:1" onclick="addPosto()">+ Adicionar posto</button>
     </div>
     <div class="card" style="margin-bottom:16px;">
       <div class="card-title">Ponto de corte real do seu carro</div>
       <div style="font-size:13px;color:var(--muted);">
-        Baseado nas suas mÃÂ©dias reais: Gasolina <strong style="color:var(--primary)">${gasAvg} km/L</strong> ÃÂ· Etanol <strong style="color:var(--primary)">${ethAvg} km/L</strong><br>
-        Se Etanol/Gasolina &lt; <strong style="color:var(--success)">${corteReal}%</strong> Ã¢ÂÂ Etanol ÃÂ© mais econÃÂ´mico no seu carro
+        Baseado nas suas mÃÂÃÂ©dias reais: Gasolina <strong style="color:var(--primary)">${gasAvg} km/L</strong> ÃÂÃÂ· Etanol <strong style="color:var(--primary)">${ethAvg} km/L</strong><br>
+        Se Etanol/Gasolina &lt; <strong style="color:var(--success)">${corteReal}%</strong> ÃÂ¢ÃÂÃÂ Etanol ÃÂÃÂ© mais econÃÂÃÂ´mico no seu carro
       </div>
     </div>
     <div class="list">
@@ -1300,8 +1300,8 @@ function renderPostos() {
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div style="font-weight:bold;">${p.nome} ${abaixoCorte ? '<span class="badge best">Eth vence</span>' : ''}</div>
           <div style="display:flex;gap:6px;">
-            <button class="btn" onclick="editPosto(${i})">Ã¢ÂÂ</button>
-            <button class="btn danger" onclick="delPosto(${i})">Ã¢ÂÂ</button>
+            <button class="btn" onclick="editPosto(${i})">ÃÂ¢ÃÂÃÂ</button>
+            <button class="btn danger" onclick="delPosto(${i})">ÃÂ¢ÃÂÃÂ</button>
           </div>
         </div>
         <div class="stat" style="margin-bottom:0;">
@@ -1309,8 +1309,8 @@ function renderPostos() {
           <div class="stat-item"><div class="stat-label">Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${p.ethP.toFixed(2)}/L</div></div>
           <div class="stat-item"><div class="stat-label">Custo/km Gas</div><div class="stat-value" style="font-size:14px;">R$ ${gasCkm}</div></div>
           <div class="stat-item"><div class="stat-label">Custo/km Eth</div><div class="stat-value" style="font-size:14px;">R$ ${ethCkm}</div></div>
-          <div class="stat-item"><div class="stat-label">RelaÃÂ§ÃÂ£o Eth/Gas</div><div class="stat-value" style="font-size:14px;color:${abaixoCorte?'var(--success)':'var(--warning)'};">${rel}% ${abaixoCorte?'Ã¢ÂÂ':'Ã¢ÂÂ '}</div></div>
-          <div class="stat-item"><div class="stat-label">PreÃÂ§o corte Eth</div><div class="stat-value" style="font-size:14px;">R$ ${corte}/L</div></div>
+          <div class="stat-item"><div class="stat-label">RelaÃÂÃÂ§ÃÂÃÂ£o Eth/Gas</div><div class="stat-value" style="font-size:14px;color:${abaixoCorte?'var(--success)':'var(--warning)'};">${rel}% ${abaixoCorte?'ÃÂ¢ÃÂÃÂ':'ÃÂ¢ÃÂÃÂ '}</div></div>
+          <div class="stat-item"><div class="stat-label">PreÃÂÃÂ§o corte Eth</div><div class="stat-value" style="font-size:14px;">R$ ${corte}/L</div></div>
         </div>
       </div>`;
   });
@@ -1322,37 +1322,37 @@ function renderPostos() {
 
 function addPosto() {
   const nome = prompt('Nome do posto:'); if (!nome) return;
-  const gasP = parseFloat(prompt('PreÃÂ§o Gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
-  const ethP = parseFloat(prompt('PreÃÂ§o Etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
+  const gasP = parseFloat(prompt('PreÃÂÃÂ§o Gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('PreÃÂÃÂ§o Etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
   POSTOS.push({nome, gasP, ethP, gasKmL:10.2, ethKmL:8.1});
-  saveData(); toast('Ã¢ÂÂ Posto adicionado'); renderPostos();
+  saveData(); toast('ÃÂ¢ÃÂÃÂ Posto adicionado'); renderPostos();
 }
 
 function editPosto(i) {
   const p = POSTOS[i];
   const nome = prompt('Nome:', p.nome); if (nome === null) return;
-  const gasP = parseFloat(prompt('PreÃÂ§o Gasolina R$/L:', p.gasP)); if (isNaN(gasP)) return;
-  const ethP = parseFloat(prompt('PreÃÂ§o Etanol R$/L:', p.ethP)); if (isNaN(ethP)) return;
+  const gasP = parseFloat(prompt('PreÃÂÃÂ§o Gasolina R$/L:', p.gasP)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('PreÃÂÃÂ§o Etanol R$/L:', p.ethP)); if (isNaN(ethP)) return;
   POSTOS[i] = {...p, nome, gasP, ethP};
-  saveData(); toast('Ã¢ÂÂ Atualizado'); renderPostos();
+  saveData(); toast('ÃÂ¢ÃÂÃÂ Atualizado'); renderPostos();
 }
 
 function delPosto(i) {
   if (confirm('Remover posto "' + POSTOS[i].nome + '"?')) {
-    POSTOS.splice(i, 1); saveData(); toast('Ã¢ÂÂ Removido'); renderPostos();
+    POSTOS.splice(i, 1); saveData(); toast('ÃÂ¢ÃÂÃÂ Removido'); renderPostos();
   }
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ CICLO 1 e 2 Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ CICLO 1 e 2 ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function renderCicloHistorico(dados, titulo, elId) {
   if (!dados || dados.length === 0) {
-    document.getElementById(elId).innerHTML = `<div class="sh"><span class="sh-title">${titulo}</span></div><div style="text-align:center;padding:40px;color:var(--muted);">Nenhum dado disponÃÂ­vel.</div>`;
+    document.getElementById(elId).innerHTML = `<div class="sh"><span class="sh-title">${titulo}</span></div><div style="text-align:center;padding:40px;color:var(--muted);">Nenhum dado disponÃÂÃÂ­vel.</div>`;
     return;
   }
   const gasD = dados.filter(d => d.comb === 'Gasolina' && d.km > 0);
   const ethD = dados.filter(d => d.comb === 'Etanol' && d.km > 0);
-  const gasKmL = gasD.length ? (gasD.reduce((a,d)=>a+d.km,0) / gasD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : 'Ã¢ÂÂ';
-  const ethKmL = ethD.length ? (ethD.reduce((a,d)=>a+d.km,0) / ethD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : 'Ã¢ÂÂ';
+  const gasKmL = gasD.length ? (gasD.reduce((a,d)=>a+d.km,0) / gasD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : 'ÃÂ¢ÃÂÃÂ';
+  const ethKmL = ethD.length ? (ethD.reduce((a,d)=>a+d.km,0) / ethD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : 'ÃÂ¢ÃÂÃÂ';
   const totalGas = gasD.reduce((a,d)=>a+d.total,0).toFixed(2);
   const totalEth = ethD.reduce((a,d)=>a+d.total,0).toFixed(2);
   const totalKm = dados.reduce((a,d)=>a+d.km,0);
@@ -1364,11 +1364,11 @@ function renderCicloHistorico(dados, titulo, elId) {
     <div class="card">
       <div class="card-title">Resumo do Ciclo</div>
       <div class="stat">
-        <div class="stat-item"><div class="stat-label">OdÃÂ´metro inÃÂ­cio</div><div class="stat-value">${odoInicio.toLocaleString('pt-BR')} km</div></div>
-        <div class="stat-item"><div class="stat-label">OdÃÂ´metro fim</div><div class="stat-value">${odoFim.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">OdÃÂÃÂ´metro inÃÂÃÂ­cio</div><div class="stat-value">${odoInicio.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">OdÃÂÃÂ´metro fim</div><div class="stat-value">${odoFim.toLocaleString('pt-BR')} km</div></div>
         <div class="stat-item"><div class="stat-label">Total rodado</div><div class="stat-value">${totalKm.toLocaleString('pt-BR')} km</div></div>
-        <div class="stat-item"><div class="stat-label">MÃÂ©dia Gasolina</div><div class="stat-value">${gasKmL} km/L</div></div>
-        <div class="stat-item"><div class="stat-label">MÃÂ©dia Etanol</div><div class="stat-value">${ethKmL} km/L</div></div>
+        <div class="stat-item"><div class="stat-label">MÃÂÃÂ©dia Gasolina</div><div class="stat-value">${gasKmL} km/L</div></div>
+        <div class="stat-item"><div class="stat-label">MÃÂÃÂ©dia Etanol</div><div class="stat-value">${ethKmL} km/L</div></div>
         <div class="stat-item"><div class="stat-label">Total Gasolina</div><div class="stat-value">R$ ${parseFloat(totalGas).toFixed(2)}</div></div>
         <div class="stat-item"><div class="stat-label">Total Etanol</div><div class="stat-value">R$ ${parseFloat(totalEth).toFixed(2)}</div></div>
         <div class="stat-item"><div class="stat-label">Total gasto</div><div class="stat-value">R$ ${(parseFloat(totalGas)+parseFloat(totalEth)).toFixed(2)}</div></div>
@@ -1383,8 +1383,8 @@ function renderCicloHistorico(dados, titulo, elId) {
     html += `
       <div class="list-item">
         <div class="list-item-title">
-          <div style="font-weight:bold;">${d.data} ÃÂ· ${d.comb} ÃÂ· ${d.odo.toLocaleString('pt-BR')} km</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L ÃÂ· <strong style="color:var(--primary)">${cons} km/L</strong> ÃÂ· ${d.km} km${d.posto ? ' ÃÂ· ' + d.posto : ''}${d.desc ? ' ÃÂ· ' + d.desc : ''}</div>
+          <div style="font-weight:bold;">${d.data} ÃÂÃÂ· ${d.comb} ÃÂÃÂ· ${d.odo.toLocaleString('pt-BR')} km</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L ÃÂÃÂ· <strong style="color:var(--primary)">${cons} km/L</strong> ÃÂÃÂ· ${d.km} km${d.posto ? ' ÃÂÃÂ· ' + d.posto : ''}${d.desc ? ' ÃÂÃÂ· ' + d.desc : ''}</div>
         </div>
       </div>`;
   });
@@ -1393,10 +1393,10 @@ function renderCicloHistorico(dados, titulo, elId) {
   document.getElementById(elId).innerHTML = html;
 }
 
-function renderCiclo1() { renderCicloHistorico(CICLO1, 'Ã°ÂÂÂ Ciclo 1 ÃÂ· HistÃÂ³rico', 'sec-ciclo1'); }
-function renderCiclo2() { renderCicloHistorico(CICLO2, 'Ã°ÂÂÂ Ciclo 2 ÃÂ· HistÃÂ³rico', 'sec-ciclo2'); }
+function renderCiclo1() { renderCicloHistorico(CICLO1, 'ÃÂ°ÃÂÃÂÃÂ Ciclo 1 ÃÂÃÂ· HistÃÂÃÂ³rico', 'sec-ciclo1'); }
+function renderCiclo2() { renderCicloHistorico(CICLO2, 'ÃÂ°ÃÂÃÂÃÂ Ciclo 2 ÃÂÃÂ· HistÃÂÃÂ³rico', 'sec-ciclo2'); }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ UTILS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ UTILS ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function toast(msg) {
   const el = document.getElementById('toast');
   el.textContent = msg;
@@ -1404,7 +1404,7 @@ function toast(msg) {
   setTimeout(() => el.classList.remove('show'), 2000);
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ INIT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ INIT ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 loadData();
 go('dashboard');
 </script>
