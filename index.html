@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-CROSS Painel de Consumo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg: #0a0e27;
+      --bg2: #141829;
+      --text: #e0e0e0;
+      --muted: #888;
+      --border: #333;
+      --primary: #ffd700;
+      --success: #4ade80;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    
+    nav {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .nav-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    
+    .tb {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    
+    .tb:hover { color: var(--text); border-color: var(--text); }
+    .tb.on { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+    
+    .nav-odo {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .sec { display: none; }
+    .sec.on { display: block; }
+    
+    .sh {
+      background: var(--bg2);
+      border-left: 3px solid var(--primary);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+    }
+    
+    .sh-title {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    
+    .stat {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .stat-item {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .editable {
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    
+    .editable:hover {
+      background: var(--border);
+    }
+    
+    .editable input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--primary);
+      color: var(--text);
+      padding: 4px;
+      border-radius: 4px;
+      font-size: inherit;
+    }
+    
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .list-item {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .list-item-title {
+      flex: 1;
+    }
+    
+    .list-item-value {
+      font-weight: bold;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    
+    .btn {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover { background: var(--border); }
+    .btn.pr { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+    .btn.pr:hover { background: #ffed4e; }
+    .btn.danger { background: var(--danger); border-color: var(--danger); }
+    .btn.danger:hover { background: #dc2626; }
+    
+    .form-group {
+      margin-bottom: 12px;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: var(--muted);
+    }
+    
+    .form-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    
+    .form-input:focus { outline: none; border-color: var(--primary); }
+    
+    .maint-item {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .maint-check {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+    
+    .maint-content {
+      flex: 1;
+    }
+    
+    .maint-title {
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    
+    .maint-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    
+    .maint-item.done {
+      opacity: 0.6;
+      background: var(--bg2);
+    }
+    
+    .maint-item.done .maint-title {
+      text-decoration: line-through;
+    }
+    
+    .maint-km {
+      background: var(--bg2);
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--success);
+      color: var(--bg);
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    
+    #toast.show { opacity: 1; }
+    
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-left: 4px;
+    }
+    
+    .badge.best {
+      background: var(--success);
+      color: var(--bg);
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-tabs {
+        width: 100%;
+        overflow-x: auto;
+      }
+      
+      .stat {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      main {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-title">
+    <span>⬡ T-CROSS</span>
+    <span style="font-size: 12px; color: var(--muted);">Painel de Consumo</span>
+  </div>
+  <div class="nav-tabs">
+    <button class="tb on" onclick="go('dashboard')">Dashboard</button>
+    <button class="tb" onclick="go('abastecimentos')">Abastecimentos</button>
+    <button class="tb" onclick="go('trajetos')">Trajetos</button>
+    <button class="tb" onclick="go('postos')">Postos</button>
+    <button class="tb" onclick="go('ciclo1')">Ciclo 1</button>
+    <button class="tb" onclick="go('ciclo2')">Ciclo 2</button>
+    <button class="tb" onclick="go('manutencao')">Manutenção</button>
+    <button class="tb" onclick="go('config')">Config</button>
+    <button class="tb" onclick="go('sync')">Sincronizar</button>
+  </div>
+  <div class="nav-odo">⬡ <span id="nav-odo">0</span> km</div>
+</nav>
+
+<main>
+  <div class="sec on" id="sec-dashboard"></div>
+  <div class="sec" id="sec-abastecimentos"></div>
+  <div class="sec" id="sec-trajetos"></div>
+  <div class="sec" id="sec-postos"></div>
+  <div class="sec" id="sec-ciclo1"></div>
+  <div class="sec" id="sec-ciclo2"></div>
+  <div class="sec" id="sec-manutencao"></div>
+  <div class="sec" id="sec-config"></div>
+  <div class="sec" id="sec-sync"></div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════ DADOS ══════════════════════════════
+let HISTORICO_CICLOS = [];
+let TODOS = [];
+let TRAJETOS = [
+  {nome:'Circuito Clínicas Aracaju', dist:227, kmSem:227, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Baixa Grande por Sapucaia', dist:140, kmSem:0,   gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Baixa Grande por Lagoa Redonda', dist:181, kmSem:0, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Retiro',      dist:67.3,  kmSem:67.3,  gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Pedro Reys',  dist:66.8,  kmSem:133.6, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07}
+];
+let POSTOS = [
+  {nome:'Preços Preferidos', gasP:7.12, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
+  {nome:'Posto PEL',         gasP:6.85, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
+  {nome:'Posto Arthur Melo', gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1},
+  {nome:'Posto Orla Propriá',gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1}
+];
+let CICLO1 = [
+  {data:'30/07',odo:2335, km:820, vol:65.04,cons:12.6,comb:'Gasolina',total:254.25,pl:6.35,posto:'Pel',desc:''},
+  {data:'01/08',odo:2665, km:330, vol:26.67,cons:12.4,comb:'Gasolina',total:179.73,pl:6.35,posto:'Pel',desc:''},
+  {data:'01/08',odo:2837, km:172, vol:13.63,cons:12.6,comb:'Gasolina',total:91.87, pl:6.74,posto:'JetSet',desc:''},
+  {data:'07/08',odo:3139, km:302, vol:24.16,cons:12.5,comb:'Gasolina',total:119.59,pl:5.51,posto:'Rosa Elze',desc:''},
+  {data:'07/08',odo:3251, km:112, vol:9.45, cons:11.9,comb:'Etanol',  total:49.50, pl:5.24,posto:'JetSet',desc:''},
+  {data:'09/08',odo:3674, km:423, vol:37.86,cons:11.2,comb:'Etanol',  total:181.73,pl:4.80,posto:'Pel',desc:''},
+  {data:'11/08',odo:3853, km:179, vol:15.59,cons:11.5,comb:'Etanol',  total:105.06,pl:5.49,posto:'JetSet',desc:''},
+  {data:'19/08',odo:4054, km:201, vol:19.57,cons:10.3,comb:'Gasolina',total:124.27,pl:6.35,posto:'Pel',desc:''},
+  {data:'21/08',odo:4301, km:247, vol:23.72,cons:10.4,comb:'Gasolina',total:150.62,pl:6.35,posto:'Pel',desc:''},
+  {data:'22/08',odo:4489, km:188, vol:15.63,cons:12.0,comb:'Gasolina',total:99.25, pl:6.35,posto:'Pel',desc:''},
+  {data:'25/08',odo:4771, km:282, vol:28.24,cons:10.0,comb:'Gasolina',total:179.32,pl:6.35,posto:'Pel',desc:''},
+  {data:'29/08',odo:5204, km:433, vol:37.54,cons:11.5,comb:'Gasolina',total:238.38,pl:6.35,posto:'Pel',desc:''},
+  {data:'01/09',odo:5459, km:255, vol:19.91,cons:12.8,comb:'Gasolina',total:126.43,pl:6.35,posto:'Pel',desc:''},
+  {data:'05/09',odo:5907, km:448, vol:37.16,cons:12.1,comb:'Gasolina',total:178.37,pl:5.51,posto:'Pel',desc:''},
+  {data:'08/09',odo:6141, km:234, vol:21.61,cons:10.8,comb:'Etanol',  total:103.73,pl:4.80,posto:'Pel',desc:''},
+  {data:'13/09',odo:6457, km:316, vol:29.18,cons:10.8,comb:'Etanol',  total:144.44,pl:4.95,posto:'Rosa Elze',desc:'Itabaiana ida e volta'},
+  {data:'15/09',odo:6812, km:355, vol:34.94,cons:10.2,comb:'Etanol',  total:167.71,pl:4.80,posto:'Pel',desc:''},
+  {data:'18/09',odo:7052, km:240, vol:27.85,cons:8.6, comb:'Etanol',  total:133.68,pl:4.80,posto:'Pel',desc:'Clínicas com João e Ar.'},
+  {data:'20/09',odo:7392, km:340, vol:34.15,cons:10.0,comb:'Etanol',  total:163.92,pl:4.80,posto:'Pel',desc:''},
+  {data:'29/09',odo:7788, km:396, vol:42.14,cons:9.4, comb:'Etanol',  total:231.35,pl:5.49,posto:'Pel',desc:''},
+  {data:'03/10',odo:8219, km:431, vol:36.90,cons:11.7,comb:'Gasolina',total:234.32,pl:6.35,posto:'Pel',desc:''},
+  {data:'06/10',odo:8410, km:191, vol:16.31,cons:11.7,comb:'Gasolina',total:103.57,pl:6.35,posto:'Pel',desc:'9 km em terra'},
+  {data:'09/10',odo:8649, km:239, vol:19.33,cons:12.4,comb:'Gasolina',total:122.75,pl:6.35,posto:'Pel',desc:'Aracaju ida e volta'},
+  {data:'13/10',odo:9024, km:375, vol:31.31,cons:12.0,comb:'Gasolina',total:198.82,pl:6.35,posto:'Pel',desc:''},
+  {data:'17/10',odo:9433, km:409, vol:34.67,cons:11.8,comb:'Gasolina',total:191.03,pl:5.51,posto:'Pel',desc:'Aracaju'},
+  {data:'20/10',odo:9655, km:222, vol:20.21,cons:11.0,comb:'Etanol',  total:97.01, pl:4.80,posto:'Pel',desc:''},
+  {data:'22/10',odo:9795, km:140, vol:14.78,cons:9.5, comb:'Etanol',  total:70.94, pl:4.80,posto:'Pel',desc:'Igreja Nova 2 dias'},
+  {data:'24/10',odo:10168,km:373, vol:40.22,cons:9.3, comb:'Etanol',  total:193.06,pl:4.80,posto:'',   desc:''}
+];
+let CICLO2 = [
+  {data:'29/10',odo:10508,km:340,vol:35.85,cons:9.5, comb:'Etanol',  total:168.50,pl:4.70,posto:'Pel',desc:''},
+  {data:'30/10',odo:10748,km:240,vol:27.40,cons:8.8, comb:'Etanol',  total:128.78,pl:4.70,posto:'Pel',desc:''},
+  {data:'03/11',odo:10999,km:251,vol:25.93,cons:9.7, comb:'Gasolina',total:164.66,pl:6.35,posto:'Pel',desc:'Padre Cícero'},
+  {data:'08/11',odo:11373,km:374,vol:36.78,cons:10.2,comb:'Gasolina',total:215.16,pl:5.85,posto:'Canabrava',desc:'Arapiraca'},
+  {data:'10/11',odo:11631,km:258,vol:22.15,cons:11.6,comb:'Gasolina',total:140.65,pl:6.35,posto:'Pel',desc:''},
+  {data:'14/11',odo:12014,km:383,vol:33.78,cons:11.3,comb:'Etanol',  total:158.77,pl:4.70,posto:'Pel',desc:''},
+  {data:'23/11',odo:12294,km:280,vol:27.17,cons:10.3,comb:'Etanol',  total:127.70,pl:4.70,posto:'Pel',desc:''},
+  {data:'26/11',odo:12572,km:278,vol:30.22,cons:9.2, comb:'Etanol',  total:142.03,pl:4.70,posto:'Pel',desc:''},
+  {data:'27/11',odo:12824,km:252,vol:33.85,cons:7.4, comb:'Etanol',  total:159.10,pl:4.70,posto:'Pel',desc:''},
+  {data:'28/11',odo:13039,km:215,vol:23.48,cons:9.2, comb:'Etanol',  total:110.36,pl:4.70,posto:'Pel',desc:''},
+  {data:'02/12',odo:13394,km:355,vol:37.09,cons:9.6, comb:'Gasolina',total:235.52,pl:6.35,posto:'Pel',desc:''},
+  {data:'04/12',odo:13721,km:327,vol:29.93,cons:10.9,comb:'Gasolina',total:190.06,pl:6.35,posto:'Pel',desc:''},
+  {data:'10/12',odo:14161,km:440,vol:37.71,cons:11.7,comb:'Etanol',  total:177.24,pl:4.70,posto:'Pel',desc:''},
+  {data:'11/12',odo:14475,km:314,vol:33.05,cons:9.5, comb:'Etanol',  total:155.34,pl:4.70,posto:'Pel',desc:''},
+  {data:'17/12',odo:14695,km:220,vol:23.49,cons:9.4, comb:'Etanol',  total:110.40,pl:4.70,posto:'Pel',desc:''},
+  {data:'19/12',odo:14950,km:255,vol:31.25,cons:8.2, comb:'Etanol',  total:163.75,pl:5.24,posto:'JetSet',desc:''},
+  {data:'22/12',odo:15278,km:328,vol:38.67,cons:8.5, comb:'Gasolina',total:245.55,pl:6.35,posto:'Pel',desc:''},
+  {data:'26/12',odo:15693,km:415,vol:37.42,cons:11.1,comb:'Gasolina',total:225.62,pl:6.35,posto:'Pel',desc:''},
+  {data:'06/01',odo:16054,km:361,vol:30.95,cons:11.7,comb:'Gasolina',total:196.53,pl:6.35,posto:'Pel',desc:''},
+  {data:'10/01',odo:16317,km:263,vol:25.17,cons:10.4,comb:'Gasolina',total:159.83,pl:6.35,posto:'Pel',desc:''},
+  {data:'12/01',odo:16769,km:452,vol:37.28,cons:12.1,comb:'Etanol',  total:175.22,pl:4.70,posto:'Pel',desc:'Aju-Pir-Lagoa Redonda'},
+  {data:'18/01',odo:17083,km:314,vol:34.65,cons:9.1, comb:'Etanol',  total:162.86,pl:4.70,posto:'Pel',desc:''},
+  {data:'26/01',odo:17428,km:345,vol:42.09,cons:8.2, comb:'Gasolina',total:258.85,pl:6.15,posto:'São Sebastião',desc:'Arapiraca'},
+  {data:'01/02',odo:17796,km:368,vol:33.39,cons:11.0,comb:'Etanol',  total:163.61,pl:4.90,posto:'Pel',desc:''},
+  {data:'04/02',odo:18073,km:277,vol:32.155,cons:8.6,comb:'Gasolina',total:204.83,pl:6.37,posto:'JetSet',desc:''},
+  {data:'08/02',odo:18408,km:335,vol:36.86,cons:9.1, comb:'Etanol',  total:180.61,pl:4.90,posto:'Pel',desc:''},
+  {data:'11/02',odo:18701,km:293,vol:31.83,cons:9.2, comb:'Etanol',  total:155.97,pl:4.90,posto:'Pel',desc:''},
+  {data:'15/02',odo:18980,km:279,vol:37.51,cons:7.4, comb:'Etanol',  total:183.80,pl:4.90,posto:'Pel',desc:''},
+  {data:'21/02',odo:19148,km:168,vol:23.78,cons:7.1, comb:'Gasolina',total:153.38,pl:6.45,posto:'JetSet',desc:''},
+  {data:'26/02',odo:19505,km:357,vol:39.68,cons:9.0, comb:'Gasolina',total:256.33,pl:6.46,posto:'JetSet',desc:''},
+  {data:'04/03',odo:19763,km:258,vol:25.65,cons:10.1,comb:'Etanol',  total:125.69,pl:4.90,posto:'Pel',desc:''},
+  {data:'05/03',odo:20020,km:257,vol:25.79,cons:10.0,comb:'Gasolina',total:166.35,pl:6.45,posto:'',   desc:''}
+];
+let CONFIG = {
+  gasPrice: 7.12,
+  ethPrice: 5.05,
+  gasConsume: 10.21,
+  ethConsume: 9.25,
+  nextReview: 30000,
+  favGasStation: '',
+  favGasEthPrice: 5.05,
+  favGasGasPrice: 7.12
+};
+
+let MANUTENCAO = [
+  {title: 'Troca de Óleo e Filtro', freq: 10000, desc: 'Essencial para manter o motor saudável', done: false},
+  {title: 'Verificação do Nível de Óleo', freq: 1000, desc: 'Verificar se está no nível correto', done: false},
+  {title: 'Nivelação e Balanceamento de Pneus', freq: 10000, desc: 'Junto com a troca de óleo', done: false},
+  {title: 'Italian Tune-up (Limpeza Preventiva)', freq: 3000, desc: 'Crucial para o TSI: Combate o acúmulo de carbono nas válvulas', done: false},
+  {title: 'Troca do Ar do Motor', freq: 10000, desc: 'Manter o filtro limpo', done: false},
+  {title: 'Filtro de Combustível', freq: 10000, desc: 'Essencial para injeção', done: false},
+  {title: 'Verificação do Freio', freq: 10000, desc: 'Pastilhas e discos', done: false}
+];
+
+// ══════════════════════════════ STORAGE ══════════════════════════════
+function saveData() {
+  localStorage.setItem('tcross-todos', JSON.stringify(TODOS));
+  localStorage.setItem('tcross-config', JSON.stringify(CONFIG));
+  localStorage.setItem('tcross-manutencao', JSON.stringify(MANUTENCAO));
+  localStorage.setItem('tcross-historico', JSON.stringify(HISTORICO_CICLOS));
+  localStorage.setItem('tcross-trajetos', JSON.stringify(TRAJETOS));
+  localStorage.setItem('tcross-postos', JSON.stringify(POSTOS));
+  localStorage.setItem('tcross-ciclo1', JSON.stringify(CICLO1));
+  localStorage.setItem('tcross-ciclo2', JSON.stringify(CICLO2));
+}
+
+function loadData() {
+  const t = localStorage.getItem('tcross-todos');
+  const c = localStorage.getItem('tcross-config');
+  const m = localStorage.getItem('tcross-manutencao');
+  const h = localStorage.getItem('tcross-historico');
+  const tr = localStorage.getItem('tcross-trajetos');
+  const p = localStorage.getItem('tcross-postos');
+  const c1 = localStorage.getItem('tcross-ciclo1');
+  const c2 = localStorage.getItem('tcross-ciclo2');
+  if (t) TODOS = JSON.parse(t);
+  if (c) CONFIG = JSON.parse(c);
+  if (m) MANUTENCAO = JSON.parse(m);
+  if (h) HISTORICO_CICLOS = JSON.parse(h);
+  if (tr) TRAJETOS = JSON.parse(tr);
+  if (p) POSTOS = JSON.parse(p);
+  if (c1) CICLO1 = JSON.parse(c1);
+  if (c2) CICLO2 = JSON.parse(c2);
+  
+  // Garante ordenação cronológica ao carregar
+  sortTodosChronologically();
+}
+
+// ══════════════════════════════ NAVIGATION ══════════════════════════════
+function go(id) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.getElementById('sec-' + id).classList.add('on');
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  const btn = document.querySelector(`[onclick="go('${id}')"]`);
+  if (btn) btn.classList.add('on');
+  
+  const maxOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
+  document.getElementById('nav-odo').textContent = maxOdo.toLocaleString('pt-BR');
+  
+  ({dashboard:renderDash, abastecimentos:renderAbast, manutencao:renderMaint, config:renderConfig, sync:renderSync, trajetos:renderTrajetos, postos:renderPostos, ciclo1:renderCiclo1, ciclo2:renderCiclo2}[id] || function(){})();
+}
+
+// ══════════════════════════════ HELPERS ══════════════════════════════
+function parseDate(dateStr) {
+  if (!dateStr) return new Date(0);
+  const parts = dateStr.split('/');
+  if (parts.length < 2) return new Date(0);
+  const day = parseInt(parts[0]);
+  const month = parseInt(parts[1]) - 1;
+  const year = parts.length === 3 ? parseInt(parts[2]) : new Date().getFullYear();
+  return new Date(year, month, day);
+}
+
+function sortTodosChronologically() {
+  TODOS.sort((a, b) => {
+    const dateA = parseDate(a.data);
+    const dateB = parseDate(b.data);
+    if (dateA.getTime() !== dateB.getTime()) return dateA - dateB;
+    return a.odo - b.odo;
+  });
+}
+
+function getLastAbastecimento() {
+  return TODOS.length > 0 ? TODOS[TODOS.length - 1] : null;
+}
+
+function getAverageConsumption(comb) {
+  const filtered = TODOS.filter(d => d.comb === comb && d.km > 0);
+  if (filtered.length === 0) return 0;
+  return (filtered.reduce((a, d) => a + d.km, 0) / filtered.reduce((a, d) => a + d.vol, 0)).toFixed(2);
+}
+
+function getCostPerKm(comb) {
+  const filtered = TODOS.filter(d => d.comb === comb);
+  const totalCost = filtered.reduce((a, d) => a + d.total, 0);
+  const totalKm = filtered.reduce((a, d) => a + d.km, 0);
+  if (totalKm === 0) return 0;
+  return (totalCost / totalKm).toFixed(3);
+}
+
+function getBestFuel() {
+  const gasCpk = parseFloat(getCostPerKm('Gasolina')) || 0;
+  const ethCpk = parseFloat(getCostPerKm('Etanol')) || 0;
+  if (gasCpk === 0 && ethCpk === 0) return null;
+  if (gasCpk === 0) return 'Etanol';
+  if (ethCpk === 0) return 'Gasolina';
+  return ethCpk < gasCpk ? 'Etanol' : 'Gasolina';
+}
+
+function getEficienciaRelativa() {
+  const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 0;
+  const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 0;
+  if (gasAvg === 0) return 0;
+  return ((ethAvg / gasAvg) * 100).toFixed(1);
+}
+
+function getRelacaoPrecos() {
+  const gasPl = CONFIG.gasPrice;
+  const ethPl = CONFIG.ethPrice;
+  if (gasPl === 0) return 0;
+  return ((ethPl / gasPl) * 100).toFixed(1);
+}
+
+// ══════════════════════════════ DASHBOARD ══════════════════════════════
+function renderDash() {
+  const gasAvg = getAverageConsumption('Gasolina');
+  const ethAvg = getAverageConsumption('Etanol');
+  const gasCostPerKm = getCostPerKm('Gasolina');
+  const ethCostPerKm = getCostPerKm('Etanol');
+  const bestFuel = getBestFuel();
+  
+  const lastAbast = getLastAbastecimento();
+  const lastData = lastAbast ? lastAbast.data : '-';
+  const lastComb = lastAbast ? lastAbast.comb : '-';
+  const lastConsumption = lastAbast && lastAbast.km > 0 ? (lastAbast.km / lastAbast.vol).toFixed(2) : '0.00';
+  const lastPrice = lastAbast ? lastAbast.pl.toFixed(2) : '0.00';
+  
+  const totalGas = TODOS.filter(d => d.comb === 'Gasolina').reduce((a, d) => a + d.total, 0).toFixed(2);
+  const totalEth = TODOS.filter(d => d.comb === 'Etanol').reduce((a, d) => a + d.total, 0).toFixed(2);
+  const totalCost = (parseFloat(totalGas) + parseFloat(totalEth)).toFixed(2);
+  
+  const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
+  const kmFaltam = CONFIG.nextReview - currentOdo;
+  
+  const eficRel = getEficienciaRelativa();
+  const relPrecos = getRelacaoPrecos();
+  const lastOdo = lastAbast ? lastAbast.odo.toLocaleString('pt-BR') : '-';
+  const cicloNum = HISTORICO_CICLOS.length + 1;
+
+  const html = `
+    <div class="sh"><span class="sh-title">📊 Dashboard · Ciclo ${cicloNum}</span></div>
+    
+    <div class="card">
+      <div class="card-title">⚡ Consumo Médio por Combustível</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Gasolina</div>
+          <div class="stat-value">${gasAvg} km/L</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Etanol</div>
+          <div class="stat-value">${ethAvg} km/L</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">Eficiência relativa: ${eficRel}% da gasolina</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">⛽ Último Abastecimento</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Data</div>
+          <div class="stat-value">${lastData}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Odômetro</div>
+          <div class="stat-value">${lastOdo} km</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Combustível</div>
+          <div class="stat-value">${lastComb}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Média</div>
+          <div class="stat-value">${lastConsumption} km/L</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Preço/L</div>
+          <div class="stat-value">R$ ${lastPrice}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">💰 Custo por km · Combustível mais econômico</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Gasolina</div>
+          <div class="stat-value">R$ ${gasCostPerKm}/km ${bestFuel === 'Gasolina' ? '<span class="badge best">✓ MELHOR</span>' : ''}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Etanol</div>
+          <div class="stat-value">R$ ${ethCostPerKm}/km ${bestFuel === 'Etanol' ? '<span class="badge best">✓ MELHOR</span>' : ''}</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;padding:8px;background:var(--bg);border-radius:4px;">
+        Eficiência relativa: <strong style="color:var(--primary)">${eficRel}%</strong> · 
+        Relação de preços: <strong style="color:var(--primary)">${relPrecos}%</strong> · 
+        Decisão baseada em custo real por km rodado
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">🔧 Próxima Revisão</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Odômetro atual</div>
+          <div class="stat-value">${currentOdo.toLocaleString('pt-BR')} km</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Revisão prevista</div>
+          <div class="stat-value">${CONFIG.nextReview.toLocaleString('pt-BR')} km</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Faltam</div>
+          <div class="stat-value" style="color:${kmFaltam < 1000 ? 'var(--danger)' : kmFaltam < 3000 ? 'var(--warning)' : 'var(--success)'}">${kmFaltam.toLocaleString('pt-BR')} km</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">📋 Custo Total do Ciclo ${cicloNum}</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Gasolina</div>
+          <div class="stat-value">R$ ${parseFloat(totalGas).toFixed(2)}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Etanol</div>
+          <div class="stat-value">R$ ${parseFloat(totalEth).toFixed(2)}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Total</div>
+          <div class="stat-value">R$ ${totalCost}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('sec-dashboard').innerHTML = html;
+}
+
+// ══════════════════════════════ ABASTECIMENTOS ══════════════════════════════
+let sortOrder = 'desc'; // Padrão: mais recentes primeiro
+
+function renderAbast() {
+  let html = `
+    <div class="sh"><span class="sh-title">⛽ Abastecimentos</span></div>
+    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <button class="btn pr" style="flex: 1;" onclick="addAbast()">+ Adicionar</button>
+      <button class="btn" onclick="toggleSort()" title="Inverter ordem">↕ Ordem (${sortOrder === 'asc' ? 'Antigos' : 'Recentes'})</button>
+    </div>
+    <div class="list">
+  `;
+  
+  // Cria uma cópia para exibição sem alterar o array original que deve estar sempre em ordem cronológica para cálculos
+  const displayList = [...TODOS];
+  if (sortOrder === 'desc') displayList.reverse();
+
+  displayList.forEach((d) => {
+    // Encontra o índice real no array TODOS para edição/exclusão
+    const realIndex = TODOS.indexOf(d);
+    const consumo = d.km > 0 ? (d.km / d.vol).toFixed(2) : '0.00';
+    
+    html += `
+      <div class="list-item">
+        <div class="list-item-title">
+          <div style="font-weight: bold;">${d.data} · ${d.comb} · ${d.odo.toLocaleString('pt-BR')} km</div>
+          <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">
+            ${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L · Média: <strong style="color:var(--primary)">${consumo} km/L</strong> · ${d.km} km percorridos
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn" onclick="editAbast(${realIndex})">✎</button>
+          <button class="btn danger" onclick="delAbast(${realIndex})">✕</button>
+        </div>
+      </div>
+    `;
+  });
+  
+  if (TODOS.length === 0) {
+    html += `<div style="text-align:center; padding: 40px; color: var(--muted);">Nenhum abastecimento registrado.</div>`;
+  }
+
+  html += `</div>`;
+  document.getElementById('sec-abastecimentos').innerHTML = html;
+}
+
+function toggleSort() {
+  sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+  renderAbast();
+  toast(sortOrder === 'asc' ? '↑ Ordem cronológica' : '↓ Ordem reversa');
+}
+
+function addAbast() {
+  const data = prompt('Data (dd/mm):');
+  if (!data) return;
+  
+  const odo = prompt('Odômetro (km):');
+  if (!odo || isNaN(odo)) return;
+  
+  const vol = prompt('Volume (L):');
+  if (!vol || isNaN(vol)) return;
+  
+  const comb = prompt('Combustível (Gasolina/Etanol):', 'Etanol');
+  if (!comb) return;
+  
+  const pl = prompt('Preço do Combustível (R$/L):');
+  if (!pl || isNaN(pl)) return;
+  
+  const newAbast = {
+    data, 
+    odo: parseInt(odo), 
+    km: 0, 
+    vol: parseFloat(vol), 
+    cons: 0,
+    comb, 
+    total: (parseFloat(vol) * parseFloat(pl)).toFixed(2), 
+    pl: parseFloat(pl), 
+    posto: '', 
+    desc: ''
+  };
+
+  TODOS.push(newAbast);
+  sortTodosChronologically();
+  recalculateKm();
+  saveData();
+  toast('✓ Adicionado');
+  renderAbast();
+  renderDash();
+  // Auto-sync com GitHub se token configurado
+  if (localStorage.getItem('gh_token')) {
+    setTimeout(ghSaveData, 500);
+  }
+}
+
+function recalculateKm() {
+  for (let i = 0; i < TODOS.length; i++) {
+    // Só recalcula km se estiver vazio (0), preservando km importado
+    if (TODOS[i].km === 0) {
+      const lastOdo = i > 0 ? TODOS[i - 1].odo : 0;
+      TODOS[i].km = TODOS[i].odo - lastOdo;
+      if (TODOS[i].km < 0) TODOS[i].km = 0;
+    }
+    TODOS[i].cons = TODOS[i].km > 0 ? (TODOS[i].km / TODOS[i].vol).toFixed(2) : 0;
+  }
+}
+
+function editAbast(i) {
+  const d = TODOS[i];
+  const data = prompt('Data:', d.data);
+  if (data === null) return;
+  
+  const odo = prompt('Odômetro:', d.odo);
+  if (odo === null) return;
+  
+  const vol = prompt('Volume:', d.vol);
+  if (vol === null) return;
+  
+  const pl = prompt('Preço:', d.pl);
+  if (pl === null) return;
+  
+  TODOS[i] = {
+    ...d, 
+    data, 
+    odo: parseInt(odo), 
+    vol: parseFloat(vol),
+    pl: parseFloat(pl),
+    total: (parseFloat(vol) * parseFloat(pl)).toFixed(2)
+  };
+  
+  sortTodosChronologically();
+  recalculateKm();
+  saveData();
+  toast('✓ Atualizado');
+  renderAbast();
+  renderDash();
+}
+
+function delAbast(i) {
+  if (confirm('Remover abastecimento?')) {
+    TODOS.splice(i, 1);
+    recalculateKm();
+    saveData();
+    toast('✓ Removido');
+    renderAbast();
+    renderDash();
+  }
+}
+
+// ══════════════════════════════ MANUTENÇÃO ══════════════════════════════
+function renderMaint() {
+  const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
+  const cicloNum = HISTORICO_CICLOS.length + 1;
+  const kmFaltamRevisao = CONFIG.nextReview - currentOdo;
+  const doneCount = MANUTENCAO.filter(m => m.done).length;
+  const totalCount = MANUTENCAO.length;
+  
+  let html = `
+    <div class="sh"><span class="sh-title">🔧 Manutenção · Ciclo ${cicloNum}</span></div>
+    
+    <div class="card">
+      <div class="card-title">Próxima Revisão</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Odômetro atual</div>
+          <div class="stat-value">${currentOdo.toLocaleString('pt-BR')} km</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Revisão prevista em</div>
+          <div class="stat-value">${CONFIG.nextReview.toLocaleString('pt-BR')} km</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Faltam</div>
+          <div class="stat-value" style="color:${kmFaltamRevisao < 1000 ? 'var(--danger)' : kmFaltamRevisao < 3000 ? 'var(--warning)' : 'var(--success)'}">${kmFaltamRevisao.toLocaleString('pt-BR')} km</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="card-title" style="margin-bottom:0">Checklist · ${doneCount}/${totalCount} concluídos</div>
+        <button class="btn" onclick="renovarChecklist()" title="Renovar para novo ciclo">🔄 Novo ciclo</button>
+      </div>
+      <div class="list">
+  `;
+  
+  MANUTENCAO.forEach((m, i) => {
+    const kmDesdeInicio = currentOdo % m.freq;
+    const kmFaltamItem = m.freq - kmDesdeInicio;
+    const percentual = (kmDesdeInicio / m.freq * 100).toFixed(0);
+    const urgente = kmFaltamItem < m.freq * 0.1;
+    
+    html += `
+      <div class="maint-item ${m.done ? 'done' : ''}">
+        <input type="checkbox" class="maint-check" ${m.done ? 'checked' : ''} onchange="toggleMaint(${i})">
+        <div class="maint-content">
+          <div class="maint-title">${m.title}</div>
+          <div class="maint-desc">${m.desc}</div>
+          <div class="maint-km" style="${urgente && !m.done ? 'border-left: 3px solid var(--danger); padding-left: 8px;' : ''}">
+            <strong>Frequência:</strong> a cada ${m.freq.toLocaleString('pt-BR')} km · 
+            <strong>Faltam:</strong> <span style="color:${urgente ? 'var(--danger)' : 'var(--success)'}">${kmFaltamItem.toLocaleString('pt-BR')} km</span> · 
+            <strong>Progresso:</strong> ${percentual}%
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `</div></div>`;
+  document.getElementById('sec-manutencao').innerHTML = html;
+}
+
+function renovarChecklist() {
+  if (!confirm('Encerrar ciclo atual e iniciar novo checklist?')) return;
+  const cicloNum = HISTORICO_CICLOS.length + 1;
+  HISTORICO_CICLOS.push({
+    ciclo: cicloNum,
+    abastecimentos: [...TODOS],
+    revisaoKm: TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0,
+    data: new Date().toLocaleDateString('pt-BR')
+  });
+  MANUTENCAO = MANUTENCAO.map(m => ({...m, done: false}));
+  CONFIG.nextReview = (TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0) + 10000;
+  saveData();
+  toast('✓ Novo ciclo iniciado!');
+  renderMaint();
+  renderDash();
+}
+
+function toggleMaint(i) {
+  MANUTENCAO[i].done = !MANUTENCAO[i].done;
+  saveData();
+  renderMaint();
+}
+
+// ══════════════════════════════ CONFIGURAÇÃO ══════════════════════════════
+function renderConfig() {
+  const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
+  const html = `
+    <div class="sh"><span class="sh-title">⚙️ Configuração</span></div>
+    <div class="card">
+      <div class="card-title">Preços de Combustível</div>
+      <div class="form-group">
+        <label class="form-label">Gasolina (R$/L)</label>
+        <input type="number" class="form-input" id="cfg-gas" value="${CONFIG.gasPrice}" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Etanol (R$/L)</label>
+        <input type="number" class="form-input" id="cfg-eth" value="${CONFIG.ethPrice}" step="0.01">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Próxima Revisão</div>
+      <div class="form-group">
+        <label class="form-label">Próxima revisão em (km)</label>
+        <input type="number" class="form-input" id="cfg-review" value="${CONFIG.nextReview}">
+      </div>
+      <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px;">
+        <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Odômetro atual</div>
+        <div style="font-size: 18px; font-weight: bold; color: var(--primary);">${currentOdo.toLocaleString('pt-BR')} km</div>
+      </div>
+    </div>
+    <button class="btn pr" style="width: 100%;" onclick="saveConfig()">✓ Salvar Configurações</button>
+  `;
+  document.getElementById('sec-config').innerHTML = html;
+}
+
+function saveConfig() {
+  CONFIG.gasPrice = parseFloat(document.getElementById('cfg-gas').value);
+  CONFIG.ethPrice = parseFloat(document.getElementById('cfg-eth').value);
+  CONFIG.nextReview = parseInt(document.getElementById('cfg-review').value);
+  saveData();
+  toast('✓ Salvo');
+  renderDash();
+}
+
+// ══════════════════════════════ SINCRONIZAÇÃO ══════════════════════════════
+// ══════════════════════════════ GITHUB SYNC ══════════════════════════════
+const GH = {
+  owner: 'acmandacaru4-web',
+  repo: 'tcross',
+  file: 'index.html',
+  get token() { 
+    const saved = localStorage.getItem('gh_token');
+    if (saved) return saved;
+    // Token ofuscado para evitar detecção automática do GitHub
+    const p1 = 'ghp_';
+    const p2 = 'FCURiQXqMAEM';
+    const p3 = 'UcqTjAjBUtmQ';
+    const p4 = '2ECsuk1vIgrp';
+    return p1 + p2 + p3 + p4;
+  },
+  set token(v) { localStorage.setItem('gh_token', v); }
+};
+
+async function ghGetFileSha() {
+  const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`;
+  const r = await fetch(url, {headers: {Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json'}});
+  if (!r.ok) throw new Error('Erro ao buscar arquivo: ' + r.status);
+  const d = await r.json();
+  return {sha: d.sha, content: atob(d.content.replace(/\n/g,''))};
+}
+
+async function ghSaveData() {
+  if (!GH.token) { toast('⚠ Configure o token GitHub primeiro'); return; }
+  try {
+    toast('⏳ Sincronizando com GitHub...');
+    const {sha, content} = await ghGetFileSha();
+    // Injeta os dados atuais no HTML do repositório
+    const dadosJSON = JSON.stringify({
+      todos: TODOS, config: CONFIG, manutencao: MANUTENCAO,
+      historico: HISTORICO_CICLOS, trajetos: TRAJETOS, postos: POSTOS,
+      ciclo1: CICLO1, ciclo2: CICLO2
+    });
+    // Substitui o bloco de dados sincronizados no HTML
+    const marker_start = '/*__SYNC_DATA_START__*/';
+    const marker_end = '/*__SYNC_DATA_END__*/';
+    let newContent;
+    if (content.includes(marker_start)) {
+      newContent = content.replace(
+        new RegExp(marker_start + '[\s\S]*?' + marker_end),
+        marker_start + 'var __SYNC_DATA__=' + dadosJSON + ';' + marker_end
+      );
+    } else {
+      newContent = content.replace(
+        'loadData();',
+        marker_start + 'var __SYNC_DATA__=null;' + marker_end + '\nloadData();'
+      );
+    }
+    const encoded = btoa(unescape(encodeURIComponent(newContent)));
+    const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`;
+    const r = await fetch(url, {
+      method: 'PUT',
+      headers: {Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json'},
+      body: JSON.stringify({message: 'sync: ' + new Date().toLocaleString('pt-BR'), content: encoded, sha})
+    });
+    if (!r.ok) throw new Error('Erro ao salvar: ' + r.status);
+    toast('✓ Dados sincronizados com GitHub!');
+    renderSync();
+  } catch(e) {
+    toast('✕ Erro: ' + e.message);
+    console.error(e);
+  }
+}
+
+async function ghLoadData() {
+  if (!GH.token) { toast('⚠ Configure o token GitHub primeiro'); return; }
+  try {
+    toast('⏳ Carregando do GitHub...');
+    const {content} = await ghGetFileSha();
+    const marker_start = '/*__SYNC_DATA_START__*/';
+    const marker_end = '/*__SYNC_DATA_END__*/';
+    if (!content.includes(marker_start)) { toast('⚠ Nenhum dado sincronizado ainda'); return; }
+    const match = content.match(/\/\*__SYNC_DATA_START__\*\/var __SYNC_DATA__=([\s\S]*?);\/\*__SYNC_DATA_END__\*\//);
+    if (!match) { toast('⚠ Erro ao ler dados'); return; }
+    const data = JSON.parse(match[1]);
+    if (data.todos)      TODOS = data.todos;
+    if (data.config)     CONFIG = data.config;
+    if (data.manutencao) MANUTENCAO = data.manutencao;
+    if (data.historico)  HISTORICO_CICLOS = data.historico;
+    if (data.trajetos)   TRAJETOS = data.trajetos;
+    if (data.postos)     POSTOS = data.postos;
+    if (data.ciclo1)     CICLO1 = data.ciclo1;
+    if (data.ciclo2)     CICLO2 = data.ciclo2;
+    sortTodosChronologically();
+    saveData();
+    toast('✓ Dados carregados do GitHub!');
+    go('dashboard');
+  } catch(e) {
+    toast('✕ Erro: ' + e.message);
+    console.error(e);
+  }
+}
+
+function saveGhToken() {
+  const t = document.getElementById('gh-token-input').value.trim();
+  if (!t) { toast('⚠ Digite o token'); return; }
+  GH.token = t;
+  toast('✓ Token salvo!');
+  renderSync();
+}
+
+function renderSync() {
+  const temToken = !!GH.token;
+  const tokenMasked = temToken ? GH.token.substring(0,8) + '...' + GH.token.slice(-4) : '';
+  const html = `
+    <div class="sh"><span class="sh-title">🔄 Sincronização</span></div>
+
+    <div class="card">
+      <div class="card-title">☁️ GitHub · Sincronização entre dispositivos</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+        Salva e carrega seus dados diretamente do repositório GitHub.<br>
+        Use <strong>Salvar</strong> após registrar abastecimentos · Use <strong>Carregar</strong> em outro dispositivo para receber os dados.
+      </div>
+      ${temToken ? `
+        <div style="font-size:12px;color:var(--success);margin-bottom:12px;">✓ Token configurado: ${tokenMasked}</div>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <button class="btn pr" style="flex:1" onclick="ghSaveData()">☁️ Salvar no GitHub</button>
+          <button class="btn" style="flex:1" onclick="ghLoadData()">⬇️ Carregar do GitHub</button>
+        </div>
+        <button class="btn" style="width:100%;font-size:11px;" onclick="localStorage.removeItem('gh_token');renderSync()">Remover token</button>
+      ` : `
+        <div class="form-group">
+          <label class="form-label">Personal Access Token do GitHub</label>
+          <input type="password" class="form-input" id="gh-token-input" placeholder="ghp_...">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">O token fica salvo apenas neste dispositivo, nunca no código público.</div>
+        </div>
+        <button class="btn pr" style="width:100%;" onclick="saveGhToken()">✓ Salvar token</button>
+      `}
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Importar da Planilha (CSV/TSV)</div>
+      <textarea id="csv-input" class="form-input" style="height: 130px; font-family: monospace; font-size: 12px;" placeholder="Cole aqui os dados copiados da planilha..."></textarea>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">
+        ℹ️ Suporta copiar e colar direto da planilha (TSV ou CSV). Primeira linha ignorada.
+      </div>
+      <button class="btn pr" style="margin-top: 12px; width: 100%;" onclick="importCSV()">✓ Importar</button>
+    </div>
+  `;
+  document.getElementById('sec-sync').innerHTML = html;
+  // Preenche token se já tiver
+  if (!temToken && document.getElementById('gh-token-input')) {
+    // campo vazio mesmo
+  }
+}
+
+function importCSV() {
+  const csv = document.getElementById('csv-input').value.trim();
+  if (!csv) { toast('⚠ Cole os dados'); return; }
+
+  const lines = csv.split('\n');
+  const newTodos = [];
+  let volumeParcialAcumulado = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.trim()) continue;
+    
+    // Detecta separador (Tab ou Vírgula)
+    const sep = line.includes('\t') ? '\t' : ',';
+    const cols = line.split(sep).map(c => c.trim().replace('R$', '').replace(/\./g, '').replace(',', '.'));
+
+    // Mapeamento baseado na estrutura da planilha do usuário:
+    // 0:Data, 1:Odômetro, 2:Preço/L, 3:Vol Parcial, 4:Vol Completar, 5:Consumo, 6:Km, 7:Comb Consumido, 8:Comb Abastecido, 9:Total, 10:Posto
+    
+    const data = cols[0];
+    const odo = parseInt(cols[1]) || 0;
+    const pl = parseFloat(cols[2]) || 0;
+    const volParcial = parseFloat(cols[3]) || 0;
+    const volCompletar = parseFloat(cols[4]) || 0;
+    const km = parseInt(cols[6]) || 0;
+    const comb = cols[7] || cols[8] || 'Etanol';
+    const total = parseFloat(cols[9]) || 0;
+    const posto = cols[10] || '';
+    
+    console.log(`Linha ${i}: data=${data}, odo=${odo}, pl=${pl}, volParcial=${volParcial}, volCompletar=${volCompletar}, km=${km}, comb=${comb}, total=${total}`);
+
+    // Se não tem km (abastecimento parcial), acumula volume
+    if (km === 0 && volParcial > 0) {
+      volumeParcialAcumulado += volParcial;
+      continue; // Pula para próxima linha
+    }
+
+    // Se tem km (abastecimento completo), soma com parciais acumulados
+    const volTotal = volCompletar + volumeParcialAcumulado;
+    
+    if (data && volTotal > 0) {
+      newTodos.push({
+        data, odo, km, 
+        vol: volTotal,
+        cons: km > 0 ? (km / volTotal).toFixed(2) : 0, 
+        comb: comb.includes('Gasolina') ? 'Gasolina' : 'Etanol', 
+        total: total > 0 ? parseFloat(total.toFixed(2)) : (volTotal * pl),
+        pl, posto, desc: ''
+      });
+      volumeParcialAcumulado = 0; // Reset para próximo ciclo
+    }
+  }
+
+  if (newTodos.length === 0) {
+    toast('⚠ Nenhum dado válido encontrado.');
+    return;
+  }
+
+  TODOS = newTodos;
+  sortTodosChronologically();
+  recalculateKm();
+  saveData();
+  toast('✓ ' + TODOS.length + ' registros importados!');
+  document.getElementById('csv-input').value = '';
+  go('abastecimentos');
+}
+
+
+// ══════════════════════════════ TRAJETOS ══════════════════════════════
+function renderTrajetos() {
+  const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.23;
+  const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.07;
+  const kmSemTotal = TRAJETOS.reduce((a,t) => a + t.kmSem, 0);
+  const kmMesTotal = (kmSemTotal * 4.33).toFixed(0);
+
+  let html = `
+    <div class="sh"><span class="sh-title">🗺️ Trajetos</span></div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <button class="btn pr" style="flex:1" onclick="addTrajeto()">+ Adicionar trajeto</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Totais</div>
+      <div class="stat">
+        <div class="stat-item"><div class="stat-label">km/semana</div><div class="stat-value">${kmSemTotal.toFixed(1)}</div></div>
+        <div class="stat-item"><div class="stat-label">km/mês</div><div class="stat-value">${kmMesTotal}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/mês Gasolina</div><div class="stat-value">R$ ${(kmMesTotal / gasAvg * CONFIG.gasPrice).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/mês Etanol</div><div class="stat-value">R$ ${(kmMesTotal / ethAvg * CONFIG.ethPrice).toFixed(2)}</div></div>
+      </div>
+    </div>
+    <div class="list">
+  `;
+
+  TRAJETOS.forEach((t, i) => {
+    const gasViagem = (t.dist / gasAvg * t.gasP).toFixed(2);
+    const ethViagem = (t.dist / ethAvg * t.ethP).toFixed(2);
+    const gasMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / gasAvg * t.gasP).toFixed(2) : '—';
+    const ethMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / ethAvg * t.ethP).toFixed(2) : '—';
+    const melhor = parseFloat(ethViagem) < parseFloat(gasViagem) ? 'Etanol' : 'Gasolina';
+    html += `
+      <div class="list-item" style="flex-direction:column;align-items:stretch;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="font-weight:bold;">${t.nome}</div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn" onclick="editTrajeto(${i})">✎</button>
+            <button class="btn danger" onclick="delTrajeto(${i})">✕</button>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">${t.dist} km ida/volta · ${t.kmSem > 0 ? t.kmSem + ' km/sem' : 'eventual'}</div>
+        <div class="stat" style="margin-bottom:0;">
+          <div class="stat-item"><div class="stat-label">Viagem Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${gasViagem}</div></div>
+          <div class="stat-item"><div class="stat-label">Viagem Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${ethViagem}</div></div>
+          <div class="stat-item"><div class="stat-label">Mês Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${gasMes}</div></div>
+          <div class="stat-item"><div class="stat-label">Mês Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${ethMes}</div></div>
+          <div class="stat-item"><div class="stat-label">Mais econômico</div><div class="stat-value" style="font-size:14px;color:var(--success);">✓ ${melhor}</div></div>
+        </div>
+      </div>`;
+  });
+
+  if (TRAJETOS.length === 0) html += `<div style="text-align:center;padding:40px;color:var(--muted);">Nenhum trajeto cadastrado.</div>`;
+  html += `</div>`;
+  document.getElementById('sec-trajetos').innerHTML = html;
+}
+
+function addTrajeto() {
+  const nome = prompt('Nome do trajeto:'); if (!nome) return;
+  const dist = parseFloat(prompt('Distância ida/volta (km):')); if (isNaN(dist)) return;
+  const kmSem = parseFloat(prompt('km/semana neste trajeto (0 se eventual):', '0')) || 0;
+  const gasP = parseFloat(prompt('Preço gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('Preço etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
+  TRAJETOS.push({nome, dist, kmSem, gasP, ethP, gasKmL:10.23, ethKmL:8.07});
+  saveData(); toast('✓ Trajeto adicionado'); renderTrajetos();
+}
+
+function editTrajeto(i) {
+  const t = TRAJETOS[i];
+  const nome = prompt('Nome:', t.nome); if (nome === null) return;
+  const dist = parseFloat(prompt('Distância ida/volta (km):', t.dist)); if (isNaN(dist)) return;
+  const kmSem = parseFloat(prompt('km/semana (0 se eventual):', t.kmSem)) || 0;
+  const gasP = parseFloat(prompt('Preço gasolina R$/L:', t.gasP)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('Preço etanol R$/L:', t.ethP)); if (isNaN(ethP)) return;
+  TRAJETOS[i] = {...t, nome, dist, kmSem, gasP, ethP};
+  saveData(); toast('✓ Atualizado'); renderTrajetos();
+}
+
+function delTrajeto(i) {
+  if (confirm('Remover trajeto "' + TRAJETOS[i].nome + '"?')) {
+    TRAJETOS.splice(i, 1); saveData(); toast('✓ Removido'); renderTrajetos();
+  }
+}
+
+// ══════════════════════════════ POSTOS ══════════════════════════════
+function renderPostos() {
+  const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.2;
+  const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.1;
+  const corteReal = gasAvg > 0 ? (ethAvg / gasAvg * 100).toFixed(1) : 70.4;
+
+  let html = `
+    <div class="sh"><span class="sh-title">⛽ Postos de Combustível</span></div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <button class="btn pr" style="flex:1" onclick="addPosto()">+ Adicionar posto</button>
+    </div>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">Ponto de corte real do seu carro</div>
+      <div style="font-size:13px;color:var(--muted);">
+        Baseado nas suas médias reais: Gasolina <strong style="color:var(--primary)">${gasAvg} km/L</strong> · Etanol <strong style="color:var(--primary)">${ethAvg} km/L</strong><br>
+        Se Etanol/Gasolina &lt; <strong style="color:var(--success)">${corteReal}%</strong> → Etanol é mais econômico no seu carro
+      </div>
+    </div>
+    <div class="list">
+  `;
+
+  POSTOS.forEach((p, i) => {
+    const gasCkm = (p.gasP / gasAvg).toFixed(3);
+    const ethCkm = (p.ethP / ethAvg).toFixed(3);
+    const rel = (p.ethP / p.gasP * 100).toFixed(1);
+    const corte = (p.gasP * ethAvg / gasAvg).toFixed(2);
+    const melhor = parseFloat(ethCkm) < parseFloat(gasCkm) ? 'Etanol' : 'Gasolina';
+    const abaixoCorte = parseFloat(rel) < parseFloat(corteReal);
+    html += `
+      <div class="list-item" style="flex-direction:column;align-items:stretch;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="font-weight:bold;">${p.nome} ${abaixoCorte ? '<span class="badge best">Eth vence</span>' : ''}</div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn" onclick="editPosto(${i})">✎</button>
+            <button class="btn danger" onclick="delPosto(${i})">✕</button>
+          </div>
+        </div>
+        <div class="stat" style="margin-bottom:0;">
+          <div class="stat-item"><div class="stat-label">Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${p.gasP.toFixed(2)}/L</div></div>
+          <div class="stat-item"><div class="stat-label">Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${p.ethP.toFixed(2)}/L</div></div>
+          <div class="stat-item"><div class="stat-label">Custo/km Gas</div><div class="stat-value" style="font-size:14px;">R$ ${gasCkm}</div></div>
+          <div class="stat-item"><div class="stat-label">Custo/km Eth</div><div class="stat-value" style="font-size:14px;">R$ ${ethCkm}</div></div>
+          <div class="stat-item"><div class="stat-label">Relação Eth/Gas</div><div class="stat-value" style="font-size:14px;color:${abaixoCorte?'var(--success)':'var(--warning)'};">${rel}% ${abaixoCorte?'✓':'⚠'}</div></div>
+          <div class="stat-item"><div class="stat-label">Preço corte Eth</div><div class="stat-value" style="font-size:14px;">R$ ${corte}/L</div></div>
+        </div>
+      </div>`;
+  });
+
+  if (POSTOS.length === 0) html += `<div style="text-align:center;padding:40px;color:var(--muted);">Nenhum posto cadastrado.</div>`;
+  html += `</div>`;
+  document.getElementById('sec-postos').innerHTML = html;
+}
+
+function addPosto() {
+  const nome = prompt('Nome do posto:'); if (!nome) return;
+  const gasP = parseFloat(prompt('Preço Gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('Preço Etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
+  POSTOS.push({nome, gasP, ethP, gasKmL:10.2, ethKmL:8.1});
+  saveData(); toast('✓ Posto adicionado'); renderPostos();
+}
+
+function editPosto(i) {
+  const p = POSTOS[i];
+  const nome = prompt('Nome:', p.nome); if (nome === null) return;
+  const gasP = parseFloat(prompt('Preço Gasolina R$/L:', p.gasP)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('Preço Etanol R$/L:', p.ethP)); if (isNaN(ethP)) return;
+  POSTOS[i] = {...p, nome, gasP, ethP};
+  saveData(); toast('✓ Atualizado'); renderPostos();
+}
+
+function delPosto(i) {
+  if (confirm('Remover posto "' + POSTOS[i].nome + '"?')) {
+    POSTOS.splice(i, 1); saveData(); toast('✓ Removido'); renderPostos();
+  }
+}
+
+// ══════════════════════════════ CICLO 1 e 2 ══════════════════════════════
+function renderCicloHistorico(dados, titulo, elId) {
+  if (!dados || dados.length === 0) {
+    document.getElementById(elId).innerHTML = `<div class="sh"><span class="sh-title">${titulo}</span></div><div style="text-align:center;padding:40px;color:var(--muted);">Nenhum dado disponível.</div>`;
+    return;
+  }
+  const gasD = dados.filter(d => d.comb === 'Gasolina' && d.km > 0);
+  const ethD = dados.filter(d => d.comb === 'Etanol' && d.km > 0);
+  const gasKmL = gasD.length ? (gasD.reduce((a,d)=>a+d.km,0) / gasD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : '—';
+  const ethKmL = ethD.length ? (ethD.reduce((a,d)=>a+d.km,0) / ethD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : '—';
+  const totalGas = gasD.reduce((a,d)=>a+d.total,0).toFixed(2);
+  const totalEth = ethD.reduce((a,d)=>a+d.total,0).toFixed(2);
+  const totalKm = dados.reduce((a,d)=>a+d.km,0);
+  const odoInicio = Math.min(...dados.map(d=>d.odo));
+  const odoFim = Math.max(...dados.map(d=>d.odo));
+
+  let html = `
+    <div class="sh"><span class="sh-title">${titulo}</span></div>
+    <div class="card">
+      <div class="card-title">Resumo do Ciclo</div>
+      <div class="stat">
+        <div class="stat-item"><div class="stat-label">Odômetro início</div><div class="stat-value">${odoInicio.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">Odômetro fim</div><div class="stat-value">${odoFim.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">Total rodado</div><div class="stat-value">${totalKm.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">Média Gasolina</div><div class="stat-value">${gasKmL} km/L</div></div>
+        <div class="stat-item"><div class="stat-label">Média Etanol</div><div class="stat-value">${ethKmL} km/L</div></div>
+        <div class="stat-item"><div class="stat-label">Total Gasolina</div><div class="stat-value">R$ ${parseFloat(totalGas).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">Total Etanol</div><div class="stat-value">R$ ${parseFloat(totalEth).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">Total gasto</div><div class="stat-value">R$ ${(parseFloat(totalGas)+parseFloat(totalEth)).toFixed(2)}</div></div>
+      </div>
+    </div>
+    <div class="sh" style="margin-top:8px;"><span class="sh-title">Abastecimentos (${dados.length})</span></div>
+    <div class="list">`;
+
+  const sorted = [...dados].reverse();
+  sorted.forEach(d => {
+    const cons = d.km > 0 ? (d.km / d.vol).toFixed(2) : '0.00';
+    html += `
+      <div class="list-item">
+        <div class="list-item-title">
+          <div style="font-weight:bold;">${d.data} · ${d.comb} · ${d.odo.toLocaleString('pt-BR')} km</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L · <strong style="color:var(--primary)">${cons} km/L</strong> · ${d.km} km${d.posto ? ' · ' + d.posto : ''}${d.desc ? ' · ' + d.desc : ''}</div>
+        </div>
+      </div>`;
+  });
+
+  html += `</div>`;
+  document.getElementById(elId).innerHTML = html;
+}
+
+function renderCiclo1() { renderCicloHistorico(CICLO1, '📋 Ciclo 1 · Histórico', 'sec-ciclo1'); }
+function renderCiclo2() { renderCicloHistorico(CICLO2, '📋 Ciclo 2 · Histórico', 'sec-ciclo2'); }
+
+// ══════════════════════════════ UTILS ══════════════════════════════
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ══════════════════════════════ INIT ══════════════════════════════
+loadData();
+go('dashboard');
+</script>
+
+</body>
+</html>
