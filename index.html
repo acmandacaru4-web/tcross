@@ -329,7 +329,7 @@
 
 <nav>
   <div class="nav-title">
-    <span>⬡ T-CROSS</span>
+    <span>â¬¡ T-CROSS</span>
     <span style="font-size: 12px; color: var(--muted);">Painel de Consumo</span>
   </div>
   <div class="nav-tabs">
@@ -339,11 +339,11 @@
     <button class="tb" onclick="go('postos')">Postos</button>
     <button class="tb" onclick="go('ciclo1')">Ciclo 1</button>
     <button class="tb" onclick="go('ciclo2')">Ciclo 2</button>
-    <button class="tb" onclick="go('manutencao')">Manutenção</button>
+    <button class="tb" onclick="go('manutencao')">ManutenÃ§Ã£o</button>
     <button class="tb" onclick="go('config')">Config</button>
     <button class="tb" onclick="go('sync')">Sincronizar</button>
   </div>
-  <div class="nav-odo">⬡ <span id="nav-odo">0</span> km</div>
+  <div class="nav-odo">â¬¡ <span id="nav-odo">0</span> km</div>
 </nav>
 
 <main>
@@ -361,21 +361,21 @@
 <div id="toast"></div>
 
 <script>
-// ══════════════════════════════ DADOS ══════════════════════════════
+// ââââââââââââââââââââââââââââââ DADOS ââââââââââââââââââââââââââââââ
 let HISTORICO_CICLOS = [];
 let TODOS = [];
 let TRAJETOS = [
-  {nome:'Circuito Clínicas Aracaju', dist:227, kmSem:227, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Circuito ClÃ­nicas Aracaju', dist:227, kmSem:227, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
   {nome:'Baixa Grande por Sapucaia', dist:140, kmSem:0,   gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
   {nome:'Baixa Grande por Lagoa Redonda', dist:181, kmSem:0, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
   {nome:'Retiro',      dist:67.3,  kmSem:67.3,  gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
   {nome:'Pedro Reys',  dist:66.8,  kmSem:133.6, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07}
 ];
 let POSTOS = [
-  {nome:'Preços Preferidos', gasP:7.12, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
+  {nome:'PreÃ§os Preferidos', gasP:7.12, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
   {nome:'Posto PEL',         gasP:6.85, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
   {nome:'Posto Arthur Melo', gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1},
-  {nome:'Posto Orla Propriá',gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1}
+  {nome:'Posto Orla PropriÃ¡',gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1}
 ];
 let CICLO1 = [
   {data:'30/07',odo:2335, km:820, vol:65.04,cons:12.6,comb:'Gasolina',total:254.25,pl:6.35,posto:'Pel',desc:''},
@@ -395,7 +395,7 @@ let CICLO1 = [
   {data:'08/09',odo:6141, km:234, vol:21.61,cons:10.8,comb:'Etanol',  total:103.73,pl:4.80,posto:'Pel',desc:''},
   {data:'13/09',odo:6457, km:316, vol:29.18,cons:10.8,comb:'Etanol',  total:144.44,pl:4.95,posto:'Rosa Elze',desc:'Itabaiana ida e volta'},
   {data:'15/09',odo:6812, km:355, vol:34.94,cons:10.2,comb:'Etanol',  total:167.71,pl:4.80,posto:'Pel',desc:''},
-  {data:'18/09',odo:7052, km:240, vol:27.85,cons:8.6, comb:'Etanol',  total:133.68,pl:4.80,posto:'Pel',desc:'Clínicas com João e Ar.'},
+  {data:'18/09',odo:7052, km:240, vol:27.85,cons:8.6, comb:'Etanol',  total:133.68,pl:4.80,posto:'Pel',desc:'ClÃ­nicas com JoÃ£o e Ar.'},
   {data:'20/09',odo:7392, km:340, vol:34.15,cons:10.0,comb:'Etanol',  total:163.92,pl:4.80,posto:'Pel',desc:''},
   {data:'29/09',odo:7788, km:396, vol:42.14,cons:9.4, comb:'Etanol',  total:231.35,pl:5.49,posto:'Pel',desc:''},
   {data:'03/10',odo:8219, km:431, vol:36.90,cons:11.7,comb:'Gasolina',total:234.32,pl:6.35,posto:'Pel',desc:''},
@@ -410,7 +410,7 @@ let CICLO1 = [
 let CICLO2 = [
   {data:'29/10',odo:10508,km:340,vol:35.85,cons:9.5, comb:'Etanol',  total:168.50,pl:4.70,posto:'Pel',desc:''},
   {data:'30/10',odo:10748,km:240,vol:27.40,cons:8.8, comb:'Etanol',  total:128.78,pl:4.70,posto:'Pel',desc:''},
-  {data:'03/11',odo:10999,km:251,vol:25.93,cons:9.7, comb:'Gasolina',total:164.66,pl:6.35,posto:'Pel',desc:'Padre Cícero'},
+  {data:'03/11',odo:10999,km:251,vol:25.93,cons:9.7, comb:'Gasolina',total:164.66,pl:6.35,posto:'Pel',desc:'Padre CÃ­cero'},
   {data:'08/11',odo:11373,km:374,vol:36.78,cons:10.2,comb:'Gasolina',total:215.16,pl:5.85,posto:'Canabrava',desc:'Arapiraca'},
   {data:'10/11',odo:11631,km:258,vol:22.15,cons:11.6,comb:'Gasolina',total:140.65,pl:6.35,posto:'Pel',desc:''},
   {data:'14/11',odo:12014,km:383,vol:33.78,cons:11.3,comb:'Etanol',  total:158.77,pl:4.70,posto:'Pel',desc:''},
@@ -430,7 +430,7 @@ let CICLO2 = [
   {data:'10/01',odo:16317,km:263,vol:25.17,cons:10.4,comb:'Gasolina',total:159.83,pl:6.35,posto:'Pel',desc:''},
   {data:'12/01',odo:16769,km:452,vol:37.28,cons:12.1,comb:'Etanol',  total:175.22,pl:4.70,posto:'Pel',desc:'Aju-Pir-Lagoa Redonda'},
   {data:'18/01',odo:17083,km:314,vol:34.65,cons:9.1, comb:'Etanol',  total:162.86,pl:4.70,posto:'Pel',desc:''},
-  {data:'26/01',odo:17428,km:345,vol:42.09,cons:8.2, comb:'Gasolina',total:258.85,pl:6.15,posto:'São Sebastião',desc:'Arapiraca'},
+  {data:'26/01',odo:17428,km:345,vol:42.09,cons:8.2, comb:'Gasolina',total:258.85,pl:6.15,posto:'SÃ£o SebastiÃ£o',desc:'Arapiraca'},
   {data:'01/02',odo:17796,km:368,vol:33.39,cons:11.0,comb:'Etanol',  total:163.61,pl:4.90,posto:'Pel',desc:''},
   {data:'04/02',odo:18073,km:277,vol:32.155,cons:8.6,comb:'Gasolina',total:204.83,pl:6.37,posto:'JetSet',desc:''},
   {data:'08/02',odo:18408,km:335,vol:36.86,cons:9.1, comb:'Etanol',  total:180.61,pl:4.90,posto:'Pel',desc:''},
@@ -453,16 +453,16 @@ let CONFIG = {
 };
 
 let MANUTENCAO = [
-  {title: 'Troca de Óleo e Filtro', freq: 10000, desc: 'Essencial para manter o motor saudável', done: false},
-  {title: 'Verificação do Nível de Óleo', freq: 1000, desc: 'Verificar se está no nível correto', done: false},
-  {title: 'Nivelação e Balanceamento de Pneus', freq: 10000, desc: 'Junto com a troca de óleo', done: false},
-  {title: 'Italian Tune-up (Limpeza Preventiva)', freq: 3000, desc: 'Crucial para o TSI: Combate o acúmulo de carbono nas válvulas', done: false},
+  {title: 'Troca de Ãleo e Filtro', freq: 10000, desc: 'Essencial para manter o motor saudÃ¡vel', done: false},
+  {title: 'VerificaÃ§Ã£o do NÃ­vel de Ãleo', freq: 1000, desc: 'Verificar se estÃ¡ no nÃ­vel correto', done: false},
+  {title: 'NivelaÃ§Ã£o e Balanceamento de Pneus', freq: 10000, desc: 'Junto com a troca de Ã³leo', done: false},
+  {title: 'Italian Tune-up (Limpeza Preventiva)', freq: 3000, desc: 'Crucial para o TSI: Combate o acÃºmulo de carbono nas vÃ¡lvulas', done: false},
   {title: 'Troca do Ar do Motor', freq: 10000, desc: 'Manter o filtro limpo', done: false},
-  {title: 'Filtro de Combustível', freq: 10000, desc: 'Essencial para injeção', done: false},
-  {title: 'Verificação do Freio', freq: 10000, desc: 'Pastilhas e discos', done: false}
+  {title: 'Filtro de CombustÃ­vel', freq: 10000, desc: 'Essencial para injeÃ§Ã£o', done: false},
+  {title: 'VerificaÃ§Ã£o do Freio', freq: 10000, desc: 'Pastilhas e discos', done: false}
 ];
 
-// ══════════════════════════════ STORAGE ══════════════════════════════
+// ââââââââââââââââââââââââââââââ STORAGE ââââââââââââââââââââââââââââââ
 function saveData() {
   localStorage.setItem('tcross-todos', JSON.stringify(TODOS));
   localStorage.setItem('tcross-config', JSON.stringify(CONFIG));
@@ -492,11 +492,11 @@ function loadData() {
   if (c1) CICLO1 = JSON.parse(c1);
   if (c2) CICLO2 = JSON.parse(c2);
   
-  // Garante ordenação cronológica ao carregar
+  // Garante ordenaÃ§Ã£o cronolÃ³gica ao carregar
   sortTodosChronologically();
 }
 
-// ══════════════════════════════ NAVIGATION ══════════════════════════════
+// ââââââââââââââââââââââââââââââ NAVIGATION ââââââââââââââââââââââââââââââ
 function go(id) {
   document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
   document.getElementById('sec-' + id).classList.add('on');
@@ -510,7 +510,7 @@ function go(id) {
   ({dashboard:renderDash, abastecimentos:renderAbast, manutencao:renderMaint, config:renderConfig, sync:renderSync, trajetos:renderTrajetos, postos:renderPostos, ciclo1:renderCiclo1, ciclo2:renderCiclo2}[id] || function(){})();
 }
 
-// ══════════════════════════════ HELPERS ══════════════════════════════
+// ââââââââââââââââââââââââââââââ HELPERS ââââââââââââââââââââââââââââââ
 function parseDate(dateStr) {
   if (!dateStr) return new Date(0);
   const parts = dateStr.split('/');
@@ -571,7 +571,7 @@ function getRelacaoPrecos() {
   return ((ethPl / gasPl) * 100).toFixed(1);
 }
 
-// ══════════════════════════════ DASHBOARD ══════════════════════════════
+// ââââââââââââââââââââââââââââââ DASHBOARD ââââââââââââââââââââââââââââââ
 function renderDash() {
   const gasAvg = getAverageConsumption('Gasolina');
   const ethAvg = getAverageConsumption('Etanol');
@@ -598,10 +598,10 @@ function renderDash() {
   const cicloNum = HISTORICO_CICLOS.length + 1;
 
   const html = `
-    <div class="sh"><span class="sh-title">📊 Dashboard · Ciclo ${cicloNum}</span></div>
+    <div class="sh"><span class="sh-title">ð Dashboard Â· Ciclo ${cicloNum}</span></div>
     
     <div class="card">
-      <div class="card-title">⚡ Consumo Médio por Combustível</div>
+      <div class="card-title">â¡ Consumo MÃ©dio por CombustÃ­vel</div>
       <div class="stat">
         <div class="stat-item">
           <div class="stat-label">Gasolina</div>
@@ -610,65 +610,65 @@ function renderDash() {
         <div class="stat-item">
           <div class="stat-label">Etanol</div>
           <div class="stat-value">${ethAvg} km/L</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">Eficiência relativa: ${eficRel}% da gasolina</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">EficiÃªncia relativa: ${eficRel}% da gasolina</div>
         </div>
       </div>
     </div>
     
     <div class="card">
-      <div class="card-title">⛽ Último Abastecimento</div>
+      <div class="card-title">â½ Ãltimo Abastecimento</div>
       <div class="stat">
         <div class="stat-item">
           <div class="stat-label">Data</div>
           <div class="stat-value">${lastData}</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">Odômetro</div>
+          <div class="stat-label">OdÃ´metro</div>
           <div class="stat-value">${lastOdo} km</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">Combustível</div>
+          <div class="stat-label">CombustÃ­vel</div>
           <div class="stat-value">${lastComb}</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">Média</div>
+          <div class="stat-label">MÃ©dia</div>
           <div class="stat-value">${lastConsumption} km/L</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">Preço/L</div>
+          <div class="stat-label">PreÃ§o/L</div>
           <div class="stat-value">R$ ${lastPrice}</div>
         </div>
       </div>
     </div>
     
     <div class="card">
-      <div class="card-title">💰 Custo por km · Combustível mais econômico</div>
+      <div class="card-title">ð° Custo por km Â· CombustÃ­vel mais econÃ´mico</div>
       <div class="stat">
         <div class="stat-item">
           <div class="stat-label">Gasolina</div>
-          <div class="stat-value">R$ ${gasCostPerKm}/km ${bestFuel === 'Gasolina' ? '<span class="badge best">✓ MELHOR</span>' : ''}</div>
+          <div class="stat-value">R$ ${gasCostPerKm}/km ${bestFuel === 'Gasolina' ? '<span class="badge best">â MELHOR</span>' : ''}</div>
         </div>
         <div class="stat-item">
           <div class="stat-label">Etanol</div>
-          <div class="stat-value">R$ ${ethCostPerKm}/km ${bestFuel === 'Etanol' ? '<span class="badge best">✓ MELHOR</span>' : ''}</div>
+          <div class="stat-value">R$ ${ethCostPerKm}/km ${bestFuel === 'Etanol' ? '<span class="badge best">â MELHOR</span>' : ''}</div>
         </div>
       </div>
       <div style="font-size:12px;color:var(--muted);margin-top:8px;padding:8px;background:var(--bg);border-radius:4px;">
-        Eficiência relativa: <strong style="color:var(--primary)">${eficRel}%</strong> · 
-        Relação de preços: <strong style="color:var(--primary)">${relPrecos}%</strong> · 
-        Decisão baseada em custo real por km rodado
+        EficiÃªncia relativa: <strong style="color:var(--primary)">${eficRel}%</strong> Â· 
+        RelaÃ§Ã£o de preÃ§os: <strong style="color:var(--primary)">${relPrecos}%</strong> Â· 
+        DecisÃ£o baseada em custo real por km rodado
       </div>
     </div>
     
     <div class="card">
-      <div class="card-title">🔧 Próxima Revisão</div>
+      <div class="card-title">ð§ PrÃ³xima RevisÃ£o</div>
       <div class="stat">
         <div class="stat-item">
-          <div class="stat-label">Odômetro atual</div>
+          <div class="stat-label">OdÃ´metro atual</div>
           <div class="stat-value">${currentOdo.toLocaleString('pt-BR')} km</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">Revisão prevista</div>
+          <div class="stat-label">RevisÃ£o prevista</div>
           <div class="stat-value">${CONFIG.nextReview.toLocaleString('pt-BR')} km</div>
         </div>
         <div class="stat-item">
@@ -679,7 +679,7 @@ function renderDash() {
     </div>
     
     <div class="card">
-      <div class="card-title">📋 Custo Total do Ciclo ${cicloNum}</div>
+      <div class="card-title">ð Custo Total do Ciclo ${cicloNum}</div>
       <div class="stat">
         <div class="stat-item">
           <div class="stat-label">Gasolina</div>
@@ -700,39 +700,39 @@ function renderDash() {
   document.getElementById('sec-dashboard').innerHTML = html;
 }
 
-// ══════════════════════════════ ABASTECIMENTOS ══════════════════════════════
-let sortOrder = 'desc'; // Padrão: mais recentes primeiro
+// ââââââââââââââââââââââââââââââ ABASTECIMENTOS ââââââââââââââââââââââââââââââ
+let sortOrder = 'desc'; // PadrÃ£o: mais recentes primeiro
 
 function renderAbast() {
   let html = `
-    <div class="sh"><span class="sh-title">⛽ Abastecimentos</span></div>
+    <div class="sh"><span class="sh-title">â½ Abastecimentos</span></div>
     <div style="display: flex; gap: 8px; margin-bottom: 16px;">
       <button class="btn pr" style="flex: 1;" onclick="addAbast()">+ Adicionar</button>
-      <button class="btn" onclick="toggleSort()" title="Inverter ordem">↕ Ordem (${sortOrder === 'asc' ? 'Antigos' : 'Recentes'})</button>
+      <button class="btn" onclick="toggleSort()" title="Inverter ordem">â Ordem (${sortOrder === 'asc' ? 'Antigos' : 'Recentes'})</button>
     </div>
     <div class="list">
   `;
   
-  // Cria uma cópia para exibição sem alterar o array original que deve estar sempre em ordem cronológica para cálculos
+  // Cria uma cÃ³pia para exibiÃ§Ã£o sem alterar o array original que deve estar sempre em ordem cronolÃ³gica para cÃ¡lculos
   const displayList = [...TODOS];
   if (sortOrder === 'desc') displayList.reverse();
 
   displayList.forEach((d) => {
-    // Encontra o índice real no array TODOS para edição/exclusão
+    // Encontra o Ã­ndice real no array TODOS para ediÃ§Ã£o/exclusÃ£o
     const realIndex = TODOS.indexOf(d);
     const consumo = d.km > 0 ? (d.km / d.vol).toFixed(2) : '0.00';
     
     html += `
       <div class="list-item">
         <div class="list-item-title">
-          <div style="font-weight: bold;">${d.data} · ${d.comb} · ${d.odo.toLocaleString('pt-BR')} km</div>
+          <div style="font-weight: bold;">${d.data} Â· ${d.comb} Â· ${d.odo.toLocaleString('pt-BR')} km</div>
           <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">
-            ${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L · Média: <strong style="color:var(--primary)">${consumo} km/L</strong> · ${d.km} km percorridos
+            ${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L Â· MÃ©dia: <strong style="color:var(--primary)">${consumo} km/L</strong> Â· ${d.km} km percorridos
           </div>
         </div>
         <div style="display: flex; gap: 8px;">
-          <button class="btn" onclick="editAbast(${realIndex})">✎</button>
-          <button class="btn danger" onclick="delAbast(${realIndex})">✕</button>
+          <button class="btn" onclick="editAbast(${realIndex})">â</button>
+          <button class="btn danger" onclick="delAbast(${realIndex})">â</button>
         </div>
       </div>
     `;
@@ -749,23 +749,23 @@ function renderAbast() {
 function toggleSort() {
   sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
   renderAbast();
-  toast(sortOrder === 'asc' ? '↑ Ordem cronológica' : '↓ Ordem reversa');
+  toast(sortOrder === 'asc' ? 'â Ordem cronolÃ³gica' : 'â Ordem reversa');
 }
 
 function addAbast() {
   const data = prompt('Data (dd/mm):');
   if (!data) return;
   
-  const odo = prompt('Odômetro (km):');
+  const odo = prompt('OdÃ´metro (km):');
   if (!odo || isNaN(odo)) return;
   
   const vol = prompt('Volume (L):');
   if (!vol || isNaN(vol)) return;
   
-  const comb = prompt('Combustível (Gasolina/Etanol):', 'Etanol');
+  const comb = prompt('CombustÃ­vel (Gasolina/Etanol):', 'Etanol');
   if (!comb) return;
   
-  const pl = prompt('Preço do Combustível (R$/L):');
+  const pl = prompt('PreÃ§o do CombustÃ­vel (R$/L):');
   if (!pl || isNaN(pl)) return;
   
   const newAbast = {
@@ -785,7 +785,7 @@ function addAbast() {
   sortTodosChronologically();
   recalculateKm();
   saveData();
-  toast('✓ Adicionado');
+  toast('â Adicionado');
   renderAbast();
   renderDash();
   // Auto-sync com GitHub se token configurado
@@ -796,7 +796,7 @@ function addAbast() {
 
 function recalculateKm() {
   for (let i = 0; i < TODOS.length; i++) {
-    // Só recalcula km se estiver vazio (0), preservando km importado
+    // SÃ³ recalcula km se estiver vazio (0), preservando km importado
     if (TODOS[i].km === 0) {
       const lastOdo = i > 0 ? TODOS[i - 1].odo : 0;
       TODOS[i].km = TODOS[i].odo - lastOdo;
@@ -811,13 +811,13 @@ function editAbast(i) {
   const data = prompt('Data:', d.data);
   if (data === null) return;
   
-  const odo = prompt('Odômetro:', d.odo);
+  const odo = prompt('OdÃ´metro:', d.odo);
   if (odo === null) return;
   
   const vol = prompt('Volume:', d.vol);
   if (vol === null) return;
   
-  const pl = prompt('Preço:', d.pl);
+  const pl = prompt('PreÃ§o:', d.pl);
   if (pl === null) return;
   
   TODOS[i] = {
@@ -832,7 +832,7 @@ function editAbast(i) {
   sortTodosChronologically();
   recalculateKm();
   saveData();
-  toast('✓ Atualizado');
+  toast('â Atualizado');
   renderAbast();
   renderDash();
 }
@@ -842,13 +842,13 @@ function delAbast(i) {
     TODOS.splice(i, 1);
     recalculateKm();
     saveData();
-    toast('✓ Removido');
+    toast('â Removido');
     renderAbast();
     renderDash();
   }
 }
 
-// ══════════════════════════════ MANUTENÇÃO ══════════════════════════════
+// ââââââââââââââââââââââââââââââ MANUTENÃÃO ââââââââââââââââââââââââââââââ
 function renderMaint() {
   const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
   const cicloNum = HISTORICO_CICLOS.length + 1;
@@ -857,17 +857,17 @@ function renderMaint() {
   const totalCount = MANUTENCAO.length;
   
   let html = `
-    <div class="sh"><span class="sh-title">🔧 Manutenção · Ciclo ${cicloNum}</span></div>
+    <div class="sh"><span class="sh-title">ð§ ManutenÃ§Ã£o Â· Ciclo ${cicloNum}</span></div>
     
     <div class="card">
-      <div class="card-title">Próxima Revisão</div>
+      <div class="card-title">PrÃ³xima RevisÃ£o</div>
       <div class="stat">
         <div class="stat-item">
-          <div class="stat-label">Odômetro atual</div>
+          <div class="stat-label">OdÃ´metro atual</div>
           <div class="stat-value">${currentOdo.toLocaleString('pt-BR')} km</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">Revisão prevista em</div>
+          <div class="stat-label">RevisÃ£o prevista em</div>
           <div class="stat-value">${CONFIG.nextReview.toLocaleString('pt-BR')} km</div>
         </div>
         <div class="stat-item">
@@ -879,8 +879,8 @@ function renderMaint() {
     
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <div class="card-title" style="margin-bottom:0">Checklist · ${doneCount}/${totalCount} concluídos</div>
-        <button class="btn" onclick="renovarChecklist()" title="Renovar para novo ciclo">🔄 Novo ciclo</button>
+        <div class="card-title" style="margin-bottom:0">Checklist Â· ${doneCount}/${totalCount} concluÃ­dos</div>
+        <button class="btn" onclick="renovarChecklist()" title="Renovar para novo ciclo">ð Novo ciclo</button>
       </div>
       <div class="list">
   `;
@@ -898,8 +898,8 @@ function renderMaint() {
           <div class="maint-title">${m.title}</div>
           <div class="maint-desc">${m.desc}</div>
           <div class="maint-km" style="${urgente && !m.done ? 'border-left: 3px solid var(--danger); padding-left: 8px;' : ''}">
-            <strong>Frequência:</strong> a cada ${m.freq.toLocaleString('pt-BR')} km · 
-            <strong>Faltam:</strong> <span style="color:${urgente ? 'var(--danger)' : 'var(--success)'}">${kmFaltamItem.toLocaleString('pt-BR')} km</span> · 
+            <strong>FrequÃªncia:</strong> a cada ${m.freq.toLocaleString('pt-BR')} km Â· 
+            <strong>Faltam:</strong> <span style="color:${urgente ? 'var(--danger)' : 'var(--success)'}">${kmFaltamItem.toLocaleString('pt-BR')} km</span> Â· 
             <strong>Progresso:</strong> ${percentual}%
           </div>
         </div>
@@ -923,7 +923,7 @@ function renovarChecklist() {
   MANUTENCAO = MANUTENCAO.map(m => ({...m, done: false}));
   CONFIG.nextReview = (TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0) + 10000;
   saveData();
-  toast('✓ Novo ciclo iniciado!');
+  toast('â Novo ciclo iniciado!');
   renderMaint();
   renderDash();
 }
@@ -934,13 +934,13 @@ function toggleMaint(i) {
   renderMaint();
 }
 
-// ══════════════════════════════ CONFIGURAÇÃO ══════════════════════════════
+// ââââââââââââââââââââââââââââââ CONFIGURAÃÃO ââââââââââââââââââââââââââââââ
 function renderConfig() {
   const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
   const html = `
-    <div class="sh"><span class="sh-title">⚙️ Configuração</span></div>
+    <div class="sh"><span class="sh-title">âï¸ ConfiguraÃ§Ã£o</span></div>
     <div class="card">
-      <div class="card-title">Preços de Combustível</div>
+      <div class="card-title">PreÃ§os de CombustÃ­vel</div>
       <div class="form-group">
         <label class="form-label">Gasolina (R$/L)</label>
         <input type="number" class="form-input" id="cfg-gas" value="${CONFIG.gasPrice}" step="0.01">
@@ -951,17 +951,17 @@ function renderConfig() {
       </div>
     </div>
     <div class="card">
-      <div class="card-title">Próxima Revisão</div>
+      <div class="card-title">PrÃ³xima RevisÃ£o</div>
       <div class="form-group">
-        <label class="form-label">Próxima revisão em (km)</label>
+        <label class="form-label">PrÃ³xima revisÃ£o em (km)</label>
         <input type="number" class="form-input" id="cfg-review" value="${CONFIG.nextReview}">
       </div>
       <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px;">
-        <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Odômetro atual</div>
+        <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">OdÃ´metro atual</div>
         <div style="font-size: 18px; font-weight: bold; color: var(--primary);">${currentOdo.toLocaleString('pt-BR')} km</div>
       </div>
     </div>
-    <button class="btn pr" style="width: 100%;" onclick="saveConfig()">✓ Salvar Configurações</button>
+    <button class="btn pr" style="width: 100%;" onclick="saveConfig()">â Salvar ConfiguraÃ§Ãµes</button>
   `;
   document.getElementById('sec-config').innerHTML = html;
 }
@@ -971,12 +971,12 @@ function saveConfig() {
   CONFIG.ethPrice = parseFloat(document.getElementById('cfg-eth').value);
   CONFIG.nextReview = parseInt(document.getElementById('cfg-review').value);
   saveData();
-  toast('✓ Salvo');
+  toast('â Salvo');
   renderDash();
 }
 
-// ══════════════════════════════ SINCRONIZAÇÃO ══════════════════════════════
-// ══════════════════════════════ GITHUB SYNC ══════════════════════════════
+// ââââââââââââââââââââââââââââââ SINCRONIZAÃÃO ââââââââââââââââââââââââââââââ
+// ââââââââââââââââââââââââââââââ GITHUB SYNC ââââââââââââââââââââââââââââââ
 const GH = {
   owner: 'acmandacaru4-web',
   repo: 'tcross',
@@ -994,11 +994,11 @@ async function ghGetFileSha() {
 }
 
 async function ghSaveData() {
-  if (!GH.token) { toast('⚠ Configure o token GitHub primeiro'); return; }
+  if (!GH.token) { toast('â  Configure o token GitHub primeiro'); return; }
   try {
-    toast('⏳ Sincronizando com GitHub...');
+    toast('â³ Sincronizando com GitHub...');
     const {sha, content} = await ghGetFileSha();
-    // Injeta os dados atuais no HTML do repositório
+    // Injeta os dados atuais no HTML do repositÃ³rio
     const dadosJSON = JSON.stringify({
       todos: TODOS, config: CONFIG, manutencao: MANUTENCAO,
       historico: HISTORICO_CICLOS, trajetos: TRAJETOS, postos: POSTOS,
@@ -1027,24 +1027,24 @@ async function ghSaveData() {
       body: JSON.stringify({message: 'sync: ' + new Date().toLocaleString('pt-BR'), content: encoded, sha})
     });
     if (!r.ok) throw new Error('Erro ao salvar: ' + r.status);
-    toast('✓ Dados sincronizados com GitHub!');
+    toast('â Dados sincronizados com GitHub!');
     renderSync();
   } catch(e) {
-    toast('✕ Erro: ' + e.message);
+    toast('â Erro: ' + e.message);
     console.error(e);
   }
 }
 
 async function ghLoadData() {
-  if (!GH.token) { toast('⚠ Configure o token GitHub primeiro'); return; }
+  if (!GH.token) { toast('â  Configure o token GitHub primeiro'); return; }
   try {
-    toast('⏳ Carregando do GitHub...');
+    toast('â³ Carregando do GitHub...');
     const {content} = await ghGetFileSha();
     const marker_start = '/*__SYNC_DATA_START__*/';
     const marker_end = '/*__SYNC_DATA_END__*/';
-    if (!content.includes(marker_start)) { toast('⚠ Nenhum dado sincronizado ainda'); return; }
+    if (!content.includes(marker_start)) { toast('â  Nenhum dado sincronizado ainda'); return; }
     const match = content.match(/\/\*__SYNC_DATA_START__\*\/var __SYNC_DATA__=([\s\S]*?);\/\*__SYNC_DATA_END__\*\//);
-    if (!match) { toast('⚠ Erro ao ler dados'); return; }
+    if (!match) { toast('â  Erro ao ler dados'); return; }
     const data = JSON.parse(match[1]);
     if (data.todos)      TODOS = data.todos;
     if (data.config)     CONFIG = data.config;
@@ -1056,19 +1056,19 @@ async function ghLoadData() {
     if (data.ciclo2)     CICLO2 = data.ciclo2;
     sortTodosChronologically();
     saveData();
-    toast('✓ Dados carregados do GitHub!');
+    toast('â Dados carregados do GitHub!');
     go('dashboard');
   } catch(e) {
-    toast('✕ Erro: ' + e.message);
+    toast('â Erro: ' + e.message);
     console.error(e);
   }
 }
 
 function saveGhToken() {
   const t = document.getElementById('gh-token-input').value.trim();
-  if (!t) { toast('⚠ Digite o token'); return; }
+  if (!t) { toast('â  Digite o token'); return; }
   GH.token = t;
-  toast('✓ Token salvo!');
+  toast('â Token salvo!');
   renderSync();
 }
 
@@ -1076,42 +1076,42 @@ function renderSync() {
   const temToken = !!GH.token;
   const tokenMasked = temToken ? GH.token.substring(0,8) + '...' + GH.token.slice(-4) : '';
   const html = `
-    <div class="sh"><span class="sh-title">🔄 Sincronização</span></div>
+    <div class="sh"><span class="sh-title">ð SincronizaÃ§Ã£o</span></div>
 
     <div class="card">
-      <div class="card-title">☁️ GitHub · Sincronização entre dispositivos</div>
+      <div class="card-title">âï¸ GitHub Â· SincronizaÃ§Ã£o entre dispositivos</div>
       <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">
-        Salva e carrega seus dados diretamente do repositório GitHub.<br>
-        Use <strong>Salvar</strong> após registrar abastecimentos · Use <strong>Carregar</strong> em outro dispositivo para receber os dados.
+        Salva e carrega seus dados diretamente do repositÃ³rio GitHub.<br>
+        Use <strong>Salvar</strong> apÃ³s registrar abastecimentos Â· Use <strong>Carregar</strong> em outro dispositivo para receber os dados.
       </div>
       ${temToken ? `
-        <div style="font-size:12px;color:var(--success);margin-bottom:12px;">✓ Token configurado: ${tokenMasked}</div>
+        <div style="font-size:12px;color:var(--success);margin-bottom:12px;">â Token configurado: ${tokenMasked}</div>
         <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <button class="btn pr" style="flex:1" onclick="ghSaveData()">☁️ Salvar no GitHub</button>
-          <button class="btn" style="flex:1" onclick="ghLoadData()">⬇️ Carregar do GitHub</button>
+          <button class="btn pr" style="flex:1" onclick="ghSaveData()">âï¸ Salvar no GitHub</button>
+          <button class="btn" style="flex:1" onclick="ghLoadData()">â¬ï¸ Carregar do GitHub</button>
         </div>
         <button class="btn" style="width:100%;font-size:11px;" onclick="localStorage.removeItem('gh_token');renderSync()">Remover token</button>
       ` : `
         <div class="form-group">
           <label class="form-label">Personal Access Token do GitHub</label>
           <input type="password" class="form-input" id="gh-token-input" placeholder="ghp_...">
-          <div style="font-size:11px;color:var(--muted);margin-top:4px;">O token fica salvo apenas neste dispositivo, nunca no código público.</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">O token fica salvo apenas neste dispositivo, nunca no cÃ³digo pÃºblico.</div>
         </div>
-        <button class="btn pr" style="width:100%;" onclick="saveGhToken()">✓ Salvar token</button>
+        <button class="btn pr" style="width:100%;" onclick="saveGhToken()">â Salvar token</button>
       `}
     </div>
 
     <div class="card">
-      <div class="card-title">📋 Importar da Planilha (CSV/TSV)</div>
+      <div class="card-title">ð Importar da Planilha (CSV/TSV)</div>
       <textarea id="csv-input" class="form-input" style="height: 130px; font-family: monospace; font-size: 12px;" placeholder="Cole aqui os dados copiados da planilha..."></textarea>
       <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">
-        ℹ️ Suporta copiar e colar direto da planilha (TSV ou CSV). Primeira linha ignorada.
+        â¹ï¸ Suporta copiar e colar direto da planilha (TSV ou CSV). Primeira linha ignorada.
       </div>
-      <button class="btn pr" style="margin-top: 12px; width: 100%;" onclick="importCSV()">✓ Importar</button>
+      <button class="btn pr" style="margin-top: 12px; width: 100%;" onclick="importCSV()">â Importar</button>
     </div>
   `;
   document.getElementById('sec-sync').innerHTML = html;
-  // Preenche token se já tiver
+  // Preenche token se jÃ¡ tiver
   if (!temToken && document.getElementById('gh-token-input')) {
     // campo vazio mesmo
   }
@@ -1119,7 +1119,7 @@ function renderSync() {
 
 function importCSV() {
   const csv = document.getElementById('csv-input').value.trim();
-  if (!csv) { toast('⚠ Cole os dados'); return; }
+  if (!csv) { toast('â  Cole os dados'); return; }
 
   const lines = csv.split('\n');
   const newTodos = [];
@@ -1129,12 +1129,12 @@ function importCSV() {
     const line = lines[i];
     if (!line.trim()) continue;
     
-    // Detecta separador (Tab ou Vírgula)
+    // Detecta separador (Tab ou VÃ­rgula)
     const sep = line.includes('\t') ? '\t' : ',';
     const cols = line.split(sep).map(c => c.trim().replace('R$', '').replace(/\./g, '').replace(',', '.'));
 
-    // Mapeamento baseado na estrutura da planilha do usuário:
-    // 0:Data, 1:Odômetro, 2:Preço/L, 3:Vol Parcial, 4:Vol Completar, 5:Consumo, 6:Km, 7:Comb Consumido, 8:Comb Abastecido, 9:Total, 10:Posto
+    // Mapeamento baseado na estrutura da planilha do usuÃ¡rio:
+    // 0:Data, 1:OdÃ´metro, 2:PreÃ§o/L, 3:Vol Parcial, 4:Vol Completar, 5:Consumo, 6:Km, 7:Comb Consumido, 8:Comb Abastecido, 9:Total, 10:Posto
     
     const data = cols[0];
     const odo = parseInt(cols[1]) || 0;
@@ -1148,10 +1148,10 @@ function importCSV() {
     
     console.log(`Linha ${i}: data=${data}, odo=${odo}, pl=${pl}, volParcial=${volParcial}, volCompletar=${volCompletar}, km=${km}, comb=${comb}, total=${total}`);
 
-    // Se não tem km (abastecimento parcial), acumula volume
+    // Se nÃ£o tem km (abastecimento parcial), acumula volume
     if (km === 0 && volParcial > 0) {
       volumeParcialAcumulado += volParcial;
-      continue; // Pula para próxima linha
+      continue; // Pula para prÃ³xima linha
     }
 
     // Se tem km (abastecimento completo), soma com parciais acumulados
@@ -1166,12 +1166,12 @@ function importCSV() {
         total: total > 0 ? parseFloat(total.toFixed(2)) : (volTotal * pl),
         pl, posto, desc: ''
       });
-      volumeParcialAcumulado = 0; // Reset para próximo ciclo
+      volumeParcialAcumulado = 0; // Reset para prÃ³ximo ciclo
     }
   }
 
   if (newTodos.length === 0) {
-    toast('⚠ Nenhum dado válido encontrado.');
+    toast('â  Nenhum dado vÃ¡lido encontrado.');
     return;
   }
 
@@ -1179,13 +1179,13 @@ function importCSV() {
   sortTodosChronologically();
   recalculateKm();
   saveData();
-  toast('✓ ' + TODOS.length + ' registros importados!');
+  toast('â ' + TODOS.length + ' registros importados!');
   document.getElementById('csv-input').value = '';
   go('abastecimentos');
 }
 
 
-// ══════════════════════════════ TRAJETOS ══════════════════════════════
+// ââââââââââââââââââââââââââââââ TRAJETOS ââââââââââââââââââââââââââââââ
 function renderTrajetos() {
   const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.23;
   const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.07;
@@ -1193,7 +1193,7 @@ function renderTrajetos() {
   const kmMesTotal = (kmSemTotal * 4.33).toFixed(0);
 
   let html = `
-    <div class="sh"><span class="sh-title">🗺️ Trajetos</span></div>
+    <div class="sh"><span class="sh-title">ðºï¸ Trajetos</span></div>
     <div style="display:flex;gap:8px;margin-bottom:16px;">
       <button class="btn pr" style="flex:1" onclick="addTrajeto()">+ Adicionar trajeto</button>
     </div>
@@ -1201,9 +1201,9 @@ function renderTrajetos() {
       <div class="card-title">Totais</div>
       <div class="stat">
         <div class="stat-item"><div class="stat-label">km/semana</div><div class="stat-value">${kmSemTotal.toFixed(1)}</div></div>
-        <div class="stat-item"><div class="stat-label">km/mês</div><div class="stat-value">${kmMesTotal}</div></div>
-        <div class="stat-item"><div class="stat-label">R$/mês Gasolina</div><div class="stat-value">R$ ${(kmMesTotal / gasAvg * CONFIG.gasPrice).toFixed(2)}</div></div>
-        <div class="stat-item"><div class="stat-label">R$/mês Etanol</div><div class="stat-value">R$ ${(kmMesTotal / ethAvg * CONFIG.ethPrice).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">km/mÃªs</div><div class="stat-value">${kmMesTotal}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/mÃªs Gasolina</div><div class="stat-value">R$ ${(kmMesTotal / gasAvg * CONFIG.gasPrice).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/mÃªs Etanol</div><div class="stat-value">R$ ${(kmMesTotal / ethAvg * CONFIG.ethPrice).toFixed(2)}</div></div>
       </div>
     </div>
     <div class="list">
@@ -1212,25 +1212,25 @@ function renderTrajetos() {
   TRAJETOS.forEach((t, i) => {
     const gasViagem = (t.dist / gasAvg * t.gasP).toFixed(2);
     const ethViagem = (t.dist / ethAvg * t.ethP).toFixed(2);
-    const gasMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / gasAvg * t.gasP).toFixed(2) : '—';
-    const ethMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / ethAvg * t.ethP).toFixed(2) : '—';
+    const gasMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / gasAvg * t.gasP).toFixed(2) : 'â';
+    const ethMes = t.kmSem > 0 ? ((t.kmSem * 4.33) / ethAvg * t.ethP).toFixed(2) : 'â';
     const melhor = parseFloat(ethViagem) < parseFloat(gasViagem) ? 'Etanol' : 'Gasolina';
     html += `
       <div class="list-item" style="flex-direction:column;align-items:stretch;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div style="font-weight:bold;">${t.nome}</div>
           <div style="display:flex;gap:6px;">
-            <button class="btn" onclick="editTrajeto(${i})">✎</button>
-            <button class="btn danger" onclick="delTrajeto(${i})">✕</button>
+            <button class="btn" onclick="editTrajeto(${i})">â</button>
+            <button class="btn danger" onclick="delTrajeto(${i})">â</button>
           </div>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">${t.dist} km ida/volta · ${t.kmSem > 0 ? t.kmSem + ' km/sem' : 'eventual'}</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">${t.dist} km ida/volta Â· ${t.kmSem > 0 ? t.kmSem + ' km/sem' : 'eventual'}</div>
         <div class="stat" style="margin-bottom:0;">
           <div class="stat-item"><div class="stat-label">Viagem Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${gasViagem}</div></div>
           <div class="stat-item"><div class="stat-label">Viagem Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${ethViagem}</div></div>
-          <div class="stat-item"><div class="stat-label">Mês Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${gasMes}</div></div>
-          <div class="stat-item"><div class="stat-label">Mês Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${ethMes}</div></div>
-          <div class="stat-item"><div class="stat-label">Mais econômico</div><div class="stat-value" style="font-size:14px;color:var(--success);">✓ ${melhor}</div></div>
+          <div class="stat-item"><div class="stat-label">MÃªs Gasolina</div><div class="stat-value" style="font-size:14px;">R$ ${gasMes}</div></div>
+          <div class="stat-item"><div class="stat-label">MÃªs Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${ethMes}</div></div>
+          <div class="stat-item"><div class="stat-label">Mais econÃ´mico</div><div class="stat-value" style="font-size:14px;color:var(--success);">â ${melhor}</div></div>
         </div>
       </div>`;
   });
@@ -1242,47 +1242,47 @@ function renderTrajetos() {
 
 function addTrajeto() {
   const nome = prompt('Nome do trajeto:'); if (!nome) return;
-  const dist = parseFloat(prompt('Distância ida/volta (km):')); if (isNaN(dist)) return;
+  const dist = parseFloat(prompt('DistÃ¢ncia ida/volta (km):')); if (isNaN(dist)) return;
   const kmSem = parseFloat(prompt('km/semana neste trajeto (0 se eventual):', '0')) || 0;
-  const gasP = parseFloat(prompt('Preço gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
-  const ethP = parseFloat(prompt('Preço etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
+  const gasP = parseFloat(prompt('PreÃ§o gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('PreÃ§o etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
   TRAJETOS.push({nome, dist, kmSem, gasP, ethP, gasKmL:10.23, ethKmL:8.07});
-  saveData(); toast('✓ Trajeto adicionado'); renderTrajetos();
+  saveData(); toast('â Trajeto adicionado'); renderTrajetos();
 }
 
 function editTrajeto(i) {
   const t = TRAJETOS[i];
   const nome = prompt('Nome:', t.nome); if (nome === null) return;
-  const dist = parseFloat(prompt('Distância ida/volta (km):', t.dist)); if (isNaN(dist)) return;
+  const dist = parseFloat(prompt('DistÃ¢ncia ida/volta (km):', t.dist)); if (isNaN(dist)) return;
   const kmSem = parseFloat(prompt('km/semana (0 se eventual):', t.kmSem)) || 0;
-  const gasP = parseFloat(prompt('Preço gasolina R$/L:', t.gasP)); if (isNaN(gasP)) return;
-  const ethP = parseFloat(prompt('Preço etanol R$/L:', t.ethP)); if (isNaN(ethP)) return;
+  const gasP = parseFloat(prompt('PreÃ§o gasolina R$/L:', t.gasP)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('PreÃ§o etanol R$/L:', t.ethP)); if (isNaN(ethP)) return;
   TRAJETOS[i] = {...t, nome, dist, kmSem, gasP, ethP};
-  saveData(); toast('✓ Atualizado'); renderTrajetos();
+  saveData(); toast('â Atualizado'); renderTrajetos();
 }
 
 function delTrajeto(i) {
   if (confirm('Remover trajeto "' + TRAJETOS[i].nome + '"?')) {
-    TRAJETOS.splice(i, 1); saveData(); toast('✓ Removido'); renderTrajetos();
+    TRAJETOS.splice(i, 1); saveData(); toast('â Removido'); renderTrajetos();
   }
 }
 
-// ══════════════════════════════ POSTOS ══════════════════════════════
+// ââââââââââââââââââââââââââââââ POSTOS ââââââââââââââââââââââââââââââ
 function renderPostos() {
   const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.2;
   const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.1;
   const corteReal = gasAvg > 0 ? (ethAvg / gasAvg * 100).toFixed(1) : 70.4;
 
   let html = `
-    <div class="sh"><span class="sh-title">⛽ Postos de Combustível</span></div>
+    <div class="sh"><span class="sh-title">â½ Postos de CombustÃ­vel</span></div>
     <div style="display:flex;gap:8px;margin-bottom:16px;">
       <button class="btn pr" style="flex:1" onclick="addPosto()">+ Adicionar posto</button>
     </div>
     <div class="card" style="margin-bottom:16px;">
       <div class="card-title">Ponto de corte real do seu carro</div>
       <div style="font-size:13px;color:var(--muted);">
-        Baseado nas suas médias reais: Gasolina <strong style="color:var(--primary)">${gasAvg} km/L</strong> · Etanol <strong style="color:var(--primary)">${ethAvg} km/L</strong><br>
-        Se Etanol/Gasolina &lt; <strong style="color:var(--success)">${corteReal}%</strong> → Etanol é mais econômico no seu carro
+        Baseado nas suas mÃ©dias reais: Gasolina <strong style="color:var(--primary)">${gasAvg} km/L</strong> Â· Etanol <strong style="color:var(--primary)">${ethAvg} km/L</strong><br>
+        Se Etanol/Gasolina &lt; <strong style="color:var(--success)">${corteReal}%</strong> â Etanol Ã© mais econÃ´mico no seu carro
       </div>
     </div>
     <div class="list">
@@ -1300,8 +1300,8 @@ function renderPostos() {
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div style="font-weight:bold;">${p.nome} ${abaixoCorte ? '<span class="badge best">Eth vence</span>' : ''}</div>
           <div style="display:flex;gap:6px;">
-            <button class="btn" onclick="editPosto(${i})">✎</button>
-            <button class="btn danger" onclick="delPosto(${i})">✕</button>
+            <button class="btn" onclick="editPosto(${i})">â</button>
+            <button class="btn danger" onclick="delPosto(${i})">â</button>
           </div>
         </div>
         <div class="stat" style="margin-bottom:0;">
@@ -1309,8 +1309,8 @@ function renderPostos() {
           <div class="stat-item"><div class="stat-label">Etanol</div><div class="stat-value" style="font-size:14px;">R$ ${p.ethP.toFixed(2)}/L</div></div>
           <div class="stat-item"><div class="stat-label">Custo/km Gas</div><div class="stat-value" style="font-size:14px;">R$ ${gasCkm}</div></div>
           <div class="stat-item"><div class="stat-label">Custo/km Eth</div><div class="stat-value" style="font-size:14px;">R$ ${ethCkm}</div></div>
-          <div class="stat-item"><div class="stat-label">Relação Eth/Gas</div><div class="stat-value" style="font-size:14px;color:${abaixoCorte?'var(--success)':'var(--warning)'};">${rel}% ${abaixoCorte?'✓':'⚠'}</div></div>
-          <div class="stat-item"><div class="stat-label">Preço corte Eth</div><div class="stat-value" style="font-size:14px;">R$ ${corte}/L</div></div>
+          <div class="stat-item"><div class="stat-label">RelaÃ§Ã£o Eth/Gas</div><div class="stat-value" style="font-size:14px;color:${abaixoCorte?'var(--success)':'var(--warning)'};">${rel}% ${abaixoCorte?'â':'â '}</div></div>
+          <div class="stat-item"><div class="stat-label">PreÃ§o corte Eth</div><div class="stat-value" style="font-size:14px;">R$ ${corte}/L</div></div>
         </div>
       </div>`;
   });
@@ -1322,37 +1322,37 @@ function renderPostos() {
 
 function addPosto() {
   const nome = prompt('Nome do posto:'); if (!nome) return;
-  const gasP = parseFloat(prompt('Preço Gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
-  const ethP = parseFloat(prompt('Preço Etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
+  const gasP = parseFloat(prompt('PreÃ§o Gasolina R$/L:', CONFIG.gasPrice)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('PreÃ§o Etanol R$/L:', CONFIG.ethPrice)); if (isNaN(ethP)) return;
   POSTOS.push({nome, gasP, ethP, gasKmL:10.2, ethKmL:8.1});
-  saveData(); toast('✓ Posto adicionado'); renderPostos();
+  saveData(); toast('â Posto adicionado'); renderPostos();
 }
 
 function editPosto(i) {
   const p = POSTOS[i];
   const nome = prompt('Nome:', p.nome); if (nome === null) return;
-  const gasP = parseFloat(prompt('Preço Gasolina R$/L:', p.gasP)); if (isNaN(gasP)) return;
-  const ethP = parseFloat(prompt('Preço Etanol R$/L:', p.ethP)); if (isNaN(ethP)) return;
+  const gasP = parseFloat(prompt('PreÃ§o Gasolina R$/L:', p.gasP)); if (isNaN(gasP)) return;
+  const ethP = parseFloat(prompt('PreÃ§o Etanol R$/L:', p.ethP)); if (isNaN(ethP)) return;
   POSTOS[i] = {...p, nome, gasP, ethP};
-  saveData(); toast('✓ Atualizado'); renderPostos();
+  saveData(); toast('â Atualizado'); renderPostos();
 }
 
 function delPosto(i) {
   if (confirm('Remover posto "' + POSTOS[i].nome + '"?')) {
-    POSTOS.splice(i, 1); saveData(); toast('✓ Removido'); renderPostos();
+    POSTOS.splice(i, 1); saveData(); toast('â Removido'); renderPostos();
   }
 }
 
-// ══════════════════════════════ CICLO 1 e 2 ══════════════════════════════
+// ââââââââââââââââââââââââââââââ CICLO 1 e 2 ââââââââââââââââââââââââââââââ
 function renderCicloHistorico(dados, titulo, elId) {
   if (!dados || dados.length === 0) {
-    document.getElementById(elId).innerHTML = `<div class="sh"><span class="sh-title">${titulo}</span></div><div style="text-align:center;padding:40px;color:var(--muted);">Nenhum dado disponível.</div>`;
+    document.getElementById(elId).innerHTML = `<div class="sh"><span class="sh-title">${titulo}</span></div><div style="text-align:center;padding:40px;color:var(--muted);">Nenhum dado disponÃ­vel.</div>`;
     return;
   }
   const gasD = dados.filter(d => d.comb === 'Gasolina' && d.km > 0);
   const ethD = dados.filter(d => d.comb === 'Etanol' && d.km > 0);
-  const gasKmL = gasD.length ? (gasD.reduce((a,d)=>a+d.km,0) / gasD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : '—';
-  const ethKmL = ethD.length ? (ethD.reduce((a,d)=>a+d.km,0) / ethD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : '—';
+  const gasKmL = gasD.length ? (gasD.reduce((a,d)=>a+d.km,0) / gasD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : 'â';
+  const ethKmL = ethD.length ? (ethD.reduce((a,d)=>a+d.km,0) / ethD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : 'â';
   const totalGas = gasD.reduce((a,d)=>a+d.total,0).toFixed(2);
   const totalEth = ethD.reduce((a,d)=>a+d.total,0).toFixed(2);
   const totalKm = dados.reduce((a,d)=>a+d.km,0);
@@ -1364,11 +1364,11 @@ function renderCicloHistorico(dados, titulo, elId) {
     <div class="card">
       <div class="card-title">Resumo do Ciclo</div>
       <div class="stat">
-        <div class="stat-item"><div class="stat-label">Odômetro início</div><div class="stat-value">${odoInicio.toLocaleString('pt-BR')} km</div></div>
-        <div class="stat-item"><div class="stat-label">Odômetro fim</div><div class="stat-value">${odoFim.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">OdÃ´metro inÃ­cio</div><div class="stat-value">${odoInicio.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">OdÃ´metro fim</div><div class="stat-value">${odoFim.toLocaleString('pt-BR')} km</div></div>
         <div class="stat-item"><div class="stat-label">Total rodado</div><div class="stat-value">${totalKm.toLocaleString('pt-BR')} km</div></div>
-        <div class="stat-item"><div class="stat-label">Média Gasolina</div><div class="stat-value">${gasKmL} km/L</div></div>
-        <div class="stat-item"><div class="stat-label">Média Etanol</div><div class="stat-value">${ethKmL} km/L</div></div>
+        <div class="stat-item"><div class="stat-label">MÃ©dia Gasolina</div><div class="stat-value">${gasKmL} km/L</div></div>
+        <div class="stat-item"><div class="stat-label">MÃ©dia Etanol</div><div class="stat-value">${ethKmL} km/L</div></div>
         <div class="stat-item"><div class="stat-label">Total Gasolina</div><div class="stat-value">R$ ${parseFloat(totalGas).toFixed(2)}</div></div>
         <div class="stat-item"><div class="stat-label">Total Etanol</div><div class="stat-value">R$ ${parseFloat(totalEth).toFixed(2)}</div></div>
         <div class="stat-item"><div class="stat-label">Total gasto</div><div class="stat-value">R$ ${(parseFloat(totalGas)+parseFloat(totalEth)).toFixed(2)}</div></div>
@@ -1383,8 +1383,8 @@ function renderCicloHistorico(dados, titulo, elId) {
     html += `
       <div class="list-item">
         <div class="list-item-title">
-          <div style="font-weight:bold;">${d.data} · ${d.comb} · ${d.odo.toLocaleString('pt-BR')} km</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L · <strong style="color:var(--primary)">${cons} km/L</strong> · ${d.km} km${d.posto ? ' · ' + d.posto : ''}${d.desc ? ' · ' + d.desc : ''}</div>
+          <div style="font-weight:bold;">${d.data} Â· ${d.comb} Â· ${d.odo.toLocaleString('pt-BR')} km</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L Â· <strong style="color:var(--primary)">${cons} km/L</strong> Â· ${d.km} km${d.posto ? ' Â· ' + d.posto : ''}${d.desc ? ' Â· ' + d.desc : ''}</div>
         </div>
       </div>`;
   });
@@ -1393,10 +1393,10 @@ function renderCicloHistorico(dados, titulo, elId) {
   document.getElementById(elId).innerHTML = html;
 }
 
-function renderCiclo1() { renderCicloHistorico(CICLO1, '📋 Ciclo 1 · Histórico', 'sec-ciclo1'); }
-function renderCiclo2() { renderCicloHistorico(CICLO2, '📋 Ciclo 2 · Histórico', 'sec-ciclo2'); }
+function renderCiclo1() { renderCicloHistorico(CICLO1, 'ð Ciclo 1 Â· HistÃ³rico', 'sec-ciclo1'); }
+function renderCiclo2() { renderCicloHistorico(CICLO2, 'ð Ciclo 2 Â· HistÃ³rico', 'sec-ciclo2'); }
 
-// ══════════════════════════════ UTILS ══════════════════════════════
+// ââââââââââââââââââââââââââââââ UTILS ââââââââââââââââââââââââââââââ
 function toast(msg) {
   const el = document.getElementById('toast');
   el.textContent = msg;
@@ -1404,7 +1404,7 @@ function toast(msg) {
   setTimeout(() => el.classList.remove('show'), 2000);
 }
 
-// ══════════════════════════════ INIT ══════════════════════════════
+// ââââââââââââââââââââââââââââââ INIT ââââââââââââââââââââââââââââââ
 loadData();
 go('dashboard');
 </script>
