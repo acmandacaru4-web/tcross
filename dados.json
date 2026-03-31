@@ -125,9 +125,84 @@
     }
   ],
   "historico": [],
-  "trajetos": [],
-  "postos": [],
+  "trajetos": [
+    {
+      "nome": "Circuito Clínicas Aracaju",
+      "dist": 227,
+      "kmSem": 227,
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.21,
+      "ethKmL": 9.25
+    },
+    {
+      "nome": "Baixa Grande por Sapucaia",
+      "dist": 140,
+      "kmSem": 0,
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.21,
+      "ethKmL": 9.25
+    },
+    {
+      "nome": "Baixa Grande por Lagoa Redonda",
+      "dist": 181,
+      "kmSem": 0,
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.21,
+      "ethKmL": 9.25
+    },
+    {
+      "nome": "Retiro",
+      "dist": 67.3,
+      "kmSem": 67.3,
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.21,
+      "ethKmL": 9.25
+    },
+    {
+      "nome": "Pedro Reys",
+      "dist": 66.8,
+      "kmSem": 133.6,
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.21,
+      "ethKmL": 9.25
+    }
+  ],
+  "postos": [
+    {
+      "nome": "Preço/L (R$)",
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.2,
+      "ethKmL": 9.3
+    },
+    {
+      "nome": "Posto PEL",
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.2,
+      "ethKmL": 9.3
+    },
+    {
+      "nome": "Posto Arthur Melo",
+      "gasP": 7.12,
+      "ethP": 5.24,
+      "gasKmL": 10.2,
+      "ethKmL": 9.3
+    },
+    {
+      "nome": "Posto Orla Propriá",
+      "gasP": 7.12,
+      "ethP": 5.24,
+      "gasKmL": 10.2,
+      "ethKmL": 9.3
+    }
+  ],
   "ciclo1": [],
   "ciclo2": [],
-  "savedAt": "2026-03-31T10:56:10.358Z"
+  "savedAt": "2026-03-31T11:02:05.967Z"
 }
