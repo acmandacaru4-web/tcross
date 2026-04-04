@@ -157,7 +157,9 @@
       "gasP": 7.12,
       "ethP": 5.05,
       "gasKmL": 10.21,
-      "ethKmL": 9.25
+      "ethKmL": 9.25,
+      "vezSem": 1,
+      "mapUrl": "https://www.google.com/maps/dir/Rua+Josias+Teixeira+Lima,+125,+Propri%C3%A1+-+SE/R.+Elp%C3%ADdio+Batista+Neri,+784+-+Rosa+Elze,+S%C3%A3o+Crist%C3%B3v%C3%A3o+-+SE,+49107-258/Hapvida+Cl%C3%ADnica+Gentil+Tavares,+Av.+Eng.+Gentil+Tavares,+831+-+Get%C3%BAlio+Vargas,+Aracaju+-+SE,+49055-260/R.+Campo+do+Brito,+1180+-+S%C3%A3o+Jos%C3%A9,+Aracaju+-+SE,+49015-460/Atacad%C3%A3o+-+Aracaju+BR-235,+Av.+Chanceler+Osvaldo+Aranha,+2445+-+Novo+Para%C3%ADso,+Aracaju+-+SE,+49082-110/R.+Elp%C3%ADdio+Batista+Neri,+784+-+Rosa+Elze,+S%C3%A3o+Crist%C3%B3v%C3%A3o+-+SE,+49107-258/Rua+Josias+Teixeira+Lima,+125,+Propri%C3%A1+-+SE/@-10.5676671,-37.3118294,10z/data=!3m1!4b1!4m44!4m43!1m5!1m1!1s0x705a44ee6f7dc33:0xaa69fc5e0cc6ebaf!2m2!1d-36.8327471!2d-10.2114029!1m5!1m1!1s0x71ab268aa34b0f5:0xc60a75547005d242!2m2!1d-37.1095058!2d-10.9214017!1m5!1m1!1s0x71ab3d0426c8fbd:0xead419623263b483!2m2!1d-37.0640333!2d-10.9136913!1m5!1m1!1s0x71ab39be948a1d3:0x5be75fd2c001e69d!2m2!1d-37.0551924!2d-10.9251481!1m5!1m1!1s0x71ab2f0ef2d6ed5:0xa06604e360c12811!2m2!1d-37.0962048!2d-10.9081919!1m5!1m1!1s0x71ab268aa34b0f5:0xc60a75547005d242!2m2!1d-37.1095058!2d-10.9214017!1m5!1m1!1s0x705a44ee6f7dc33:0xaa69fc5e0cc6ebaf!2m2!1d-36.8327471!2d-10.2114029!3e0?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "nome": "Baixa Grande por Sapucaia",
@@ -184,7 +186,9 @@
       "gasP": 7.12,
       "ethP": 5.05,
       "gasKmL": 10.21,
-      "ethKmL": 9.25
+      "ethKmL": 9.25,
+      "vezSem": 1,
+      "mapUrl": ""
     },
     {
       "nome": "Pedro Reys",
@@ -193,7 +197,9 @@
       "gasP": 7.12,
       "ethP": 5.05,
       "gasKmL": 10.21,
-      "ethKmL": 9.25
+      "ethKmL": 9.25,
+      "vezSem": 2,
+      "mapUrl": ""
     }
   ],
   "postos": [
@@ -962,5 +968,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-02T18:53:20.523Z"
+  "savedAt": "2026-04-04T12:33:13.855Z"
 }
