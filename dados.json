@@ -170,7 +170,10 @@
       "gasP": 7.12,
       "ethP": 5.05,
       "gasKmL": 10.21,
-      "ethKmL": 9.25
+      "ethKmL": 9.25,
+      "freq": "semana",
+      "vezes": 0,
+      "mapUrl": ""
     },
     {
       "nome": "Baixa Grande por Lagoa Redonda",
@@ -206,6 +209,28 @@
       "mapUrl": "",
       "freq": "semana",
       "vezes": 2
+    },
+    {
+      "nome": "Ponta do Mangues",
+      "dist": 122,
+      "freq": "semana",
+      "vezes": 0,
+      "mapUrl": "Trajeto compartilhado\nDe (-10.2114882,-36.8327149) até Ponta dos Mangues via SE-204.\n\n1h 14min (61 km)\n1h 14min no trânsito atual\n\n\n1. Siga em direção à R. Josias Teixeira Lima\n2. Vire à esquerda na R. Josias Teixeira Lima\n3. Vire à direita na Tv. Santa Luzia\n4. Curva suave à esquerda na Praça Santa Luzia\n5. Vire à esquerda na R. Ver. José Braga\n6. Curva suave à esquerda na R. Dom José Tomás\n7. Vire à esquerda\n8. Curva suave à direita em direção à Rod. Se-065 Ou Antiga Estrada Própria Japoata\n9. Vire à direita na Rod. Se-065 Ou Antiga Estrada Própria Japoata\n10. Vire à esquerda na R. Santa Teresinha\n11. Vire à direita na R. Dr. Augusto Falcão\n12. Vire à esquerda na Rod. Comendador Manoel Gonçalves/SE-204/SE-335\n13. Curva suave à direita em direção à SE-204\n14. Vire à direita na SE-439\n15. Curva suave à esquerda na SE-100\n16. Vire à direita na R. da Escola\n17. Chegar ao local: Ponta dos Mangues\nPara o melhor trajeto no momento, acesse https://maps.app.goo.gl/WmfYyt2sVLMKKjxM9",
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.23,
+      "ethKmL": 8.07
+    },
+    {
+      "nome": "Praia do Robalo",
+      "dist": 228,
+      "freq": "semana",
+      "vezes": 0,
+      "mapUrl": "Trajeto compartilhado\nDe (-10.2115107,-36.8326762) até Praia do Robalo via BR-101.\n\n1h 59min (114 km)\n1h 59min no trânsito atual\n\n\n1. Siga em direção à R. Josias Teixeira Lima\n2. Vire à direita na R. Josias Teixeira Lima\n3. Vire à direita na Av. Pref. Nelson Melo\n4. Vire à esquerda\n5. Vire à direita na rampa de acesso para Rod. Prestes Maia/BR-101\n6. Pegue a Rod. Prestes Maia/BR-101\n7. Continue em frente para permanecer na BR-101\n8. Continue em frente para permanecer na BR-101\n9. Curva suave à esquerda\n10. Curva suave à direita em direção à BR-101\n11. Mantenha-se à direita para continuar na direção de BR-101\n12. Vire à esquerda na BR-101\n13. Curva suave à direita\n14. Vire à direita na BR-101\n15. Vire à direita\n16. Pegue a BR-101\n17. Mantenha-se à esquerda para continuar na BR-101/BR-235\n18. Curva suave à direita na rampa de acesso a Aeroporto/Praias/Linha Verde\n19. Continue em frente para permanecer na Av. Pres. Tancredo Neves\n20. Continue em frente na Av. Gov. Paulo Barreto de Menezes\n21. Use as duas faixas da esquerda para virar levemente à esquerda e acessar a Av. Antônio Alves/Av. Gov. Paulo Barreto de Menezes\n22. Na rotatória, pegue a 2ª saída para a Av. Rotary\n23. Saia da rotatória para  Av. Rotary\n24. Use qualquer faixa para virar à direita depois de Mcdonalds (à direita) para Av. Santos Dumont\n25. Na rotatória, pegue a 2ª saída para a Av. Inácio Barbosa\n26. Saia da rotatória para  Av. Inácio Barbosa\n27. Chegar ao local: Praia do Robalo\nPara o melhor trajeto no momento, acesse https://maps.app.goo.gl/xjLvrBpQ15ZAe23b9",
+      "gasP": 7.12,
+      "ethP": 5.05,
+      "gasKmL": 10.23,
+      "ethKmL": 8.07
     }
   ],
   "postos": [
@@ -974,5 +999,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-05T16:12:29.139Z"
+  "savedAt": "2026-04-06T12:00:37.455Z"
 }
