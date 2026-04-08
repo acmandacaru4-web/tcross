@@ -98,11 +98,15 @@
     }
   ],
   "config": {
-    "gasPrice": 7.12,
+    "gasPrice": 7.07,
     "ethPrice": 5.05,
     "gasConsume": 10.21,
     "ethConsume": 9.25,
-    "nextReview": 29373
+    "nextReview": 29373,
+    "cicloAtualNum": 3,
+    "favGasStation": "",
+    "favGasEthPrice": 5.05,
+    "favGasGasPrice": 7.12
   },
   "manutencao": [
     {
@@ -255,7 +259,7 @@
     },
     {
       "nome": "Posto PEL",
-      "gasP": 7.12,
+      "gasP": 7.07,
       "ethP": 5.05,
       "gasKmL": 10.2,
       "ethKmL": 9.3
@@ -1011,5 +1015,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-06T23:15:23.236Z"
+  "savedAt": "2026-04-08T10:15:42.001Z"
 }
