@@ -96,19 +96,7 @@
       "posto": "",
       "desc": ""
     },
-    {
-      "data": "08/04",
-      "odo": 22285,
-      "km": 22285,
-      "vol": 38.3,
-      "cons": "581.85",
-      "comb": "Etanol",
-      "total": 193.41,
-      "pl": 5.05,
-      "posto": "",
-      "desc": ""
-    }
-  ],
+   ],
   "config": {
     "gasPrice": 7.07,
     "ethPrice": 5.05,
