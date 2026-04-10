@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-CROSS Painel de Consumo</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+
+:root{
+  --bg:#080c18;
+  --bg2:#0f1628;
+  --bg3:#162040;
+  --text:#f0f4ff;
+  --muted:#6b7a99;
+  --border:#1e2d50;
+  --primary:#f5c518;
+  --primary2:#ffdb4d;
+  --success:#00e676;
+  --warning:#ff9800;
+  --danger:#ff3d57;
+  --eth:#00c896;
+  --gas:#f5a623;
+  --blue:#4a9eff;
+  --radius:16px;
+  --radius-sm:10px;
+}
+
+body{
+  font-family:'Sora',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(8,12,24,0.95);
+  backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-around;
+  padding:8px 0 max(8px,env(safe-area-inset-bottom));
+  z-index:100;
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;color:var(--muted);
+  font-family:'Sora',sans-serif;font-size:10px;
+  cursor:pointer;padding:4px 10px;border-radius:8px;
+  transition:all 0.2s;min-width:52px;
+}
+.bn-item.on{color:var(--primary);}
+.bn-item svg{width:22px;height:22px;}
+.bn-add{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(245,197,24,0.4);
+  transition:transform 0.15s,box-shadow 0.15s;
+  margin-top:-16px;
+}
+.bn-add:active{transform:scale(0.93);box-shadow:0 2px 10px rgba(245,197,24,0.3);}
+.bn-add svg{width:26px;height:26px;color:#000;}
+
+/* ── MORE MENU ── */
+.more-menu{
+  position:fixed;bottom:70px;right:12px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:8px;
+  display:none;flex-direction:column;gap:4px;
+  z-index:200;min-width:160px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+.more-menu.open{display:flex;}
+.more-item{
+  background:none;border:none;color:var(--text);
+  font-family:'Sora',sans-serif;font-size:13px;
+  padding:10px 14px;border-radius:8px;cursor:pointer;
+  text-align:left;transition:background 0.15s;
+  display:flex;align-items:center;gap:10px;
+}
+.more-item:hover,.more-item.on{background:var(--bg3);color:var(--primary);}
+
+/* ── MAIN ── */
+main{
+  max-width:480px;margin:0 auto;
+  padding:16px 14px 90px;
+}
+
+/* PC: centraliza e limita largura */
+@media(min-width:600px){
+  /* Nav continua embaixo, mas centralizada */
+  .bottom-nav{
+    max-width:900px;
+    left:50%; transform:translateX(-50%);
+    border-radius:16px 16px 0 0;
+  }
+  .more-menu{ right:calc(50% - 450px + 12px); }
+
+  /* Main mais largo */
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:24px 32px 100px;
+    width:100%;
+  }
+
+  .stat-grid{ grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+  .page-title{ font-size:26px; }
+}
+
+@media(min-width:900px){
+  main{ max-width:1100px; padding:24px 48px 100px; }
+  .bottom-nav{ max-width:1100px; }
+  .more-menu{ right:calc(50% - 550px + 12px); }
+}
+.sec{display:none;}
+.sec.on{display:block;}
+
+/* ── PAGE HEADER ── */
+.page-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.page-title{font-size:22px;font-weight:700;letter-spacing:-0.5px;}
+.page-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+.odo-pill{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:20px;padding:6px 14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;font-weight:600;color:var(--blue);
+  white-space:nowrap;
+}
+
+/* ── CARDS ── */
+.card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;margin-bottom:14px;
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+}
+.card.accent-gas::before{background:linear-gradient(90deg,transparent,var(--gas),transparent);}
+.card.accent-eth::before{background:linear-gradient(90deg,transparent,var(--eth),transparent);}
+.card.accent-blue::before{background:linear-gradient(90deg,transparent,var(--blue),transparent);}
+.card.accent-primary::before{background:linear-gradient(90deg,transparent,var(--primary),transparent);}
+.card.accent-sim{border-color:var(--warning);box-shadow:0 0 0 1px rgba(255,152,0,0.15);}
+
+.card-title{
+  font-size:12px;font-weight:600;
+  color:var(--muted);text-transform:uppercase;letter-spacing:1px;
+  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.card-title svg{width:14px;height:14px;}
+
+/* ── STAT GRID ── */
+.stat-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.stat-grid.cols3{grid-template-columns:1fr 1fr 1fr;}
+.stat-grid.cols1{grid-template-columns:1fr;}
+
+.stat-item{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px;
+}
+.stat-label{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:500;}
+.stat-value{
+  font-size:20px;font-weight:700;color:var(--primary);
+  font-family:'JetBrains Mono',monospace;letter-spacing:-0.5px;
+  line-height:1.1;
+}
+.stat-value.sm{font-size:15px;}
+.stat-value.gas{color:var(--gas);}
+.stat-value.eth{color:var(--eth);}
+.stat-value.blue{color:var(--blue);}
+.stat-value.danger{color:var(--danger);}
+.stat-value.warning{color:var(--warning);}
+.stat-value.success{color:var(--success);}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+
+/* ── HERO CARD ── */
+.hero-card{
+  background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;margin-bottom:14px;
+  display:flex;align-items:center;gap:16px;
+}
+.hero-icon{
+  width:56px;height:56px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.hero-icon.gas{background:rgba(245,166,35,0.15);color:var(--gas);}
+.hero-icon.eth{background:rgba(0,200,150,0.15);color:var(--eth);}
+.hero-icon.blue{background:rgba(74,158,255,0.15);color:var(--blue);}
+.hero-icon svg{width:28px;height:28px;}
+.hero-label{font-size:12px;color:var(--muted);font-weight:500;}
+.hero-value{font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:-1px;line-height:1;}
+.hero-sub{font-size:12px;color:var(--muted);margin-top:4px;}
+
+/* ── BEST FUEL BADGE ── */
+.best-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(0,230,118,0.12);border:1px solid rgba(0,230,118,0.3);
+  color:var(--success);padding:4px 10px;border-radius:20px;
+  font-size:11px;font-weight:700;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap{margin:10px 0 4px;}
+.progress-bar{
+  height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--blue),var(--primary));
+  transition:width 0.5s ease;
+}
+
+/* ── LIST ITEMS ── */
+.list-item{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:14px;
+  margin-bottom:10px;
+}
+.li-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.li-title{font-size:14px;font-weight:600;}
+.li-meta{font-size:12px;color:var(--muted);line-height:1.6;}
+.li-value{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--primary);white-space:nowrap;}
+.li-actions{display:flex;gap:6px;margin-top:10px;}
+
+/* ── FUEL BADGE ── */
+.fuel-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;
+}
+.fuel-tag.gas{background:rgba(245,166,35,0.15);color:var(--gas);border:1px solid rgba(245,166,35,0.3);}
+.fuel-tag.eth{background:rgba(0,200,150,0.15);color:var(--eth);border:1px solid rgba(0,200,150,0.3);}
+
+/* ── BUTTONS ── */
+.btn{
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:9px 14px;border-radius:var(--radius-sm);
+  cursor:pointer;font-size:13px;font-family:'Sora',sans-serif;
+  font-weight:500;transition:all 0.15s;
+}
+.btn:active{transform:scale(0.97);}
+.btn.pr{background:var(--primary);color:#000;border-color:var(--primary);font-weight:700;}
+.btn.pr:active{background:var(--primary2);}
+.btn.danger{background:rgba(255,61,87,0.15);color:var(--danger);border-color:rgba(255,61,87,0.3);}
+.btn.sm{padding:6px 10px;font-size:12px;}
+.btn.full{width:100%;}
+
+/* ── FORM ── */
+.form-group{margin-bottom:14px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
+.form-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:12px 14px;border-radius:var(--radius-sm);
+  font-size:15px;font-family:'Sora',sans-serif;
+  transition:border-color 0.15s;
+}
+.form-input:focus{outline:none;border-color:var(--primary);}
+.form-input::placeholder{color:var(--muted);}
+textarea.form-input{height:120px;resize:vertical;font-size:13px;}
+
+/* ── SH (section header) ── */
+.sh{
+  border-left:3px solid var(--primary);
+  padding:10px 14px;margin-bottom:16px;
+  background:var(--bg2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.sh-title{font-size:15px;font-weight:700;}
+
+/* ── MAINT ITEM ── */
+.maint-item{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:14px;
+  margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;
+}
+.maint-check{width:20px;height:20px;cursor:pointer;accent-color:var(--primary);flex-shrink:0;margin-top:2px;}
+.maint-item.done{opacity:0.5;}
+.maint-item.done .maint-title{text-decoration:line-through;}
+.maint-title{font-size:13px;font-weight:600;margin-bottom:3px;}
+.maint-desc{font-size:12px;color:var(--muted);}
+.maint-km{font-size:12px;color:var(--muted);margin-top:8px;padding:8px;background:var(--bg3);border-radius:8px;}
+.maint-content{flex:1;}
+
+/* ── TOAST ── */
+/* ── INLINE FORM (substitui modal) ── */
+.inline-form{
+  background:var(--bg2);border:2px solid var(--primary);
+  border-radius:var(--radius);padding:20px;margin-bottom:14px;
+  animation:fadeIn 0.2s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.inline-form-title{
+  font-size:15px;font-weight:700;color:var(--primary);
+  margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;
+}
+.inline-form-fields{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.inline-form-field label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;}
+.inline-form-field input,.inline-form-field select{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:12px 14px;border-radius:10px;
+  font-size:16px;font-family:'Sora',sans-serif;
+  -webkit-appearance:none;
+}
+.inline-form-field input:focus,.inline-form-field select:focus{outline:none;border-color:var(--primary);}
+.inline-form-btns{display:flex;gap:10px;}
+.inline-form-btns button{flex:1;}
+
+/* modal overlay mantido mas só para fallback */
+#modal-overlay{display:none !important;}
+
+#toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+  background:var(--bg2);border:1px solid var(--border);
+  color:var(--text);padding:12px 20px;border-radius:20px;
+  font-size:13px;font-weight:500;opacity:0;
+  transition:opacity 0.3s,transform 0.3s;
+  pointer-events:none;z-index:300;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+#toast.show{opacity:1;}
+#toast.ok{border-color:var(--success);color:var(--success);}
+#toast.err{border-color:var(--danger);color:var(--danger);}
+
+/* ── HISTORICO TOGGLE ── */
+.ciclo-toggle{
+  width:100%;background:var(--bg2);border:1px solid var(--border);
+  color:var(--text);padding:14px 16px;border-radius:var(--radius-sm);
+  font-family:'Sora',sans-serif;font-size:14px;font-weight:600;
+  text-align:left;cursor:pointer;margin-bottom:8px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ciclo-toggle:active{background:var(--bg3);}
+
+@media(max-width:400px){
+  .stat-value{font-size:17px;}
+  .hero-value{font-size:24px;}
+}
+</style>
+<body>
+
+<main>
+  <div class="sec on" id="sec-dashboard"></div>
+  <div class="sec" id="sec-abastecimentos"></div>
+  <div class="sec" id="sec-trajetos"></div>
+  <div class="sec" id="sec-postos"></div>
+  <div class="sec" id="sec-historico"></div>
+  <div class="sec" id="sec-manutencao"></div>
+  <div class="sec" id="sec-config"></div>
+  <div class="sec" id="sec-sync"></div>
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bn-item on" onclick="go('dashboard')" data-tab="dashboard">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Dashboard
+  </button>
+  <button class="bn-item" onclick="go('abastecimentos')" data-tab="abastecimentos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 22V8l6-6h8l4 4v16"/><path d="M3 10h18"/><path d="M9 22v-6h6v6"/></svg>
+    Combustível
+  </button>
+  <button class="bn-add" onclick="addAbast()" title="Novo abastecimento">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+  <button class="bn-item" onclick="go('manutencao')" data-tab="manutencao">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    Manutenção
+  </button>
+  <button class="bn-item" onclick="toggleMore()" data-tab="more" id="btn-more">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    Mais
+  </button>
+</nav>
+
+<!-- MORE MENU -->
+<div class="more-menu" id="more-menu">
+  <button class="more-item" onclick="go('trajetos');toggleMore()">🗺️ Trajetos</button>
+  <button class="more-item" onclick="go('postos');toggleMore()">⛽ Postos</button>
+  <button class="more-item" onclick="go('historico');toggleMore()">📋 Histórico</button>
+  <button class="more-item" onclick="go('config');toggleMore()">⚙️ Config</button>
+  <button class="more-item" onclick="go('sync');toggleMore()">🔄 Sincronizar</button>
+</div>
+
+<div id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div id="modal-box">
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-fields" id="modal-fields"></div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn pr" id="modal-confirm" onclick="modalConfirm()">Confirmar</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════ DADOS ══════════════════════════════
+let HISTORICO_CICLOS = [];
+let TODOS = [];
+let TRAJETOS = [
+  {nome:'Circuito Clínicas Aracaju', dist:227, kmSem:227, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Baixa Grande por Sapucaia', dist:140, kmSem:0,   gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Baixa Grande por Lagoa Redonda', dist:181, kmSem:0, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Retiro',      dist:67.3,  kmSem:67.3,  gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07},
+  {nome:'Pedro Reys',  dist:66.8,  kmSem:133.6, gasP:7.12, ethP:4.95, gasKmL:10.23, ethKmL:8.07}
+];
+let POSTOS = [
+  {nome:'Posto PEL',         gasP:6.85, ethP:4.95, gasKmL:10.2, ethKmL:8.1},
+  {nome:'Posto Arthur Melo', gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1},
+  {nome:'Posto Orla Propriá',gasP:7.12, ethP:5.24, gasKmL:10.2, ethKmL:8.1}
+];
+let CICLO1 = [
+  {data:'30/07',odo:2335, km:820, vol:65.04,cons:12.6,comb:'Gasolina',total:254.25,pl:6.35,posto:'Pel',desc:''},
+  {data:'01/08',odo:2665, km:330, vol:26.67,cons:12.4,comb:'Gasolina',total:179.73,pl:6.35,posto:'Pel',desc:''},
+  {data:'01/08',odo:2837, km:172, vol:13.63,cons:12.6,comb:'Gasolina',total:91.87, pl:6.74,posto:'JetSet',desc:''},
+  {data:'07/08',odo:3139, km:302, vol:24.16,cons:12.5,comb:'Gasolina',total:119.59,pl:5.51,posto:'Rosa Elze',desc:''},
+  {data:'07/08',odo:3251, km:112, vol:9.45, cons:11.9,comb:'Etanol',  total:49.50, pl:5.24,posto:'JetSet',desc:''},
+  {data:'09/08',odo:3674, km:423, vol:37.86,cons:11.2,comb:'Etanol',  total:181.73,pl:4.80,posto:'Pel',desc:''},
+  {data:'11/08',odo:3853, km:179, vol:15.59,cons:11.5,comb:'Etanol',  total:105.06,pl:5.49,posto:'JetSet',desc:''},
+  {data:'19/08',odo:4054, km:201, vol:19.57,cons:10.3,comb:'Gasolina',total:124.27,pl:6.35,posto:'Pel',desc:''},
+  {data:'21/08',odo:4301, km:247, vol:23.72,cons:10.4,comb:'Gasolina',total:150.62,pl:6.35,posto:'Pel',desc:''},
+  {data:'22/08',odo:4489, km:188, vol:15.63,cons:12.0,comb:'Gasolina',total:99.25, pl:6.35,posto:'Pel',desc:''},
+  {data:'25/08',odo:4771, km:282, vol:28.24,cons:10.0,comb:'Gasolina',total:179.32,pl:6.35,posto:'Pel',desc:''},
+  {data:'29/08',odo:5204, km:433, vol:37.54,cons:11.5,comb:'Gasolina',total:238.38,pl:6.35,posto:'Pel',desc:''},
+  {data:'01/09',odo:5459, km:255, vol:19.91,cons:12.8,comb:'Gasolina',total:126.43,pl:6.35,posto:'Pel',desc:''},
+  {data:'05/09',odo:5907, km:448, vol:37.16,cons:12.1,comb:'Gasolina',total:178.37,pl:5.51,posto:'Pel',desc:''},
+  {data:'08/09',odo:6141, km:234, vol:21.61,cons:10.8,comb:'Etanol',  total:103.73,pl:4.80,posto:'Pel',desc:''},
+  {data:'13/09',odo:6457, km:316, vol:29.18,cons:10.8,comb:'Etanol',  total:144.44,pl:4.95,posto:'Rosa Elze',desc:'Itabaiana ida e volta'},
+  {data:'15/09',odo:6812, km:355, vol:34.94,cons:10.2,comb:'Etanol',  total:167.71,pl:4.80,posto:'Pel',desc:''},
+  {data:'18/09',odo:7052, km:240, vol:27.85,cons:8.6, comb:'Etanol',  total:133.68,pl:4.80,posto:'Pel',desc:'Clínicas com João e Ar.'},
+  {data:'20/09',odo:7392, km:340, vol:34.15,cons:10.0,comb:'Etanol',  total:163.92,pl:4.80,posto:'Pel',desc:''},
+  {data:'29/09',odo:7788, km:396, vol:42.14,cons:9.4, comb:'Etanol',  total:231.35,pl:5.49,posto:'Pel',desc:''},
+  {data:'03/10',odo:8219, km:431, vol:36.90,cons:11.7,comb:'Gasolina',total:234.32,pl:6.35,posto:'Pel',desc:''},
+  {data:'06/10',odo:8410, km:191, vol:16.31,cons:11.7,comb:'Gasolina',total:103.57,pl:6.35,posto:'Pel',desc:'9 km em terra'},
+  {data:'09/10',odo:8649, km:239, vol:19.33,cons:12.4,comb:'Gasolina',total:122.75,pl:6.35,posto:'Pel',desc:'Aracaju ida e volta'},
+  {data:'13/10',odo:9024, km:375, vol:31.31,cons:12.0,comb:'Gasolina',total:198.82,pl:6.35,posto:'Pel',desc:''},
+  {data:'17/10',odo:9433, km:409, vol:34.67,cons:11.8,comb:'Gasolina',total:191.03,pl:5.51,posto:'Pel',desc:'Aracaju'},
+  {data:'20/10',odo:9655, km:222, vol:20.21,cons:11.0,comb:'Etanol',  total:97.01, pl:4.80,posto:'Pel',desc:''},
+  {data:'22/10',odo:9795, km:140, vol:14.78,cons:9.5, comb:'Etanol',  total:70.94, pl:4.80,posto:'Pel',desc:'Igreja Nova 2 dias'},
+  {data:'24/10',odo:10168,km:373, vol:40.22,cons:9.3, comb:'Etanol',  total:193.06,pl:4.80,posto:'',   desc:''}
+];
+let CICLO2 = [
+  {data:'29/10',odo:10508,km:340,vol:35.85,cons:9.5, comb:'Etanol',  total:168.50,pl:4.70,posto:'Pel',desc:''},
+  {data:'30/10',odo:10748,km:240,vol:27.40,cons:8.8, comb:'Etanol',  total:128.78,pl:4.70,posto:'Pel',desc:''},
+  {data:'03/11',odo:10999,km:251,vol:25.93,cons:9.7, comb:'Gasolina',total:164.66,pl:6.35,posto:'Pel',desc:'Padre Cícero'},
+  {data:'08/11',odo:11373,km:374,vol:36.78,cons:10.2,comb:'Gasolina',total:215.16,pl:5.85,posto:'Canabrava',desc:'Arapiraca'},
+  {data:'10/11',odo:11631,km:258,vol:22.15,cons:11.6,comb:'Gasolina',total:140.65,pl:6.35,posto:'Pel',desc:''},
+  {data:'14/11',odo:12014,km:383,vol:33.78,cons:11.3,comb:'Etanol',  total:158.77,pl:4.70,posto:'Pel',desc:''},
+  {data:'23/11',odo:12294,km:280,vol:27.17,cons:10.3,comb:'Etanol',  total:127.70,pl:4.70,posto:'Pel',desc:''},
+  {data:'26/11',odo:12572,km:278,vol:30.22,cons:9.2, comb:'Etanol',  total:142.03,pl:4.70,posto:'Pel',desc:''},
+  {data:'27/11',odo:12824,km:252,vol:33.85,cons:7.4, comb:'Etanol',  total:159.10,pl:4.70,posto:'Pel',desc:''},
+  {data:'28/11',odo:13039,km:215,vol:23.48,cons:9.2, comb:'Etanol',  total:110.36,pl:4.70,posto:'Pel',desc:''},
+  {data:'02/12',odo:13394,km:355,vol:37.09,cons:9.6, comb:'Gasolina',total:235.52,pl:6.35,posto:'Pel',desc:''},
+  {data:'04/12',odo:13721,km:327,vol:29.93,cons:10.9,comb:'Gasolina',total:190.06,pl:6.35,posto:'Pel',desc:''},
+  {data:'10/12',odo:14161,km:440,vol:37.71,cons:11.7,comb:'Etanol',  total:177.24,pl:4.70,posto:'Pel',desc:''},
+  {data:'11/12',odo:14475,km:314,vol:33.05,cons:9.5, comb:'Etanol',  total:155.34,pl:4.70,posto:'Pel',desc:''},
+  {data:'17/12',odo:14695,km:220,vol:23.49,cons:9.4, comb:'Etanol',  total:110.40,pl:4.70,posto:'Pel',desc:''},
+  {data:'19/12',odo:14950,km:255,vol:31.25,cons:8.2, comb:'Etanol',  total:163.75,pl:5.24,posto:'JetSet',desc:''},
+  {data:'22/12',odo:15278,km:328,vol:38.67,cons:8.5, comb:'Gasolina',total:245.55,pl:6.35,posto:'Pel',desc:''},
+  {data:'26/12',odo:15693,km:415,vol:37.42,cons:11.1,comb:'Gasolina',total:225.62,pl:6.35,posto:'Pel',desc:''},
+  {data:'06/01',odo:16054,km:361,vol:30.95,cons:11.7,comb:'Gasolina',total:196.53,pl:6.35,posto:'Pel',desc:''},
+  {data:'10/01',odo:16317,km:263,vol:25.17,cons:10.4,comb:'Gasolina',total:159.83,pl:6.35,posto:'Pel',desc:''},
+  {data:'12/01',odo:16769,km:452,vol:37.28,cons:12.1,comb:'Etanol',  total:175.22,pl:4.70,posto:'Pel',desc:'Aju-Pir-Lagoa Redonda'},
+  {data:'18/01',odo:17083,km:314,vol:34.65,cons:9.1, comb:'Etanol',  total:162.86,pl:4.70,posto:'Pel',desc:''},
+  {data:'26/01',odo:17428,km:345,vol:42.09,cons:8.2, comb:'Gasolina',total:258.85,pl:6.15,posto:'São Sebastião',desc:'Arapiraca'},
+  {data:'01/02',odo:17796,km:368,vol:33.39,cons:11.0,comb:'Etanol',  total:163.61,pl:4.90,posto:'Pel',desc:''},
+  {data:'04/02',odo:18073,km:277,vol:32.155,cons:8.6,comb:'Gasolina',total:204.83,pl:6.37,posto:'JetSet',desc:''},
+  {data:'08/02',odo:18408,km:335,vol:36.86,cons:9.1, comb:'Etanol',  total:180.61,pl:4.90,posto:'Pel',desc:''},
+  {data:'11/02',odo:18701,km:293,vol:31.83,cons:9.2, comb:'Etanol',  total:155.97,pl:4.90,posto:'Pel',desc:''},
+  {data:'15/02',odo:18980,km:279,vol:37.51,cons:7.4, comb:'Etanol',  total:183.80,pl:4.90,posto:'Pel',desc:''},
+  {data:'21/02',odo:19148,km:168,vol:23.78,cons:7.1, comb:'Gasolina',total:153.38,pl:6.45,posto:'JetSet',desc:''},
+  {data:'26/02',odo:19505,km:357,vol:39.68,cons:9.0, comb:'Gasolina',total:256.33,pl:6.46,posto:'JetSet',desc:''},
+  {data:'04/03',odo:19763,km:258,vol:25.65,cons:10.1,comb:'Etanol',  total:125.69,pl:4.90,posto:'Pel',desc:''},
+  {data:'05/03',odo:20020,km:257,vol:25.79,cons:10.0,comb:'Gasolina',total:166.35,pl:6.45,posto:'',   desc:''}
+];
+let CONFIG = {
+  gasPrice: 7.12,
+  ethPrice: 5.05,
+  gasConsume: 10.21,
+  ethConsume: 9.25,
+  nextReview: 29373,
+  cicloAtualNum: 3,
+  favGasStation: '',
+  favGasEthPrice: 5.05,
+  favGasGasPrice: 7.12
+};
+
+let MANUTENCAO = [
+  {title: 'Troca de Óleo e Filtro', freq: 10000, desc: 'Essencial para manter o motor saudável', done: false},
+  {title: 'Verificação do Nível de Óleo', freq: 1000, desc: 'Verificar se está no nível correto', done: false},
+  {title: 'Nivelação e Balanceamento de Pneus', freq: 10000, desc: 'Junto com a troca de óleo', done: false},
+  {title: 'Italian Tune-up (Limpeza Preventiva)', freq: 3000, desc: 'Crucial para o TSI: Combate o acúmulo de carbono nas válvulas', done: false},
+  {title: 'Troca do Ar do Motor', freq: 10000, desc: 'Manter o filtro limpo', done: false},
+  {title: 'Filtro de Combustível', freq: 10000, desc: 'Essencial para injeção', done: false},
+  {title: 'Verificação do Freio', freq: 10000, desc: 'Pastilhas e discos', done: false}
+];
+
+// ══════════════════════════════ STORAGE ══════════════════════════════
+function atualizarPrecoConfig() {
+  const postos = POSTOS.filter(p => p.nome !== 'Preços Preferidos');
+  if (postos.length === 0) return;
+  CONFIG.gasPrice = Math.min(...postos.map(p=>p.gasP));
+  CONFIG.ethPrice = Math.min(...postos.map(p=>p.ethP));
+}
+
+function saveData() {
+  localStorage.setItem('tcross-todos', JSON.stringify(TODOS));
+  localStorage.setItem('tcross-config', JSON.stringify(CONFIG));
+  localStorage.setItem('tcross-manutencao', JSON.stringify(MANUTENCAO));
+  localStorage.setItem('tcross-historico', JSON.stringify(HISTORICO_CICLOS));
+  localStorage.setItem('tcross-trajetos', JSON.stringify(TRAJETOS));
+  localStorage.setItem('tcross-postos', JSON.stringify(POSTOS));
+  localStorage.setItem('tcross-ciclo1', JSON.stringify(CICLO1));
+  localStorage.setItem('tcross-ciclo2', JSON.stringify(CICLO2));
+}
+
+function loadData() {
+  const t = localStorage.getItem('tcross-todos');
+  const c = localStorage.getItem('tcross-config');
+  const m = localStorage.getItem('tcross-manutencao');
+  const h = localStorage.getItem('tcross-historico');
+  const tr = localStorage.getItem('tcross-trajetos');
+  const p = localStorage.getItem('tcross-postos');
+  const c1 = localStorage.getItem('tcross-ciclo1');
+  const c2 = localStorage.getItem('tcross-ciclo2');
+  if (t) TODOS = JSON.parse(t);
+  if (c) CONFIG = {...CONFIG, ...JSON.parse(c)}; // merge preserva novos campos como cicloAtualNum
+  if (m) MANUTENCAO = JSON.parse(m);
+  if (h) HISTORICO_CICLOS = JSON.parse(h);
+  if (tr) TRAJETOS = JSON.parse(tr);
+  if (p) POSTOS = JSON.parse(p);
+  if (c1) CICLO1 = JSON.parse(c1);
+  if (c2) CICLO2 = JSON.parse(c2);
+  
+  // Garante ordenação cronológica ao carregar
+  sortTodosChronologically();
+  // Sempre recalcula consumos ao carregar
+  recalculateKm();
+  atualizarPrecoConfig();
+}
+
+// ══════════════════════════════ NAVIGATION ══════════════════════════════
+function toggleMore(){
+  const m=document.getElementById('more-menu');
+  m.classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  const m=document.getElementById('more-menu');
+  if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!document.getElementById('btn-more').contains(e.target)){
+    m.classList.remove('open');
+  }
+});
+
+function go(id) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.getElementById('sec-' + id).classList.add('on');
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('on'));
+  const btn = document.querySelector(`.bn-item[data-tab="${id}"]`);
+  if (btn) btn.classList.add('on');
+  
+  // nav-odo removido — odômetro agora aparece no page-header do dashboard
+  
+  ({dashboard:renderDash, abastecimentos:renderAbast, manutencao:renderMaint, config:renderConfig, sync:renderSync, trajetos:renderTrajetos, postos:renderPostos, historico:renderHistorico}[id] || function(){})();
+}
+
+// ══════════════════════════════ HELPERS ══════════════════════════════
+function parseDate(dateStr) {
+  if (!dateStr) return new Date(0);
+  const parts = dateStr.split('/');
+  if (parts.length < 2) return new Date(0);
+  const day = parseInt(parts[0]);
+  const month = parseInt(parts[1]) - 1;
+  const year = parts.length === 3 ? parseInt(parts[2]) : new Date().getFullYear();
+  return new Date(year, month, day);
+}
+
+function sortTodosChronologically() {
+  TODOS.sort((a, b) => {
+    const dateA = parseDate(a.data);
+    const dateB = parseDate(b.data);
+    if (dateA.getTime() !== dateB.getTime()) return dateA - dateB;
+    return a.odo - b.odo;
+  });
+}
+
+function getLastAbastecimento() {
+  return TODOS.length > 0 ? TODOS[TODOS.length - 1] : null;
+}
+
+function getAverageConsumption(comb) {
+  // Filtra: combustível correto, km > 0, consumo plausível (< 30 km/L)
+  const filtered = TODOS.filter(d =>
+    d.comb === comb && d.km > 0 && d.vol > 0 &&
+    (d.km / d.vol) < 30
+  );
+  if (filtered.length === 0) return 0;
+  return (filtered.reduce((a,d) => a+d.km, 0) / filtered.reduce((a,d) => a+d.vol, 0)).toFixed(2);
+}
+
+function getCostPerKm(comb) {
+  // Usa preço ATUAL do CONFIG com média real de consumo
+  const avg = parseFloat(getAverageConsumption(comb)) || 0;
+  if (avg === 0) return 0;
+  const preco = comb === 'Gasolina' ? CONFIG.gasPrice : CONFIG.ethPrice;
+  return (preco / avg).toFixed(3);
+}
+
+function getBestFuel() {
+  const gasCpk = parseFloat(getCostPerKm('Gasolina')) || 0;
+  const ethCpk = parseFloat(getCostPerKm('Etanol')) || 0;
+  if (gasCpk === 0 && ethCpk === 0) return null;
+  if (gasCpk === 0) return 'Etanol';
+  if (ethCpk === 0) return 'Gasolina';
+  return ethCpk < gasCpk ? 'Etanol' : 'Gasolina';
+}
+
+function getEficienciaRelativa() {
+  const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 0;
+  const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 0;
+  if (gasAvg === 0) return 0;
+  return ((ethAvg / gasAvg) * 100).toFixed(1);
+}
+
+function getRelacaoPrecos() {
+  const gasPl = CONFIG.gasPrice;
+  const ethPl = CONFIG.ethPrice;
+  if (gasPl === 0) return 0;
+  return ((ethPl / gasPl) * 100).toFixed(1);
+}
+
+// ══════════════════════════════ DASHBOARD ══════════════════════════════
+// Simulação
+let SIM = { gasAvg: null, ethAvg: null, gasPrice: null, ethPrice: null };
+function simVal(f,r){ return (SIM[f]!==null&&!isNaN(SIM[f]))?SIM[f]:r; }
+function setSim(f,v){ const n=parseFloat(String(v).replace(',','.')); SIM[f]=isNaN(n)||v===''?null:n; }
+function resetSim(){ SIM={gasAvg:null,ethAvg:null,gasPrice:null,ethPrice:null}; renderDash(); }
+
+function renderDash() {
+  const gasAvgReal  = parseFloat(getAverageConsumption('Gasolina'))||10.23;
+  const ethAvgReal  = parseFloat(getAverageConsumption('Etanol'))||8.07;
+  const gasPR = CONFIG.gasPrice, ethPR = CONFIG.ethPrice;
+
+  const gasAvg   = simVal('gasAvg',gasAvgReal);
+  const ethAvg   = simVal('ethAvg',ethAvgReal);
+  const gasPrice = simVal('gasPrice',gasPR);
+  const ethPrice = simVal('ethPrice',ethPR);
+  const isSim    = Object.values(SIM).some(v=>v!==null);
+
+  const gasCpk = gasAvg>0?(gasPrice/gasAvg).toFixed(3):'—';
+  const ethCpk = ethAvg>0?(ethPrice/ethAvg).toFixed(3):'—';
+  const bestFuel = parseFloat(ethCpk)<parseFloat(gasCpk)?'Etanol':'Gasolina';
+  const eficRel  = gasAvg>0?(ethAvg/gasAvg*100).toFixed(1):'—';
+  const relPrecos= gasPR>0?(ethPR/gasPR*100).toFixed(1):'—';
+
+  const la = getLastAbastecimento();
+  const lastData = la?la.data:'—';
+  const lastComb = la?la.comb:'—';
+  const lastCons = la&&la.km>0?(la.km/la.vol).toFixed(2):'—';
+  const lastPl   = la?la.pl.toFixed(2):'—';
+  const lastOdo  = la?la.odo.toLocaleString('pt-BR'):'—';
+
+  const cicloNum = CONFIG.cicloAtualNum||(HISTORICO_CICLOS.length+1);
+  const tGas = TODOS.filter(d=>d.comb==='Gasolina').reduce((a,d)=>a+parseFloat(d.total||0),0);
+  const tEth = TODOS.filter(d=>d.comb==='Etanol').reduce((a,d)=>a+parseFloat(d.total||0),0);
+  const tCost = (tGas+tEth).toFixed(2);
+
+  const kmMes = TRAJETOS.reduce((a,t)=>a+kmPorMes(t),0);
+  const cMesGas = kmMes>0?(kmMes/gasAvg*gasPrice).toFixed(2):'—';
+  const cMesEth = kmMes>0?(kmMes/ethAvg*ethPrice).toFixed(2):'—';
+
+  const odo = TODOS.length>0?Math.max(...TODOS.map(d=>d.odo)):0;
+  const kfalt = CONFIG.nextReview - odo;
+  const kfPct = Math.min(100,Math.round((odo-(CONFIG.nextReview-10000))/100));
+  const kfCor = kfalt<1000?'danger':kfalt<3000?'warning':'success';
+
+  const simTag = isSim?'<span style="background:var(--warning);color:#000;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-left:8px;">SIM</span>':'';
+  const resetBtn = isSim?'<button class="btn sm" onclick="resetSim()">✕ Resetar</button>':'';
+
+  const fuelTagLast = lastComb==='Gasolina'
+    ?'<span class="fuel-tag gas">⛽ Gasolina</span>'
+    :'<span class="fuel-tag eth">🌿 Etanol</span>';
+  const bestTag = bestFuel==='Etanol'
+    ?'<span class="best-badge">✓ Etanol mais barato</span>'
+    :'<span class="best-badge" style="background:rgba(245,166,35,0.12);border-color:rgba(245,166,35,0.3);color:var(--gas);">✓ Gasolina mais barata</span>';
+
+  document.getElementById('sec-dashboard').innerHTML = `
+    <div class="page-header">
+      <div>
+        <div class="page-title">Dashboard ${simTag}</div>
+        <div class="page-sub">Ciclo ${cicloNum} · ${odo.toLocaleString('pt-BR')} km</div>
+      </div>
+      ${resetBtn}
+    </div>
+
+    <!-- CONSUMO MÉDIO + SIMULAÇÃO -->
+    <div class="card ${isSim?'accent-sim':'accent-primary'}">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Consumo Médio ${isSim?'<span style="color:var(--warning);font-size:10px;">· editando simulação</span>':'<span style="color:var(--muted);font-size:10px;">· edite para simular</span>'}
+      </div>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-label">Gasolina (km/L)</div>
+          <input type="number" step="0.01" class="form-input"
+            value="${SIM.gasAvg!==null?SIM.gasAvg:gasAvgReal}"
+            style="font-size:22px;font-weight:700;color:${SIM.gasAvg!==null?'var(--warning)':'var(--gas)'};padding:8px;border-color:${SIM.gasAvg!==null?'var(--warning)':'var(--border)'};"
+            onchange="setSim('gasAvg',this.value);renderDash();" onfocus="this.select();">
+          <div class="stat-sub">${SIM.gasAvg!==null?'⚠ simulando · real: '+gasAvgReal+' km/L':'real · toque para simular'}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Etanol (km/L)</div>
+          <input type="number" step="0.01" class="form-input"
+            value="${SIM.ethAvg!==null?SIM.ethAvg:ethAvgReal}"
+            style="font-size:22px;font-weight:700;color:${SIM.ethAvg!==null?'var(--warning)':'var(--eth)'};padding:8px;border-color:${SIM.ethAvg!==null?'var(--warning)':'var(--border)'};"
+            onchange="setSim('ethAvg',this.value);renderDash();" onfocus="this.select();">
+          <div class="stat-sub">${SIM.ethAvg!==null?'⚠ simulando · real: '+ethAvgReal:'real · rel: '+eficRel+'%'}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Preço Gasolina (R$/L)</div>
+          <input type="number" step="0.01" class="form-input"
+            value="${SIM.gasPrice!==null?SIM.gasPrice:gasPR}"
+            style="font-size:22px;font-weight:700;color:${SIM.gasPrice!==null?'var(--warning)':'var(--gas)'};padding:8px;border-color:${SIM.gasPrice!==null?'var(--warning)':'var(--border)'};"
+            onchange="setSim('gasPrice',this.value);renderDash();" onfocus="this.select();">
+          <div class="stat-sub">${SIM.gasPrice!==null?'⚠ simulando · real: R$ '+gasPR:'real · toque para simular'}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Preço Etanol (R$/L)</div>
+          <input type="number" step="0.01" class="form-input"
+            value="${SIM.ethPrice!==null?SIM.ethPrice:ethPR}"
+            style="font-size:22px;font-weight:700;color:${SIM.ethPrice!==null?'var(--warning)':'var(--eth)'};padding:8px;border-color:${SIM.ethPrice!==null?'var(--warning)':'var(--border)'};"
+            onchange="setSim('ethPrice',this.value);renderDash();" onfocus="this.select();">
+          <div class="stat-sub">${SIM.ethPrice!==null?'⚠ simulando · real: R$ '+ethPR:'real · rel: '+relPrecos+'%'}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTO POR KM -->
+    <div class="card accent-blue">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Custo por km · Melhor combustível
+      </div>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-label">Gasolina /km</div>
+          <div class="stat-value ${SIM.gasAvg!==null||SIM.gasPrice!==null?'warning':'gas'}">R$ ${gasCpk}</div>
+          ${bestFuel==='Gasolina'?'<div class="stat-sub">'+bestTag+'</div>':''}
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Etanol /km</div>
+          <div class="stat-value ${SIM.ethAvg!==null||SIM.ethPrice!==null?'warning':'eth'}">R$ ${ethCpk}</div>
+          ${bestFuel==='Etanol'?'<div class="stat-sub">'+bestTag+'</div>':''}
+        </div>
+      </div>
+    </div>
+
+    <!-- ÚLTIMO ABASTECIMENTO -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 22V8l6-6h8l4 4v16"/><path d="M9 22v-6h6v6"/></svg>
+        Último Abastecimento
+      </div>
+      <div class="hero-card" style="margin-bottom:12px;padding:14px;">
+        <div class="hero-icon ${lastComb==='Gasolina'?'gas':'eth'}">
+          ${lastComb==='Gasolina'
+            ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 22V8l6-6h8l4 4v16"/><path d="M9 22v-6h6v6"/></svg>'
+            :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/></svg>'}
+        </div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            ${fuelTagLast}
+            <span style="color:var(--muted);font-size:12px;">${lastData}</span>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;">${lastOdo} km</div>
+          <div class="stat-sub">${lastCons} km/L · R$ ${lastPl}/L</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRÓXIMA REVISÃO -->
+    <div class="card accent-blue">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        Próxima Revisão
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
+        <span style="color:var(--muted);font-size:13px;">Km programado</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--blue);">${CONFIG.nextReview.toLocaleString('pt-BR')} km</span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" style="width:${Math.max(2,kfPct)}%"></div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;">
+        <span style="font-size:12px;color:var(--muted);">${kfPct}% percorrido</span>
+        <span style="font-size:13px;font-weight:600;color:var(--${kfCor});">${kfalt.toLocaleString('pt-BR')} km restantes</span>
+      </div>
+    </div>
+
+    <!-- CUSTO MENSAL -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Custo Mensal Estimado
+      </div>
+      <div class="stat-grid cols3">
+        <div class="stat-item">
+          <div class="stat-label">Só Etanol</div>
+          <div class="stat-value sm eth">R$ ${cMesEth}</div>
+          <div class="stat-sub">100% eth</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Só Gasolina</div>
+          <div class="stat-value sm gas">R$ ${cMesGas}</div>
+          <div class="stat-sub">100% gas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Real</div>
+          <div class="stat-value sm">R$ ${tCost}</div>
+          <div class="stat-sub">ciclo atual</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+
+// ══════════════════════════════ ABASTECIMENTOS ══════════════════════════════
+let sortOrder = 'desc';
+
+function renderAbast() {
+  const display = sortOrder==='desc'?[...TODOS].reverse():[...TODOS];
+  let html = `
+    <div class="page-header">
+      <div>
+        <div class="page-title">Abastecimentos</div>
+        <div class="page-sub">${TODOS.length} registros no ciclo atual</div>
+      </div>
+      <button class="btn sm" onclick="toggleSort()">↕ ${sortOrder==='asc'?'Antigos':'Recentes'}</button>
+    </div>
+    <div>`;
+
+  display.forEach(d => {
+    const ri = TODOS.indexOf(d);
+    const consCalc = d.km>0 && d.vol>0 ? d.km/d.vol : 0;
+    const cons = consCalc>0 && consCalc<30 ? consCalc.toFixed(2) : d.km===0 ? 'parcial' : '—';
+    const tag = d.comb==='Gasolina'
+      ?'<span class="fuel-tag gas">⛽ Gasolina</span>'
+      :'<span class="fuel-tag eth">🌿 Etanol</span>';
+    html += `
+      <div class="list-item">
+        <div class="li-header">
+          <div>
+            <div class="li-title" style="display:flex;align-items:center;gap:8px;">
+              ${tag}
+              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue);">${(d.odo||0).toLocaleString('pt-BR')} km</span>
+            </div>
+            <div class="li-meta" style="margin-top:4px;">
+              ${d.data} · ${(d.vol||0).toFixed(2)}L · R$ ${(d.pl||0).toFixed(2)}/L
+              ${d.posto?' · '+d.posto:''}
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div class="li-value">R$ ${parseFloat(d.total||0).toFixed(2)}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px;">${cons} km/L · ${d.km||0} km</div>
+          </div>
+        </div>
+        <div class="li-actions">
+          <button class="btn sm" onclick="editAbast(${ri})">✎ Editar</button>
+          <button class="btn sm danger" onclick="delAbast(${ri})">✕</button>
+        </div>
+      </div>`;
+  });
+
+  if(!TODOS.length) html += '<div style="text-align:center;padding:40px;color:var(--muted);">Nenhum abastecimento. Toque + para adicionar.</div>';
+  html += '</div>';
+  document.getElementById('sec-abastecimentos').innerHTML = html;
+}
+
+function editAbast(i) {
+  const d = TODOS[i];
+  if (!d) return;
+  showModal('✎ Editar Abastecimento', [
+    {id:'odo',   label:'Odômetro (km)',   type:'number', value:d.odo},
+    {id:'pl',    label:'Preço/L (R$)',    type:'number', value:d.pl,   step:'0.01'},
+    {id:'vol',   label:'Volume (L)',      type:'number', value:d.vol,  step:'0.01'},
+    {id:'comb',  label:'Combustível',     type:'select', value:d.comb||'Etanol',
+      options:[{value:'Etanol',label:'🌿 Etanol'},{value:'Gasolina',label:'⛽ Gasolina'}]},
+    {id:'data',  label:'Data (dd/mm)',    type:'text',   value:d.data},
+    {id:'posto', label:'Posto',           type:'text',   value:d.posto||''},
+  ], vals => {
+    const odo   = parseInt(mVal(vals,'odo',d.odo))                                || d.odo;
+    const pl    = parseFloat(String(mVal(vals,'pl',d.pl)).replace(',','.'))       || d.pl;
+    const vol   = parseFloat(String(mVal(vals,'vol',d.vol)).replace(',','.'))     || d.vol;
+    const comb  = mVal(vals,'comb', d.comb);
+    const data  = mVal(vals,'data', d.data).trim() || d.data;
+    const posto = mVal(vals,'posto', d.posto||'');
+    TODOS[i] = {...d, odo, pl, vol, comb, data, posto,
+      total: parseFloat((vol*pl).toFixed(2)),
+      km: d.km, cons: d.cons};
+    sortTodosChronologically();
+    recalculateKm();
+    saveData();
+    toast('✓ Atualizado', 'ok');
+    renderAbast();
+    renderDash();
+    if (localStorage.getItem('gh_token')) setTimeout(ghSaveData, 500);
+  });
+}
+
+function delAbast(i) {
+  if (!TODOS[i]) return;
+  showModal('🗑 Confirmar exclusão', [
+    {id:'ok', label:'Digite SIM para excluir', type:'text', placeholder:'SIM'},
+  ], vals => {
+    if (mVal(vals,'ok','').trim().toUpperCase() !== 'SIM') { toast('⚠ Cancelado'); return; }
+    TODOS.splice(i, 1);
+    recalculateKm();
+    saveData();
+    toast('✓ Removido', 'ok');
+    renderAbast();
+    renderDash();
+    if (localStorage.getItem('gh_token')) setTimeout(ghSaveData, 500);
+  });
+}
+
+function toggleSort(){
+  sortOrder = sortOrder==='asc'?'desc':'asc';
+  renderAbast();
+}
+
+
+// ══════════════════════════════ MANUTENÇÃO ══════════════════════════════
+function renderMaint() {
+  const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
+  const cicloNum = HISTORICO_CICLOS.length + 1;
+  const kmFaltamRevisao = CONFIG.nextReview - currentOdo;
+  const doneCount = MANUTENCAO.filter(m => m.done).length;
+  const totalCount = MANUTENCAO.length;
+  
+  let html = `
+    <div class="page-header"><div><div class="page-title">Manutenção</div><div class="page-sub">Ciclo ${cicloNum} · ${doneCount}/${totalCount} concluídos</div></div><button class="btn sm" onclick="renovarChecklist()">🔄 Novo ciclo</button></div>
+    
+    <div class="card">
+      <div class="card-title">Próxima Revisão</div>
+      <div class="stat">
+        <div class="stat-item">
+          <div class="stat-label">Odômetro atual</div>
+          <div class="stat-value">${currentOdo.toLocaleString('pt-BR')} km</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Revisão prevista em</div>
+          <div class="stat-value">${CONFIG.nextReview.toLocaleString('pt-BR')} km</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Faltam</div>
+          <div class="stat-value" style="color:${kmFaltamRevisao < 1000 ? 'var(--danger)' : kmFaltamRevisao < 3000 ? 'var(--warning)' : 'var(--success)'}">${kmFaltamRevisao.toLocaleString('pt-BR')} km</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">Checklist</div>
+      <div class="list">
+  `;
+  
+  MANUTENCAO.forEach((m, i) => {
+    const kmDesdeInicio = currentOdo % m.freq;
+    const kmFaltamItem = m.freq - kmDesdeInicio;
+    const percentual = (kmDesdeInicio / m.freq * 100).toFixed(0);
+    const urgente = kmFaltamItem < m.freq * 0.1;
+    
+    html += `
+      <div class="maint-item ${m.done ? 'done' : ''}">
+        <input type="checkbox" class="maint-check" ${m.done ? 'checked' : ''} onchange="toggleMaint(${i})">
+        <div class="maint-content">
+          <div class="maint-title">${m.title}</div>
+          <div class="maint-desc">${m.desc}</div>
+          <div class="maint-km" style="${urgente && !m.done ? 'border-left: 3px solid var(--danger); padding-left: 8px;' : ''}">
+            <strong>Frequência:</strong> a cada ${m.freq.toLocaleString('pt-BR')} km · 
+            <strong>Faltam:</strong> <span style="color:${urgente ? 'var(--danger)' : 'var(--success)'}">${kmFaltamItem.toLocaleString('pt-BR')} km</span> · 
+            <strong>Progresso:</strong> ${percentual}%
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `</div></div>`;
+  document.getElementById('sec-manutencao').innerHTML = html;
+}
+
+function renovarChecklist() {
+  if (window.confirm && !confirm('Encerrar ciclo atual e iniciar novo checklist?')) return;
+  const cicloNum = HISTORICO_CICLOS.length + 1;
+  HISTORICO_CICLOS.push({
+    ciclo: cicloNum,
+    abastecimentos: [...TODOS],
+    revisaoKm: TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0,
+    data: new Date().toLocaleDateString('pt-BR')
+  });
+  MANUTENCAO = MANUTENCAO.map(m => ({...m, done: false}));
+  CONFIG.nextReview = (TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0) + 10000;
+  saveData();
+  toast('✓ Novo ciclo iniciado!');
+  renderMaint();
+  renderDash();
+}
+
+function toggleMaint(i) {
+  MANUTENCAO[i].done = !MANUTENCAO[i].done;
+  saveData();
+  renderMaint();
+}
+
+// ══════════════════════════════ CONFIGURAÇÃO ══════════════════════════════
+function renderConfig() {
+  const currentOdo = TODOS.length > 0 ? Math.max(...TODOS.map(d => d.odo)) : 0;
+  const html = `
+    <div class="page-header"><div><div class="page-title">Configurações</div><div class="page-sub">Preços e preferências</div></div></div>
+    <div class="card">
+      <div class="card-title">Preços de Combustível</div>
+      <div class="form-group">
+        <label class="form-label">Gasolina (R$/L)</label>
+        <input type="number" class="form-input" id="cfg-gas" value="${CONFIG.gasPrice}" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Etanol (R$/L)</label>
+        <input type="number" class="form-input" id="cfg-eth" value="${CONFIG.ethPrice}" step="0.01">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Próxima Revisão</div>
+      <div class="form-group">
+        <label class="form-label">Próxima revisão em (km)</label>
+        <input type="number" class="form-input" id="cfg-review" value="${CONFIG.nextReview}">
+      </div>
+      <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px;">
+        <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Odômetro atual</div>
+        <div style="font-size: 18px; font-weight: bold; color: var(--primary);">${currentOdo.toLocaleString('pt-BR')} km</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ciclo Atual</div>
+      <div class="form-group">
+        <label class="form-label">Número do ciclo atual</label>
+        <input type="number" class="form-input" id="cfg-ciclo" value="${CONFIG.cicloAtualNum||1}" min="1">
+      </div>
+    </div>
+    <button class="btn pr full" onclick="saveConfig()">✓ Salvar Configurações</button>
+
+    <div class="card" style="margin-top:14px;border-color:var(--danger);">
+      <div class="card-title" style="color:var(--danger);">⚠ Manutenção de Dados</div>
+      <button class="btn full" style="margin-bottom:8px;" onclick="sanitizarDados()">🔧 Corrigir consumos inválidos</button>
+      <button class="btn full danger" onclick="resetarDadosLocais()">🗑 Limpar dados locais</button>
+    </div>
+  `;
+  document.getElementById('sec-config').innerHTML = html;
+}
+
+function sanitizarDados() {
+  let corrigidos = 0;
+  TODOS.forEach(d => {
+    if (d.vol > 0 && d.km > 0) {
+      const calc = d.km / d.vol;
+      if (parseFloat(d.cons) > 30 || parseFloat(d.cons) < 0 || !d.cons) {
+        d.cons = calc < 30 ? parseFloat(calc.toFixed(2)) : 0;
+        corrigidos++;
+      }
+    } else if (d.km === 0) {
+      if (parseFloat(d.cons) > 0) { d.cons = 0; corrigidos++; }
+    }
+  });
+  saveData();
+  toast('✓ ' + corrigidos + ' registros corrigidos', 'ok');
+  renderAbast();
+  renderDash();
+}
+
+function resetarDadosLocais() {
+  if (!window.confirm || confirm('Isso vai apagar os dados locais e recarregar do GitHub. Continuar?')) {
+    localStorage.removeItem('tcross-todos');
+    localStorage.removeItem('tcross-config');
+    localStorage.removeItem('tcross-manutencao');
+    localStorage.removeItem('tcross-historico');
+    localStorage.removeItem('tcross-trajetos');
+    localStorage.removeItem('tcross-postos');
+    localStorage.removeItem('tcross-ciclo1');
+    localStorage.removeItem('tcross-ciclo2');
+    toast('✓ Dados locais limpos — carregue do GitHub', 'ok');
+    setTimeout(() => location.reload(), 1500);
+  }
+}
+
+function saveConfig() {
+  CONFIG.gasPrice = parseFloat(document.getElementById('cfg-gas').value);
+  CONFIG.ethPrice = parseFloat(document.getElementById('cfg-eth').value);
+  CONFIG.nextReview = parseInt(document.getElementById('cfg-review').value);
+  CONFIG.cicloAtualNum = parseInt(document.getElementById('cfg-ciclo').value) || 1;
+  saveData();
+  toast('✓ Salvo');
+  renderDash();
+}
+
+// ══════════════════════════════ SINCRONIZAÇÃO ══════════════════════════════
+// ══════════════════════════════ GITHUB SYNC ══════════════════════════════
+const GH = {
+  owner: 'acmandacaru4-web',
+  repo: 'tcross',
+  file: 'index.html',
+  get token() { return localStorage.getItem('gh_token') || ''; },
+  set token(v) { localStorage.setItem('gh_token', v); }
+};
+
+async function ghGetFileSha() {
+  const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.file}`;
+  const r = await fetch(url, {headers: {Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json'}});
+  if (!r.ok) throw new Error('Erro ao buscar arquivo: ' + r.status);
+  const d = await r.json();
+  return {sha: d.sha, content: atob(d.content.replace(/\n/g,''))};
+}
+
+async function ghSaveData() {
+  if (!GH.token) { toast('⚠ Configure o token GitHub primeiro'); return; }
+  try {
+    toast('⏳ Salvando no GitHub...');
+    const dadosJSON = JSON.stringify({
+      todos: TODOS, config: CONFIG, manutencao: MANUTENCAO,
+      historico: HISTORICO_CICLOS, trajetos: TRAJETOS, postos: POSTOS,
+      ciclo1: CICLO1, ciclo2: CICLO2, savedAt: new Date().toISOString()
+    }, null, 2);
+
+    // Tenta buscar SHA do arquivo dados.json (se já existe)
+    const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/dados.json`;
+    let sha = null;
+    try {
+      const r = await fetch(url, {headers: {Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json'}});
+      if (r.ok) { const d = await r.json(); sha = d.sha; }
+    } catch(e) {}
+
+    // Salva/atualiza dados.json
+    const body = {
+      message: 'sync: ' + new Date().toLocaleString('pt-BR'),
+      content: btoa(unescape(encodeURIComponent(dadosJSON)))
+    };
+    if (sha) body.sha = sha;
+
+    const r2 = await fetch(url, {
+      method: 'PUT',
+      headers: {Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    });
+    if (!r2.ok) throw new Error('Erro ' + r2.status + ': ' + await r2.text());
+    toast('✓ Dados salvos no GitHub!');
+    renderSync();
+  } catch(e) {
+    toast('✕ ' + e.message);
+    console.error(e);
+  }
+}
+
+async function ghLoadData() {
+  if (!GH.token) { toast('⚠ Configure o token GitHub primeiro'); return; }
+  try {
+    toast('⏳ Carregando do GitHub...');
+    const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/dados.json`;
+    const r = await fetch(url, {headers: {Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json'}});
+    if (!r.ok) throw new Error('Arquivo dados.json não encontrado. Salve primeiro em outro dispositivo.');
+    const d = await r.json();
+    const data = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));
+
+    if (data.todos)      TODOS = data.todos;
+    if (data.config)     CONFIG = data.config;
+    if (data.manutencao) MANUTENCAO = data.manutencao;
+    if (data.historico)  HISTORICO_CICLOS = data.historico;
+    if (data.trajetos)   TRAJETOS = data.trajetos;
+    if (data.postos)     POSTOS = data.postos;
+    if (data.ciclo1)     CICLO1 = data.ciclo1;
+    if (data.ciclo2)     CICLO2 = data.ciclo2;
+    sortTodosChronologically();
+    saveData();
+    const savedAt = data.savedAt ? new Date(data.savedAt).toLocaleString('pt-BR') : '?';
+    toast('✓ Dados carregados! Última sync: ' + savedAt);
+    go('dashboard');
+  } catch(e) {
+    toast('✕ ' + e.message);
+    console.error(e);
+  }
+}
+
+function trocarToken() {
+  showModal('🔑 Atualizar Token GitHub', [
+    {id:'token', label:'Novo Personal Access Token', type:'text', placeholder:'ghp_...'},
+  ], vals => {
+    const t = mVal(vals,'token','').trim();
+    if (!t) return;
+    GH.token = t;
+    toast('✓ Token atualizado!', 'ok');
+    renderSync();
+  });
+}
+
+function saveGhToken() {
+  const t = document.getElementById('gh-token-input').value.trim();
+  if (!t) { toast('⚠ Digite o token'); return; }
+  GH.token = t;
+  toast('✓ Token salvo!');
+  renderSync();
+}
+
+function renderSync() {
+  const temToken = !!GH.token;
+  const tokenMasked = temToken ? GH.token.substring(0,8) + '...' + GH.token.slice(-4) : '';
+  const html = `
+    <div class="page-header"><div><div class="page-title">Sincronização</div><div class="page-sub">GitHub · CSV</div></div></div>
+
+    <div class="card">
+      <div class="card-title">☁️ GitHub · Sincronização entre dispositivos</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+        Salva e carrega seus dados diretamente do repositório GitHub.<br>
+        Use <strong>Salvar</strong> após registrar abastecimentos · Use <strong>Carregar</strong> em outro dispositivo para receber os dados.
+      </div>
+      ${temToken ? `
+        <div style="font-size:12px;color:var(--success);margin-bottom:12px;">✓ Token configurado: ${tokenMasked} · <span style="cursor:pointer;color:var(--warning);text-decoration:underline;" onclick="trocarToken()">Trocar</span></div>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <button class="btn pr" style="flex:1" onclick="ghSaveData()">☁️ Salvar no GitHub</button>
+          <button class="btn" style="flex:1" onclick="ghLoadData()">⬇️ Carregar do GitHub</button>
+        </div>
+        <button class="btn" style="width:100%;font-size:11px;" onclick="localStorage.removeItem('gh_token');renderSync()">Remover token</button>
+      ` : `
+        <div class="form-group">
+          <label class="form-label">Personal Access Token do GitHub</label>
+          <input type="password" class="form-input" id="gh-token-input" placeholder="ghp_...">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">O token fica salvo apenas neste dispositivo, nunca no código público.</div>
+        </div>
+        <button class="btn pr" style="width:100%;" onclick="saveGhToken()">✓ Salvar token</button>
+      `}
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Importar Abastecimentos (CSV/TSV)</div>
+      <textarea id="csv-input" class="form-input" style="height: 130px; font-family: monospace; font-size: 12px;" placeholder="Cole aqui os dados copiados da planilha..."></textarea>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">
+        ℹ️ Suporta copiar e colar direto da planilha (TSV ou CSV). Primeira linha ignorada.
+      </div>
+      <button class="btn pr" style="margin-top: 12px; width: 100%;" onclick="importCSV()">✓ Importar Abastecimentos</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗺️ Importar Trajetos (CSV/TSV)</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">Cole os dados da aba <strong>Trajetos T-Cross</strong> da planilha.</div>
+      <textarea id="traj-input" class="form-input" style="height: 100px; font-family: monospace; font-size: 12px;" placeholder="Local	Preço (R$)	Eficiência (km/L)	...	Ida/Volta (km)	km/Semana	..."></textarea>
+      <button class="btn pr" style="margin-top: 8px; width: 100%;" onclick="importTrajetos()">✓ Importar Trajetos</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⛽ Importar Postos (CSV/TSV)</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">Cole os dados da aba <strong>Postos de Gasolina</strong> da planilha.</div>
+      <textarea id="postos-input" class="form-input" style="height: 100px; font-family: monospace; font-size: 12px;" placeholder="ETANOL	Nome do Posto	...&#10;Gasolina	7.12	...&#10;Etanol	4.95	..."></textarea>
+      <button class="btn pr" style="margin-top: 8px; width: 100%;" onclick="importPostos()">✓ Importar Postos</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Importar Ciclo 1 (CSV/TSV)</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">Cole os dados da aba <strong>1º Ciclo de 10mil km</strong> da planilha.</div>
+      <textarea id="ciclo1-input" class="form-input" style="height: 100px; font-family: monospace; font-size: 12px;" placeholder="Data	Odômetro	Km Percorridos	Volume (L)	..."></textarea>
+      <button class="btn pr" style="margin-top: 8px; width: 100%;" onclick="importCiclo(1)">✓ Importar Ciclo 1</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Importar Ciclo 2 (CSV/TSV)</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">Cole os dados da aba <strong>2º Ciclo de 10mil km</strong> da planilha.</div>
+      <textarea id="ciclo2-input" class="form-input" style="height: 100px; font-family: monospace; font-size: 12px;" placeholder="Data	Odômetro	Preço/L	Volume (L)	Consumo	Km Percorridos	Comb Consumido	Comb Abastecido	..."></textarea>
+      <button class="btn pr" style="margin-top: 8px; width: 100%;" onclick="importCiclo(2)">✓ Importar Ciclo 2</button>
+    </div>
+  `;
+  document.getElementById('sec-sync').innerHTML = html;
+  // Preenche token se já tiver
+  if (!temToken && document.getElementById('gh-token-input')) {
+    // campo vazio mesmo
+  }
+}
+
+function importCSV() {
+  const csv = document.getElementById('csv-input').value.trim();
+  if (!csv) { toast('⚠ Cole os dados'); return; }
+
+  const lines = csv.split('\n');
+  const newTodos = [];
+  let volumeParcialAcumulado = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.trim()) continue;
+    
+    // Detecta separador (Tab ou Vírgula)
+    const sep = line.includes('\t') ? '\t' : ',';
+    const cols = line.split(sep).map(c => c.trim().replace('R$', '').replace(/\./g, '').replace(',', '.'));
+
+    // Mapeamento baseado na estrutura da planilha do usuário:
+    // 0:Data, 1:Odômetro, 2:Preço/L, 3:Vol Parcial, 4:Vol Completar, 5:Consumo, 6:Km, 7:Comb Consumido, 8:Comb Abastecido, 9:Total, 10:Posto
+    
+    const data = cols[0];
+    const odo = parseInt(cols[1]) || 0;
+    const pl = parseFloat(cols[2]) || 0;
+    const volParcial = parseFloat(cols[3]) || 0;
+    const volCompletar = parseFloat(cols[4]) || 0;
+    const km = parseInt(cols[6]) || 0;
+    const comb = cols[7] || cols[8] || 'Etanol';
+    const total = parseFloat(cols[9]) || 0;
+    const posto = cols[10] || '';
+    
+    console.log(`Linha ${i}: data=${data}, odo=${odo}, pl=${pl}, volParcial=${volParcial}, volCompletar=${volCompletar}, km=${km}, comb=${comb}, total=${total}`);
+
+    // Se não tem km (abastecimento parcial), acumula volume
+    if (km === 0 && volParcial > 0) {
+      volumeParcialAcumulado += volParcial;
+      continue; // Pula para próxima linha
+    }
+
+    // Se tem km (abastecimento completo), soma com parciais acumulados
+    const volTotal = volCompletar + volumeParcialAcumulado;
+    
+    if (data && volTotal > 0) {
+      newTodos.push({
+        data, odo, km, 
+        vol: volTotal,
+        cons: km > 0 ? (km / volTotal).toFixed(2) : 0, 
+        comb: comb.includes('Gasolina') ? 'Gasolina' : 'Etanol', 
+        total: total > 0 ? parseFloat(total.toFixed(2)) : (volTotal * pl),
+        pl, posto, desc: ''
+      });
+      volumeParcialAcumulado = 0; // Reset para próximo ciclo
+    }
+  }
+
+  if (newTodos.length === 0) {
+    toast('⚠ Nenhum dado válido encontrado.');
+    return;
+  }
+
+  TODOS = newTodos;
+  sortTodosChronologically();
+  recalculateKm();
+  saveData();
+  toast('✓ ' + TODOS.length + ' registros importados!');
+  document.getElementById('csv-input').value = '';
+  go('abastecimentos');
+}
+
+
+function detectCombPeloPreco(pl) {
+  const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.23;
+  const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.07;
+  const corteEth = CONFIG.gasPrice * (ethAvg / gasAvg);
+  return pl <= corteEth ? 'Etanol' : 'Gasolina';
+}
+
+function recalculateKm() {
+  // Acumula volume de abastecimentos parciais (mesmo odômetro)
+  for (let i = 0; i < TODOS.length; i++) {
+    const lastOdo = i > 0 ? TODOS[i-1].odo : 0;
+    // Recalcula km
+    TODOS[i].km = Math.max(0, TODOS[i].odo - lastOdo);
+
+    // Calcula volume total: soma vol do abastecimento anterior se era parcial
+    let volTotal = TODOS[i].vol;
+    if (TODOS[i].km === 0 && i > 0) {
+      // Este é parcial — acumula com próximo que tiver km
+      TODOS[i].cons = 0;
+      continue;
+    }
+
+    // Acumula volumes de parciais anteriores consecutivos
+    let j = i - 1;
+    while (j >= 0 && TODOS[j].km === 0) {
+      volTotal += TODOS[j].vol;
+      j--;
+    }
+
+    const consCalc = volTotal > 0 && TODOS[i].km > 0 ? TODOS[i].km / volTotal : 0;
+    TODOS[i].cons = (consCalc > 0 && consCalc < 30) ? parseFloat(consCalc.toFixed(2)) : 0;
+  }
+}
+
+function addAbast() {
+  const hoje = new Date();
+  const dataHoje = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0');
+  showModal('⛽ Novo Abastecimento', [
+    {id:'odo',   label:'Odômetro (km)',      type:'number', placeholder:'ex: 21748'},
+    {id:'pl',    label:'Preço/L (R$)',        type:'number', placeholder:'ex: 4.95', step:'0.01'},
+    {id:'vol',   label:'Volume (L)',          type:'number', placeholder:'ex: 35.5', step:'0.01'},
+    {id:'comb',  label:'Combustível',         type:'select', value:'Etanol',
+      options:[{value:'Etanol',label:'🌿 Etanol'},{value:'Gasolina',label:'⛽ Gasolina'}]},
+    {id:'data',  label:'Data (dd/mm) — vazio = hoje', type:'text', placeholder:dataHoje},
+  ], vals => {
+    const odo  = parseInt(mVal(vals,'odo',0)) || 0;
+    const pl   = parseFloat(String(mVal(vals,'pl',0)).replace(',','.')) || 0;
+    const vol  = parseFloat(String(mVal(vals,'vol',0)).replace(',','.')) || 0;
+    const comb = mVal(vals,'comb','Etanol');
+    const dataV= mVal(vals,'data','').trim() || dataHoje;
+    // Auto-detecta combustível pelo preço se não mudou do default
+    const combFinal = pl > 0 ? (comb !== 'Gasolina' && comb !== 'Etanol' ? detectCombPeloPreco(pl) : comb) : comb;
+    TODOS.push({data:dataV, odo, km:0, vol, cons:0, comb:combFinal,
+      total: vol>0&&pl>0 ? parseFloat((vol*pl).toFixed(2)) : 0,
+      pl, posto:'', desc:''});
+    sortTodosChronologically();
+    recalculateKm();
+    saveData();
+    toast('✓ ' + dataV + ' · ' + combFinal + ' · ' + (odo>0?odo.toLocaleString('pt-BR')+' km':''), 'ok');
+    renderAbast();
+    renderDash();
+    if (localStorage.getItem('gh_token')) setTimeout(ghSaveData, 500);
+  });
+}
+
+// ══════════════════════════════ TRAJETOS ══════════════════════════════
+// Extrai distância de link do Google Maps (formato /dir/...)
+async function extrairDistanciaGMaps(url) {
+  // Tenta extrair do padrão !4d e !3d (coordenadas) ou do texto da URL
+  // Google Maps links têm a distância no formato: /data=...!4f{km}
+  // Como não podemos fazer fetch do Maps sem API key, vamos parsear a URL
+  try {
+    // Formato: maps.app.goo.gl ou google.com/maps/dir
+    const match = url.match(/maps\.app\.goo\.gl\/|google\.com\/maps/);
+    if (!match) return null;
+    // Tenta extrair distância do fragmento /data= se presente
+    const dataMatch = url.match(/!4f([\d.]+)/);
+    if (dataMatch) return parseFloat(dataMatch[1]);
+    return null; // não conseguiu extrair
+  } catch(e) { return null; }
+}
+
+function kmPorMes(t) {
+  // Converte frequencia para km/mes
+  // freq: 'semana', 'quinzena', 'mes'
+  // vezes: quantas vezes nessa frequencia
+  const freq = t.freq || 'semana';
+  const vezes = t.vezes || 0;
+  const dist = t.dist || 0;
+  if (freq === 'semana')   return dist * vezes * 4.33;
+  if (freq === 'quinzena') return dist * vezes * 2;
+  if (freq === 'mes')      return dist * vezes;
+  return 0;
+}
+
+function kmPorSemana(t) {
+  const freq = t.freq || 'semana';
+  const vezes = t.vezes || 0;
+  const dist = t.dist || 0;
+  if (freq === 'semana')   return dist * vezes;
+  if (freq === 'quinzena') return dist * vezes / 2;
+  if (freq === 'mes')      return dist * vezes / 4.33;
+  return 0;
+}
+
+function freqLabel(t) {
+  const freq = t.freq || 'semana';
+  const vezes = t.vezes || 0;
+  if (vezes === 0) return 'eventual';
+  const labels = {semana:'x/sem', quinzena:'x/quinzena', mes:'x/mês'};
+  return vezes + ' ' + (labels[freq]||'x/sem');
+}
+
+function renderTrajetos() {
+  const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.23;
+  const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.07;
+  const kmSemTotal = TRAJETOS.reduce((a,t) => a + kmPorSemana(t), 0);
+  const kmMesTotal = TRAJETOS.reduce((a,t) => a + kmPorMes(t), 0);
+  const kmAnoTotal = kmMesTotal * 12;
+
+  let html = `
+    <div class="page-header"><div><div class="page-title">Trajetos</div><div class="page-sub">${TRAJETOS.length} rotas cadastradas</div></div><button class="btn sm pr" onclick="addTrajeto()">+ Novo</button></div>
+
+    <div class="card">
+      <div class="card-title">Totais estimados</div>
+      <div class="stat">
+        <div class="stat-item"><div class="stat-label">km/semana</div><div class="stat-value">${kmSemTotal.toFixed(1)}</div></div>
+        <div class="stat-item"><div class="stat-label">km/mês</div><div class="stat-value">${kmMesTotal.toFixed(0)}</div></div>
+        <div class="stat-item"><div class="stat-label">km/ano</div><div class="stat-value">${kmAnoTotal.toFixed(0)}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/mês Gasolina</div><div class="stat-value">R$ ${(kmMesTotal / gasAvg * CONFIG.gasPrice).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/mês Etanol</div><div class="stat-value">R$ ${(kmMesTotal / ethAvg * CONFIG.ethPrice).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/ano Gasolina</div><div class="stat-value">R$ ${(kmAnoTotal / gasAvg * CONFIG.gasPrice).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">R$/ano Etanol</div><div class="stat-value">R$ ${(kmAnoTotal / ethAvg * CONFIG.ethPrice).toFixed(2)}</div></div>
+      </div>
+    </div>
+    <div class="list">
+  `;
+
+  TRAJETOS.forEach((t, i) => {
+    const kmSem  = kmPorSemana(t);
+    const kmMes  = kmPorMes(t);
+    // Cálculos gasolina
+    const gasVol     = (t.dist / gasAvg).toFixed(2);           // L por viagem
+    const gasViagem  = (t.dist / gasAvg * CONFIG.gasPrice).toFixed(2);
+    const gasSem     = kmSem > 0 ? (kmSem / gasAvg * CONFIG.gasPrice).toFixed(2) : '—';
+    const gasMes     = kmMes > 0 ? (kmMes / gasAvg * CONFIG.gasPrice).toFixed(2) : '—';
+    // Cálculos etanol
+    const ethVol     = (t.dist / ethAvg).toFixed(2);           // L por viagem
+    const ethViagem  = (t.dist / ethAvg * CONFIG.ethPrice).toFixed(2);
+    const ethSem     = kmSem > 0 ? (kmSem / ethAvg * CONFIG.ethPrice).toFixed(2) : '—';
+    const ethMes     = kmMes > 0 ? (kmMes / ethAvg * CONFIG.ethPrice).toFixed(2) : '—';
+    const melhor     = parseFloat(ethViagem) < parseFloat(gasViagem) ? 'Etanol' : 'Gasolina';
+    const mapLink    = t.mapUrl ? `<a href="${t.mapUrl}" target="_blank" style="font-size:11px;color:var(--primary);margin-left:6px;">🗺️ Ver rota</a>` : '';
+    html += `
+      <div class="list-item" style="flex-direction:column;align-items:stretch;">
+        <!-- Cabeçalho -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <div style="font-weight:bold;font-size:15px;">${t.nome} ${mapLink}</div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn sm" onclick="editTrajeto(${i})">✎</button>
+            <button class="btn sm danger" onclick="delTrajeto(${i})">✕</button>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+          ${t.dist} km ida/volta · ${freqLabel(t)}
+          ${kmSem>0?' · '+kmSem.toFixed(1)+' km/sem · '+kmMes.toFixed(0)+' km/mês':''}
+          · <span style="color:var(--success);font-weight:600;">✓ ${melhor}</span>
+        </div>
+        <!-- Tabela 2 colunas -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <!-- Cabeçalhos coluna -->
+          <div style="text-align:center;padding:6px;background:rgba(245,166,35,0.1);border-radius:8px;border:1px solid rgba(245,166,35,0.2);">
+            <span style="font-size:12px;font-weight:700;color:var(--gas);">⛽ Gasolina</span>
+          </div>
+          <div style="text-align:center;padding:6px;background:rgba(0,200,150,0.1);border-radius:8px;border:1px solid rgba(0,200,150,0.2);">
+            <span style="font-size:12px;font-weight:700;color:var(--eth);">🌿 Etanol</span>
+          </div>
+          <!-- Linha: volume por viagem -->
+          <div class="stat-item">
+            <div class="stat-label">Vol./viagem</div>
+            <div class="stat-value sm gas">${gasVol} L</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Vol./viagem</div>
+            <div class="stat-value sm eth">${ethVol} L</div>
+          </div>
+          <!-- Linha: custo por viagem -->
+          <div class="stat-item">
+            <div class="stat-label">Custo/viagem</div>
+            <div class="stat-value sm gas">R$ ${gasViagem}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Custo/viagem</div>
+            <div class="stat-value sm eth">R$ ${ethViagem}</div>
+          </div>
+          <!-- Linha: custo semanal -->
+          <div class="stat-item">
+            <div class="stat-label">Custo/semana</div>
+            <div class="stat-value sm gas">R$ ${gasSem}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Custo/semana</div>
+            <div class="stat-value sm eth">R$ ${ethSem}</div>
+          </div>
+          <!-- Linha: custo mensal -->
+          <div class="stat-item">
+            <div class="stat-label">Custo/mês</div>
+            <div class="stat-value sm gas">R$ ${gasMes}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Custo/mês</div>
+            <div class="stat-value sm eth">R$ ${ethMes}</div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  if (TRAJETOS.length === 0) html += `<div style="text-align:center;padding:40px;color:var(--muted);">Nenhum trajeto cadastrado.</div>`;
+  html += `</div>`;
+  document.getElementById('sec-trajetos').innerHTML = html;
+}
+
+async function addTrajeto() {
+  showModal('🗺️ Novo Trajeto', [
+    {id:'nome',  label:'Nome do trajeto',         type:'text',   placeholder:'ex: Circuito Clínicas'},
+    {id:'dist',  label:'Distância ida/volta (km)', type:'number', placeholder:'ex: 227', step:'0.1'},
+    {id:'freq',  label:'Frequência',               type:'select', value:'semana',
+      options:[{value:'semana',label:'Semanal'},{value:'quinzena',label:'Quinzenal'},{value:'mes',label:'Mensal'},{value:'eventual',label:'Eventual'}]},
+    {id:'vezes', label:'Quantas vezes por período (0=eventual)', type:'number', value:'0'},
+    {id:'mapUrl',label:'Link Google Maps (opcional)', type:'text', placeholder:'https://maps.app.goo.gl/...'},
+  ], vals => {
+    const nome  = mVal(vals,'nome','').trim(); if (!nome) return;
+    const dist  = parseFloat(String(mVal(vals,'dist',0)).replace(',','.')) || 0;
+    const freq  = mVal(vals,'freq','semana');
+    const vezes = parseFloat(mVal(vals,'vezes',0)) || 0;
+    const mapUrl= mVal(vals,'mapUrl','').trim();
+    TRAJETOS.push({nome, dist, freq, vezes, mapUrl,
+      gasP:CONFIG.gasPrice, ethP:CONFIG.ethPrice, gasKmL:10.23, ethKmL:8.07});
+    saveData(); toast('✓ Trajeto adicionado','ok'); renderTrajetos();
+  });
+}
+
+async function editTrajeto(i) {
+  const t = TRAJETOS[i];
+  showModal('✎ Editar Trajeto', [
+    {id:'nome',  label:'Nome',                     type:'text',   value:t.nome},
+    {id:'dist',  label:'Distância ida/volta (km)',  type:'number', value:t.dist, step:'0.1'},
+    {id:'freq',  label:'Frequência',               type:'select', value:t.freq||'semana',
+      options:[{value:'semana',label:'Semanal'},{value:'quinzena',label:'Quinzenal'},{value:'mes',label:'Mensal'},{value:'eventual',label:'Eventual'}]},
+    {id:'vezes', label:'Vezes por período',         type:'number', value:t.vezes||0},
+    {id:'mapUrl',label:'Link Google Maps',          type:'text',   value:t.mapUrl||''},
+  ], vals => {
+    const nome  = mVal(vals,'nome',t.nome).trim() || t.nome;
+    const dist  = parseFloat(String(mVal(vals,'dist',t.dist)).replace(',','.')) || t.dist;
+    const freq  = mVal(vals,'freq',t.freq||'semana');
+    const vezes = parseFloat(mVal(vals,'vezes',t.vezes||0)) || 0;
+    const mapUrl= mVal(vals,'mapUrl',t.mapUrl||'').trim();
+    TRAJETOS[i] = {...t, nome, dist, freq, vezes, mapUrl};
+    saveData(); toast('✓ Atualizado','ok'); renderTrajetos();
+  });
+}
+
+function delTrajeto(i) {
+  showModal('🗑 Remover trajeto?', [
+    {id:'confirm', label:'Digite SIM para confirmar', type:'text', placeholder:'SIM'},
+  ], vals => {
+    if (mVal(vals,'confirm','').trim().toUpperCase() !== 'SIM') return;
+    TRAJETOS.splice(i, 1); saveData(); toast('✓ Removido','ok'); renderTrajetos();
+  });
+}
+
+
+// ══════════════════════════════ POSTOS ══════════════════════════════
+function renderPostos() {
+  const gasAvg = parseFloat(getAverageConsumption('Gasolina')) || 10.2;
+  const ethAvg = parseFloat(getAverageConsumption('Etanol')) || 8.1;
+  const corteReal = gasAvg > 0 ? (ethAvg / gasAvg * 100).toFixed(1) : 70.4;
+
+  // Calcula menores preços entre todos os postos (excluindo "Preços Preferidos")
+  const postosFiltrados = POSTOS.filter(p => p.nome !== 'Preços Preferidos'); // exclui da lista
+  const menorGasP = postosFiltrados.length > 0 ? Math.min(...postosFiltrados.map(p=>p.gasP)) : CONFIG.gasPrice;
+  const menorEthP = postosFiltrados.length > 0 ? Math.min(...postosFiltrados.map(p=>p.ethP)) : CONFIG.ethPrice;
+  const postoMelhorGas = postosFiltrados.find(p=>p.gasP===menorGasP);
+  const postoMelhorEth = postosFiltrados.find(p=>p.ethP===menorEthP);
+
+
+  let html = `
+    <div class="page-header"><div><div class="page-title">Postos</div><div class="page-sub">${POSTOS.length} postos cadastrados</div></div><button class="btn sm pr" onclick="addPosto()">+ Novo</button></div>
+
+    <div class="card accent-primary" style="margin-bottom:16px;">
+      <div class="card-title">⭐ Melhores Preços Atuais</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+        <div class="stat-item">
+          <div class="stat-label">Menor Gasolina</div>
+          <div class="stat-value gas">R$ ${menorGasP.toFixed(2)}</div>
+          <div class="stat-sub">${postoMelhorGas?postoMelhorGas.nome:'—'}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Menor Etanol</div>
+          <div class="stat-value eth">R$ ${menorEthP.toFixed(2)}</div>
+          <div class="stat-sub">${postoMelhorEth?postoMelhorEth.nome:'—'}</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);padding:8px;background:var(--bg3);border-radius:8px;">
+        Ponto de corte: Gas <strong style="color:var(--primary)">${gasAvg} km/L</strong> · Eth <strong style="color:var(--primary)">${ethAvg} km/L</strong>
+        · Eth vence abaixo de <strong style="color:var(--success)">${corteReal}%</strong> da gasolina
+      </div>
+    </div>
+    <div class="list">
+  `;
+
+  POSTOS.filter(p=>p.nome!=='Preços Preferidos').forEach((p, i) => {
+    const gasCkm = (p.gasP / gasAvg).toFixed(3);
+    const ethCkm = (p.ethP / ethAvg).toFixed(3);
+    const rel = (p.ethP / p.gasP * 100).toFixed(1);
+    const corte = (p.gasP * ethAvg / gasAvg).toFixed(2);
+    const melhor = parseFloat(ethCkm) < parseFloat(gasCkm) ? 'Etanol' : 'Gasolina';
+    const abaixoCorte = parseFloat(rel) < parseFloat(corteReal);
+    html += `
+      <div class="list-item" style="flex-direction:column;align-items:stretch;">
+        <!-- Cabeçalho -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <div style="font-weight:bold;font-size:15px;">${p.nome}</div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn sm" onclick="editPosto(${i})">✎</button>
+            <button class="btn sm danger" onclick="delPosto(${i})">✕</button>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+          Relação Eth/Gas: <strong style="color:${abaixoCorte?'var(--success)':'var(--warning)'};">${rel}% ${abaixoCorte?'✓ Etanol vence':'⚠ Gasolina vence'}</strong>
+          · Preço corte Eth: <strong>R$ ${corte}/L</strong>
+        </div>
+        <!-- 2 colunas -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="text-align:center;padding:6px;background:rgba(245,166,35,0.1);border-radius:8px;border:1px solid rgba(245,166,35,0.2);">
+            <span style="font-size:12px;font-weight:700;color:var(--gas);">⛽ Gasolina</span>
+          </div>
+          <div style="text-align:center;padding:6px;background:rgba(0,200,150,0.1);border-radius:8px;border:1px solid rgba(0,200,150,0.2);">
+            <span style="font-size:12px;font-weight:700;color:var(--eth);">🌿 Etanol</span>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Preço/L</div>
+            <div class="stat-value sm gas">R$ ${p.gasP.toFixed(2)}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Preço/L</div>
+            <div class="stat-value sm eth">R$ ${p.ethP.toFixed(2)}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Custo/km</div>
+            <div class="stat-value sm gas">R$ ${gasCkm}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Custo/km</div>
+            <div class="stat-value sm eth">R$ ${ethCkm}</div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  if (POSTOS.length === 0) html += `<div style="text-align:center;padding:40px;color:var(--muted);">Nenhum posto cadastrado.</div>`;
+  html += `</div>`;
+  document.getElementById('sec-postos').innerHTML = html;
+}
+
+function addPosto() {
+  showModal('⛽ Novo Posto', [
+    {id:'nome', label:'Nome do posto',      type:'text',   placeholder:'ex: Posto PEL'},
+    {id:'gasP', label:'Preço Gasolina R$/L',type:'number', value:CONFIG.gasPrice, step:'0.01'},
+    {id:'ethP', label:'Preço Etanol R$/L',  type:'number', value:CONFIG.ethPrice, step:'0.01'},
+  ], vals => {
+    const nome = mVal(vals,'nome','').trim(); if (!nome) return;
+    const gasP = parseFloat(String(mVal(vals,'gasP',CONFIG.gasPrice)).replace(',','.')) || CONFIG.gasPrice;
+    const ethP = parseFloat(String(mVal(vals,'ethP',CONFIG.ethPrice)).replace(',','.')) || CONFIG.ethPrice;
+    POSTOS.push({nome, gasP, ethP, gasKmL:10.2, ethKmL:8.1});
+    atualizarPrecoConfig(); saveData(); toast('✓ Posto adicionado','ok'); renderPostos();
+  });
+}
+
+function editPosto(i) {
+  const p = POSTOS[i];
+  showModal('✎ Editar Posto', [
+    {id:'nome', label:'Nome',               type:'text',   value:p.nome},
+    {id:'gasP', label:'Preço Gasolina R$/L',type:'number', value:p.gasP, step:'0.01'},
+    {id:'ethP', label:'Preço Etanol R$/L',  type:'number', value:p.ethP, step:'0.01'},
+  ], vals => {
+    const nome = mVal(vals,'nome',p.nome).trim() || p.nome;
+    const gasP = parseFloat(String(mVal(vals,'gasP',p.gasP)).replace(',','.')) || p.gasP;
+    const ethP = parseFloat(String(mVal(vals,'ethP',p.ethP)).replace(',','.')) || p.ethP;
+    POSTOS[i] = {...p, nome, gasP, ethP};
+    atualizarPrecoConfig(); saveData(); toast('✓ Atualizado','ok'); renderPostos();
+  });
+}
+
+function delPosto(i) {
+  if (window.confirm ? confirm('Remover posto "' + POSTOS[i].nome + '"?') : true) {
+    POSTOS.splice(i, 1); atualizarPrecoConfig(); saveData(); toast('✓ Removido'); renderPostos();
+  }
+}
+
+// ══════════════════════════════ CICLO 1 e 2 ══════════════════════════════
+function renderCicloHistorico(dados, titulo, elId) {
+  if (!dados || dados.length === 0) {
+    document.getElementById(elId).innerHTML = `<div class="sh"><span class="sh-title">${titulo}</span></div><div style="text-align:center;padding:40px;color:var(--muted);">Nenhum dado disponível.</div>`;
+    return;
+  }
+  const gasD = dados.filter(d => d.comb === 'Gasolina' && d.km > 0);
+  const ethD = dados.filter(d => d.comb === 'Etanol' && d.km > 0);
+  const gasKmL = gasD.length ? (gasD.reduce((a,d)=>a+d.km,0) / gasD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : '—';
+  const ethKmL = ethD.length ? (ethD.reduce((a,d)=>a+d.km,0) / ethD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : '—';
+  const totalGas = gasD.reduce((a,d)=>a+d.total,0).toFixed(2);
+  const totalEth = ethD.reduce((a,d)=>a+d.total,0).toFixed(2);
+  const totalKm = dados.reduce((a,d)=>a+d.km,0);
+  const odoInicio = Math.min(...dados.map(d=>d.odo));
+  const odoFim = Math.max(...dados.map(d=>d.odo));
+
+  let html = `
+    <div class="sh"><span class="sh-title">${titulo}</span></div>
+    <div class="card">
+      <div class="card-title">Resumo do Ciclo</div>
+      <div class="stat">
+        <div class="stat-item"><div class="stat-label">Odômetro início</div><div class="stat-value">${odoInicio.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">Odômetro fim</div><div class="stat-value">${odoFim.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">Total rodado</div><div class="stat-value">${totalKm.toLocaleString('pt-BR')} km</div></div>
+        <div class="stat-item"><div class="stat-label">Média Gasolina</div><div class="stat-value">${gasKmL} km/L</div></div>
+        <div class="stat-item"><div class="stat-label">Média Etanol</div><div class="stat-value">${ethKmL} km/L</div></div>
+        <div class="stat-item"><div class="stat-label">Total Gasolina</div><div class="stat-value">R$ ${parseFloat(totalGas).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">Total Etanol</div><div class="stat-value">R$ ${parseFloat(totalEth).toFixed(2)}</div></div>
+        <div class="stat-item"><div class="stat-label">Total gasto</div><div class="stat-value">R$ ${(parseFloat(totalGas)+parseFloat(totalEth)).toFixed(2)}</div></div>
+      </div>
+    </div>
+    <div class="sh" style="margin-top:8px;"><span class="sh-title">Abastecimentos (${dados.length})</span></div>
+    <div class="list">`;
+
+  const sorted = [...dados].reverse();
+  sorted.forEach(d => {
+    const cons = d.km > 0 ? (d.km / d.vol).toFixed(2) : '0.00';
+    html += `
+      <div class="list-item">
+        <div class="list-item-title">
+          <div style="font-weight:bold;">${d.data} · ${d.comb} · ${d.odo.toLocaleString('pt-BR')} km</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${d.vol.toFixed(2)}L @ R$ ${d.pl.toFixed(2)}/L · <strong style="color:var(--primary)">${cons} km/L</strong> · ${d.km} km${d.posto ? ' · ' + d.posto : ''}${d.desc ? ' · ' + d.desc : ''}</div>
+        </div>
+      </div>`;
+  });
+
+  html += `</div>`;
+  document.getElementById(elId).innerHTML = html;
+}
+
+function renderCiclo1() { renderCicloHistorico(CICLO1, '📋 Ciclo 1 · Histórico', 'sec-ciclo1'); }
+function renderCiclo2() { renderCicloHistorico(CICLO2, '📋 Ciclo 2 · Histórico', 'sec-ciclo2'); }
+
+function renderHistorico() {
+  let html = '<div class="page-header"><div><div class="page-title">Histórico</div><div class="page-sub">Ciclos anteriores</div></div></div>';
+
+  // Ciclo 1
+  html += "<div style='margin-bottom:8px;'><button class='btn' style='width:100%;text-align:left;font-weight:bold;' onclick='toggleCicloSection(&quot;ciclo1-body&quot;)'>▶ Ciclo 1 (" + CICLO1.length + " abastecimentos)</button></div>";
+  html += '<div id="ciclo1-body" style="display:none;">';
+  html += buildCicloHTML(CICLO1, 'Ciclo 1');
+  html += '</div>';
+
+  // Ciclo 2
+  html += "<div style='margin-bottom:8px;'><button class='btn' style='width:100%;text-align:left;font-weight:bold;' onclick='toggleCicloSection(&quot;ciclo2-body&quot;)'>▶ Ciclo 2 (" + CICLO2.length + " abastecimentos)</button></div>";
+  html += '<div id="ciclo2-body" style="display:none;">';
+  html += buildCicloHTML(CICLO2, 'Ciclo 2');
+  html += '</div>';
+
+  // Histórico de ciclos encerrados
+  if (HISTORICO_CICLOS.length > 0) {
+    HISTORICO_CICLOS.forEach((h,idx) => {
+      html += "<div style='margin-bottom:8px;'><button class='btn' style='width:100%;text-align:left;font-weight:bold;' onclick='toggleCicloSection(&quot;hciclo" + idx + "-body&quot;)'>▶ Ciclo " + h.ciclo + " encerrado em " + h.data + "</button></div>";
+      html += "<div id='hciclo" + idx + "-body' style='display:none;'>";
+      html += buildCicloHTML(h.abastecimentos, 'Ciclo ' + h.ciclo);
+      html += '</div>';
+    });
+  }
+
+  document.getElementById('sec-historico').innerHTML = html;
+}
+
+function toggleCicloSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function buildCicloHTML(dados, titulo) {
+  if (!dados || dados.length === 0) return '<div style="padding:16px;color:var(--muted);">Nenhum dado.</div>';
+  const gasD = dados.filter(d => d.comb === 'Gasolina' && d.km > 0);
+  const ethD = dados.filter(d => d.comb === 'Etanol' && d.km > 0);
+  const gasKmL = gasD.length ? (gasD.reduce((a,d)=>a+d.km,0)/gasD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : '—';
+  const ethKmL = ethD.length ? (ethD.reduce((a,d)=>a+d.km,0)/ethD.reduce((a,d)=>a+d.vol,0)).toFixed(2) : '—';
+  const totalG = dados.filter(d=>d.comb==='Gasolina').reduce((a,d)=>a+parseFloat(d.total||0),0).toFixed(2);
+  const totalE = dados.filter(d=>d.comb==='Etanol').reduce((a,d)=>a+parseFloat(d.total||0),0).toFixed(2);
+  const totalKm = dados.reduce((a,d)=>a+(d.km||0),0);
+  let html = '<div class="card"><div class="stat">';
+  html += '<div class="stat-item"><div class="stat-label">km rodados</div><div class="stat-value">' + totalKm.toLocaleString('pt-BR') + '</div></div>';
+  html += '<div class="stat-item"><div class="stat-label">Média Gas</div><div class="stat-value">' + gasKmL + ' km/L</div></div>';
+  html += '<div class="stat-item"><div class="stat-label">Média Eth</div><div class="stat-value">' + ethKmL + ' km/L</div></div>';
+  html += '<div class="stat-item"><div class="stat-label">Total Gas</div><div class="stat-value">R$ ' + parseFloat(totalG).toFixed(2) + '</div></div>';
+  html += '<div class="stat-item"><div class="stat-label">Total Eth</div><div class="stat-value">R$ ' + parseFloat(totalE).toFixed(2) + '</div></div>';
+  html += '<div class="stat-item"><div class="stat-label">Total gasto</div><div class="stat-value">R$ ' + (parseFloat(totalG)+parseFloat(totalE)).toFixed(2) + '</div></div>';
+  html += '</div></div><div class="list">';
+  [...dados].reverse().forEach(d => {
+    const cons = d.km > 0 ? (d.km/d.vol).toFixed(2) : '0.00';
+    html += '<div class="list-item"><div class="list-item-title"><div style="font-weight:bold;">' + d.data + ' · ' + d.comb + ' · ' + (d.odo||0).toLocaleString('pt-BR') + ' km</div>';
+    html += '<div style="font-size:11px;color:var(--muted);margin-top:2px;">' + (d.vol||0).toFixed(2) + 'L @ R$ ' + (d.pl||0).toFixed(2) + '/L · <strong>' + cons + ' km/L</strong> · ' + (d.km||0) + ' km' + (d.posto?' · '+d.posto:'') + '</div></div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+
+// ══════════════════════════════ IMPORTAÇÃO DE TRAJETOS/POSTOS/CICLOS ══════════════════════════════
+function parseSep(line) { return line.includes('	') ? '	' : ','; }
+function pn(s) { return parseFloat((s||'').replace(/[^0-9,.-]/g,'').replace(',','.')) || 0; }
+
+function importTrajetos() {
+  const raw = document.getElementById('traj-input').value.trim();
+  if (!raw) { toast('⚠ Cole os dados'); return; }
+  const lines = raw.split('\n');
+  const novos = [];
+  let nomeAtual = '';
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    const sep = parseSep(line);
+    const cols = line.split(sep).map(c => c.trim().replace(/"/g,''));
+    // Linha de nome do trajeto (col 0 preenchida, col 4 vazia ou zero)
+    if (cols[0] && !['Local','Gasolina','Etanol','km/semana','R$'].some(k=>cols[0].startsWith(k))) {
+      const dist = pn(cols[4]);
+      if (dist > 0 && cols[0] !== 'Local') {
+        nomeAtual = cols[0];
+        continue;
+      }
+      if (cols[0] !== 'Local') { nomeAtual = cols[0]; continue; }
+    }
+    if (cols[0] === 'Gasolina' && nomeAtual) {
+      const dist = pn(cols[4]);
+      const kmSem = pn(cols[5]);
+      const gasP = pn(cols[1]);
+      if (dist > 0) {
+        novos.push({nome: nomeAtual, dist, kmSem, gasP, ethP: CONFIG.ethPrice, gasKmL: pn(cols[2])||10.23, ethKmL: 8.07});
+      }
+    }
+    if (cols[0] === 'Etanol' && novos.length > 0) {
+      novos[novos.length-1].ethP = pn(cols[1]);
+      novos[novos.length-1].ethKmL = pn(cols[2])||8.07;
+    }
+  }
+  if (novos.length === 0) { toast('⚠ Nenhum trajeto encontrado'); return; }
+  TRAJETOS = novos;
+  saveData();
+  toast('✓ ' + novos.length + ' trajetos importados!');
+  renderTrajetos();
+}
+
+function importPostos() {
+  const raw = document.getElementById('postos-input').value.trim();
+  if (!raw) { toast('⚠ Cole os dados'); return; }
+  const lines = raw.split('\n');
+  const novos = [];
+  let nomeAtual = '';
+  let gasP = 0, ethP = 0, gasKmL = 10.2, ethKmL = 8.1;
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    const sep = parseSep(line);
+    const cols = line.split(sep).map(c => c.trim().replace(/"/g,''));
+    // Linha de nome do posto (col 0=ETANOL, col 1=nome)
+    if (cols[0] === 'ETANOL' && cols[1]) {
+      if (nomeAtual && gasP > 0) novos.push({nome:nomeAtual, gasP, ethP, gasKmL, ethKmL});
+      nomeAtual = cols[1]; gasP=0; ethP=0;
+    }
+    if (cols[0] === 'Gasolina') { gasP = pn(cols[1]); gasKmL = pn(cols[2])||10.2; }
+    if (cols[0] === 'Etanol')   { ethP = pn(cols[1]); ethKmL = pn(cols[2])||8.1; }
+  }
+  if (nomeAtual && gasP > 0) novos.push({nome:nomeAtual, gasP, ethP, gasKmL, ethKmL});
+  if (novos.length === 0) { toast('⚠ Nenhum posto encontrado'); return; }
+  POSTOS = novos;
+  saveData();
+  toast('✓ ' + novos.length + ' postos importados!');
+  renderPostos();
+}
+
+function importCiclo(num) {
+  const raw = document.getElementById('ciclo'+num+'-input').value.trim();
+  if (!raw) { toast('⚠ Cole os dados'); return; }
+  const lines = raw.split('\n');
+  const novos = [];
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.trim()) continue;
+    const sep = parseSep(line);
+    const cols = line.split(sep).map(c => c.trim().replace(/"/g,'').replace(/\./g,'').replace(',','.'));
+    if (!cols[0] || ['TOTAL','Estatísticas','Média','Data'].some(k=>cols[0].includes(k))) continue;
+    if (num === 1) {
+      // Ciclo 1: Data(0),Odo(1),Km(2),Vol(3),Cons(4),Comb(5),Total(6),PL(7),Posto(8),Desc(9)
+      const vol = parseFloat(cols[3])||0;
+      const odo = parseInt(cols[1])||0;
+      if (!cols[0].match(/\d/) || vol<=0 || odo<=0) continue;
+      novos.push({data:cols[0],odo,km:parseInt(cols[2])||0,vol,cons:parseFloat(cols[4])||0,
+        comb:(cols[5]||'Etanol').trim(),total:parseFloat(cols[6])||0,pl:parseFloat(cols[7])||0,
+        posto:(cols[8]||'').trim(),desc:(cols[9]||'').trim()});
+    } else {
+      // Ciclo 2: Data(0),Odo(1),PL(2),Vol(3),Cons(4),Km(5),CombC(6),CombA(7),Total(8),Posto(9)
+      const vol = parseFloat(cols[3])||0;
+      const odo = parseInt(cols[1])||0;
+      if (!cols[0].match(/\d/) || vol<=0 || odo<=0) continue;
+      novos.push({data:cols[0],odo,km:parseInt(cols[5])||0,vol,cons:parseFloat(cols[4])||0,
+        comb:(cols[7]||cols[6]||'Etanol').trim(),total:parseFloat(cols[8])||0,pl:parseFloat(cols[2])||0,
+        posto:(cols[9]||'').trim(),desc:(cols[10]||'').trim()});
+    }
+  }
+  if (novos.length === 0) { toast('⚠ Nenhum dado válido encontrado'); return; }
+  if (num === 1) CICLO1 = novos; else CICLO2 = novos;
+  saveData();
+  toast('✓ ' + novos.length + ' abastecimentos importados no Ciclo ' + num + '!');
+  renderHistorico();
+}
+
+// ══════════════════════════════ UTILS ══════════════════════════════
+function toast(msg, tipo) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show' + (tipo ? ' '+tipo : '');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.className = '', 2500);
+}
+
+// ══════════════════════════════ INIT ══════════════════════════════
+// ══ INLINE FORM SYSTEM ══
+let _formCallback = null;
+const FORM_ID = 'inline-form-container';
+
+function showModal(title, fields, callback) {
+  closeModal();
+  _formCallback = callback;
+
+  // Usa container fixo no body — não é afetado por re-renders das seções
+  let container = document.getElementById('form-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'form-container';
+    container.style.cssText = 'position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:480px;z-index:400;';
+    document.body.appendChild(container);
+  }
+
+  const div = document.createElement('div');
+  div.id = FORM_ID;
+  div.className = 'inline-form';
+  div.style.cssText = 'margin:0;box-shadow:0 -4px 30px rgba(0,0,0,0.5);';
+
+  const titleEl = document.createElement('div');
+  titleEl.className = 'inline-form-title';
+  titleEl.innerHTML = '<span>' + title + '</span><button class="btn sm" onclick="closeModal()" style="padding:4px 10px;">✕</button>';
+  div.appendChild(titleEl);
+
+  const fieldsEl = document.createElement('div');
+  fieldsEl.className = 'inline-form-fields';
+  fields.forEach(f => {
+    const fg = document.createElement('div');
+    fg.className = 'inline-form-field';
+    const lbl = document.createElement('label');
+    lbl.textContent = f.label;
+    fg.appendChild(lbl);
+    if (f.type === 'select') {
+      const sel = document.createElement('select');
+      sel.id = 'mf-' + f.id;
+      f.options.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o.value; opt.textContent = o.label;
+        if (o.value === f.value) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      fg.appendChild(sel);
+    } else {
+      const inp = document.createElement('input');
+      inp.type = f.type || 'text';
+      inp.id = 'mf-' + f.id;
+      inp.placeholder = f.placeholder || '';
+      inp.value = (f.value !== undefined && f.value !== null) ? f.value : '';
+      if (f.step) inp.step = f.step;
+      if (f.type === 'number') inp.inputMode = 'decimal';
+      inp.addEventListener('keydown', e => { if(e.key==='Enter') formConfirm(); });
+      fg.appendChild(inp);
+    }
+    fieldsEl.appendChild(fg);
+  });
+  div.appendChild(fieldsEl);
+
+  const btns = document.createElement('div');
+  btns.className = 'inline-form-btns';
+  btns.innerHTML = '<button class="btn" onclick="closeModal()">Cancelar</button><button class="btn pr" onclick="formConfirm()">✓ Confirmar</button>';
+  div.appendChild(btns);
+
+  container.innerHTML = '';
+  container.appendChild(div);
+  setTimeout(() => { const first = div.querySelector('input,select'); if(first) first.focus(); }, 150);
+}
+
+function closeModal() {
+  const container = document.getElementById('form-container');
+  if (container) container.innerHTML = '';
+  _formCallback = null;
+}
+
+function formConfirm() {
+  const form = document.getElementById(FORM_ID);
+  if (!form) return;
+  const inputs = form.querySelectorAll('input,select');
+  const vals = {};
+  inputs.forEach(f => { vals[f.id.replace('mf-','')] = f.value; });
+  const cb = _formCallback;
+  closeModal();
+  if (cb) cb(vals);
+}
+
+function mVal(vals, key, def) {
+  const v = vals[key];
+  if (v === undefined || v === '') return def;
+  return v;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadData();
+  go('dashboard');
+});
+</script>
+
+</body>
+</html>
