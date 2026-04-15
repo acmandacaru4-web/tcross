@@ -95,7 +95,8 @@
       "pl": 5.19,
       "posto": "",
       "desc": "",
-      "parcial": true
+      "parcial": true,
+      "_odoOriginal": 0
     },
     {
       "data": "08/04",
@@ -106,6 +107,19 @@
       "comb": "Etanol",
       "total": 193.41,
       "pl": 5.05,
+      "posto": "",
+      "desc": "",
+      "parcial": false
+    },
+    {
+      "data": "15/04",
+      "odo": 22600,
+      "km": 315,
+      "vol": 35.67,
+      "cons": 8.83,
+      "comb": "Gasolina",
+      "total": 252.19,
+      "pl": 7.07,
       "posto": "",
       "desc": "",
       "parcial": false
@@ -1029,5 +1043,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-11T10:03:55.093Z"
+  "savedAt": "2026-04-15T18:34:04.483Z"
 }
