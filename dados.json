@@ -127,7 +127,7 @@
   ],
   "config": {
     "gasPrice": 7,
-    "ethPrice": 5.05,
+    "ethPrice": 5.19,
     "gasConsume": 10.21,
     "ethConsume": 9.25,
     "nextReview": 29373,
@@ -278,13 +278,6 @@
     }
   ],
   "postos": [
-    {
-      "nome": "Preço/L (R$)",
-      "gasP": 7.12,
-      "ethP": 5.05,
-      "gasKmL": 10.2,
-      "ethKmL": 9.3
-    },
     {
       "nome": "Posto PEL",
       "gasP": 7.07,
@@ -1050,5 +1043,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-17T13:01:17.903Z"
+  "savedAt": "2026-04-17T13:07:42.657Z"
 }
