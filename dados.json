@@ -11,7 +11,6 @@
       "pl": 4.9,
       "posto": "Pel",
       "desc": "",
-      "misto": false,
       "combC": "Gasolina"
     },
     {
@@ -163,8 +162,8 @@
     }
   ],
   "config": {
-    "gasPrice": 7.12,
-    "ethPrice": 5.24,
+    "gasPrice": 7.07,
+    "ethPrice": 5.6,
     "gasConsume": 10.21,
     "ethConsume": 9.25,
     "nextReview": 29373,
@@ -321,23 +320,26 @@
       "ethP": 5.6,
       "gasKmL": 10.2,
       "ethKmL": 9.3,
-      "favorito": false
+      "favGas": true,
+      "favEth": true
     },
     {
       "nome": "Posto Arthur Melo",
       "gasP": 7.12,
-      "ethP": 5.24,
+      "ethP": 5.6,
       "gasKmL": 10.2,
       "ethKmL": 9.3,
-      "favorito": false
+      "favGas": false,
+      "favEth": false
     },
     {
       "nome": "Posto Orla Propriá",
       "gasP": 7.12,
-      "ethP": 5.24,
+      "ethP": 5.6,
       "gasKmL": 10.2,
       "ethKmL": 9.3,
-      "favorito": true
+      "favGas": false,
+      "favEth": false
     },
     {
       "nome": "Ipiranga Propriá",
@@ -345,7 +347,8 @@
       "ethP": 5.19,
       "gasKmL": 10.2,
       "ethKmL": 8.1,
-      "favorito": false
+      "favGas": false,
+      "favEth": false
     }
   ],
   "ciclo1": [
@@ -1084,5 +1087,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-19T16:24:05.425Z"
+  "savedAt": "2026-04-19T16:27:18.313Z"
 }
