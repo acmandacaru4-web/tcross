@@ -3,7 +3,7 @@
     {
       "data": "4/3",
       "odo": 19763,
-      "km": 19763,
+      "km": 0,
       "vol": 25.65,
       "cons": 0,
       "comb": "Gasolina",
@@ -133,6 +133,22 @@
       "desc": "",
       "parcial": false,
       "misto": false
+    },
+    {
+      "data": "19/04",
+      "odo": 22899,
+      "km": 299,
+      "vol": 31.46,
+      "cons": 9.5,
+      "comb": "Gasolina",
+      "_combReal": "Gasolina",
+      "_mistoManual": false,
+      "total": 222.42,
+      "pl": 7.07,
+      "posto": "",
+      "desc": "",
+      "parcial": false,
+      "misto": true
     }
   ],
   "config": {
@@ -1053,5 +1069,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-17T13:07:42.657Z"
+  "savedAt": "2026-04-19T15:36:32.737Z"
 }
