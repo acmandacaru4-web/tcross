@@ -132,6 +132,22 @@
       "desc": "",
       "parcial": false,
       "misto": true
+    },
+    {
+      "data": "19/04",
+      "odo": 22899,
+      "km": 299,
+      "vol": 31.46,
+      "cons": 9.5,
+      "comb": "Gasolina",
+      "_combReal": "Gasolina",
+      "_mistoManual": false,
+      "total": 222.42,
+      "pl": 7.07,
+      "posto": "",
+      "desc": "",
+      "parcial": false,
+      "misto": false
     }
   ],
   "config": {
@@ -1052,5 +1068,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-18T20:48:07.057Z"
+  "savedAt": "2026-04-19T14:21:42.565Z"
 }
