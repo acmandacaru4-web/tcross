@@ -11,7 +11,8 @@
       "pl": 4.9,
       "posto": "Pel",
       "desc": "",
-      "misto": false
+      "misto": false,
+      "combC": "Gasolina"
     },
     {
       "data": "5/3",
@@ -24,7 +25,8 @@
       "pl": 6.45,
       "posto": "Pel",
       "desc": "",
-      "misto": false
+      "misto": true,
+      "combC": "Misto"
     },
     {
       "data": "10/03",
@@ -37,7 +39,8 @@
       "pl": 4.95,
       "posto": "Pel",
       "desc": "",
-      "misto": true
+      "misto": true,
+      "combC": "Misto"
     },
     {
       "data": "18/03",
@@ -50,7 +53,8 @@
       "pl": 4.95,
       "posto": "Pel",
       "desc": "",
-      "misto": false
+      "misto": true,
+      "combC": "Misto"
     },
     {
       "data": "25/03",
@@ -63,7 +67,8 @@
       "pl": 5.05,
       "posto": "Pel",
       "desc": "",
-      "misto": false
+      "misto": false,
+      "combC": "Etanol"
     },
     {
       "data": "31/03",
@@ -76,7 +81,8 @@
       "pl": 5.05,
       "posto": "",
       "desc": "",
-      "misto": false
+      "misto": false,
+      "combC": "Etanol"
     },
     {
       "data": "02/04",
@@ -89,7 +95,8 @@
       "pl": 5.05,
       "posto": "",
       "desc": "",
-      "misto": false
+      "misto": false,
+      "combC": "Etanol"
     },
     {
       "data": "06/04",
@@ -104,7 +111,8 @@
       "desc": "",
       "parcial": true,
       "_odoOriginal": 0,
-      "misto": false
+      "misto": false,
+      "combC": "Etanol"
     },
     {
       "data": "08/04",
@@ -118,7 +126,8 @@
       "posto": "",
       "desc": "",
       "parcial": false,
-      "misto": false
+      "misto": false,
+      "combC": "Etanol"
     },
     {
       "data": "15/04",
@@ -132,7 +141,8 @@
       "posto": "",
       "desc": "",
       "parcial": false,
-      "misto": false
+      "misto": true,
+      "combC": "Misto"
     },
     {
       "data": "19/04",
@@ -148,12 +158,13 @@
       "posto": "",
       "desc": "",
       "parcial": false,
-      "misto": true
+      "misto": false,
+      "combC": "Gasolina"
     }
   ],
   "config": {
-    "gasPrice": 7,
-    "ethPrice": 5.19,
+    "gasPrice": 7.12,
+    "ethPrice": 5.24,
     "gasConsume": 10.21,
     "ethConsume": 9.25,
     "nextReview": 29373,
@@ -309,28 +320,32 @@
       "gasP": 7.07,
       "ethP": 5.6,
       "gasKmL": 10.2,
-      "ethKmL": 9.3
+      "ethKmL": 9.3,
+      "favorito": false
     },
     {
       "nome": "Posto Arthur Melo",
       "gasP": 7.12,
       "ethP": 5.24,
       "gasKmL": 10.2,
-      "ethKmL": 9.3
+      "ethKmL": 9.3,
+      "favorito": false
     },
     {
       "nome": "Posto Orla Propriá",
       "gasP": 7.12,
       "ethP": 5.24,
       "gasKmL": 10.2,
-      "ethKmL": 9.3
+      "ethKmL": 9.3,
+      "favorito": true
     },
     {
       "nome": "Ipiranga Propriá",
       "gasP": 7,
       "ethP": 5.19,
       "gasKmL": 10.2,
-      "ethKmL": 8.1
+      "ethKmL": 8.1,
+      "favorito": false
     }
   ],
   "ciclo1": [
@@ -1069,5 +1084,5 @@
       "desc": ""
     }
   ],
-  "savedAt": "2026-04-19T15:36:32.737Z"
+  "savedAt": "2026-04-19T16:24:05.425Z"
 }
