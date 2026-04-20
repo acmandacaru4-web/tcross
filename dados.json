@@ -11,7 +11,8 @@
       "pl": 4.9,
       "posto": "Pel",
       "desc": "",
-      "combC": "Gasolina"
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "5/3",
@@ -24,8 +25,8 @@
       "pl": 6.45,
       "posto": "Pel",
       "desc": "",
-      "misto": true,
-      "combC": "Misto"
+      "misto": false,
+      "combC": "Gasolina"
     },
     {
       "data": "10/03",
@@ -33,7 +34,7 @@
       "km": 363,
       "vol": 35.06,
       "cons": 10.35,
-      "comb": "Gasolina",
+      "comb": "Etanol",
       "total": 173.55,
       "pl": 4.95,
       "posto": "Pel",
@@ -52,8 +53,8 @@
       "pl": 4.95,
       "posto": "Pel",
       "desc": "",
-      "misto": true,
-      "combC": "Misto"
+      "misto": false,
+      "combC": "Etanol"
     },
     {
       "data": "25/03",
@@ -140,8 +141,8 @@
       "posto": "",
       "desc": "",
       "parcial": false,
-      "misto": true,
-      "combC": "Misto"
+      "misto": false,
+      "combC": "Etanol"
     },
     {
       "data": "19/04",
@@ -157,8 +158,8 @@
       "posto": "",
       "desc": "",
       "parcial": false,
-      "misto": false,
-      "combC": "Gasolina"
+      "misto": true,
+      "combC": "Misto"
     }
   ],
   "config": {
@@ -362,7 +363,9 @@
       "total": 254.25,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "01/08",
@@ -374,7 +377,9 @@
       "total": 179.73,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "01/08",
@@ -386,7 +391,9 @@
       "total": 91.87,
       "pl": 6.74,
       "posto": "JetSet",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "07/08",
@@ -398,7 +405,9 @@
       "total": 119.59,
       "pl": 5.51,
       "posto": "Rosa Elze",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "07/08",
@@ -410,7 +419,9 @@
       "total": 49.5,
       "pl": 5.24,
       "posto": "JetSet",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "09/08",
@@ -422,7 +433,9 @@
       "total": 181.73,
       "pl": 4.8,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "11/08",
@@ -434,7 +447,9 @@
       "total": 105.06,
       "pl": 5.49,
       "posto": "JetSet",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "19/08",
@@ -446,7 +461,9 @@
       "total": 124.27,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "21/08",
@@ -458,7 +475,9 @@
       "total": 150.62,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "22/08",
@@ -470,7 +489,9 @@
       "total": 99.25,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "25/08",
@@ -482,7 +503,9 @@
       "total": 179.32,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "29/08",
@@ -494,7 +517,9 @@
       "total": 238.38,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "01/09",
@@ -506,7 +531,9 @@
       "total": 126.43,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "05/09",
@@ -518,7 +545,9 @@
       "total": 178.37,
       "pl": 5.51,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "08/09",
@@ -530,7 +559,9 @@
       "total": 103.73,
       "pl": 4.8,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "13/09",
@@ -542,7 +573,9 @@
       "total": 144.44,
       "pl": 4.95,
       "posto": "Rosa Elze",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "15/09",
@@ -554,7 +587,9 @@
       "total": 167.71,
       "pl": 4.8,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "18/09",
@@ -566,7 +601,9 @@
       "total": 133.68,
       "pl": 4.8,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "20/09",
@@ -578,7 +615,9 @@
       "total": 163.92,
       "pl": 4.8,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "29/09",
@@ -590,7 +629,9 @@
       "total": 231.35,
       "pl": 5.49,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "03/10",
@@ -602,7 +643,9 @@
       "total": 234.32,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "06/10",
@@ -614,7 +657,9 @@
       "total": 103.57,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "09/10",
@@ -626,7 +671,9 @@
       "total": 122.75,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "13/10",
@@ -638,7 +685,9 @@
       "total": 198.82,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "17/10",
@@ -650,7 +699,9 @@
       "total": 191.03,
       "pl": 5.51,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "20/10",
@@ -662,7 +713,9 @@
       "total": 97.01,
       "pl": 4.8,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "22/10",
@@ -674,7 +727,9 @@
       "total": 70.94,
       "pl": 4.8,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "24/10",
@@ -686,7 +741,9 @@
       "total": 193.06,
       "pl": 4.8,
       "posto": "",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     }
   ],
   "ciclo2": [
@@ -700,7 +757,9 @@
       "total": 193.06,
       "pl": 4.8,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "29/10",
@@ -712,7 +771,9 @@
       "total": 168.5,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "30/10",
@@ -724,7 +785,9 @@
       "total": 128.78,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "03/11",
@@ -736,7 +799,9 @@
       "total": 164.66,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "08/11",
@@ -748,7 +813,9 @@
       "total": 215.16,
       "pl": 5.85,
       "posto": "Canabrava",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "10/11",
@@ -760,7 +827,9 @@
       "total": 140.65,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "14/11",
@@ -772,7 +841,9 @@
       "total": 158.77,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "23/11",
@@ -784,7 +855,9 @@
       "total": 127.7,
       "pl": 4.7,
       "posto": "pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "26/11",
@@ -796,7 +869,9 @@
       "total": 142.03,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "27/11",
@@ -808,7 +883,9 @@
       "total": 159.1,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "28/11",
@@ -820,7 +897,9 @@
       "total": 110.36,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "02/12",
@@ -832,7 +911,9 @@
       "total": 235.52,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "04/12",
@@ -844,7 +925,9 @@
       "total": 190.06,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "10/12",
@@ -856,7 +939,9 @@
       "total": 177.24,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "11/12",
@@ -868,7 +953,9 @@
       "total": 155.34,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "17/12",
@@ -880,7 +967,9 @@
       "total": 110.4,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "19/12",
@@ -892,7 +981,9 @@
       "total": 163.75,
       "pl": 5.24,
       "posto": "Jet Set",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "22/12",
@@ -904,7 +995,9 @@
       "total": 245.55,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "26/12",
@@ -916,7 +1009,9 @@
       "total": 225.62,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "6/1",
@@ -928,7 +1023,9 @@
       "total": 196.53,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "10/1",
@@ -940,7 +1037,9 @@
       "total": 159.83,
       "pl": 6.35,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "12/1",
@@ -952,7 +1051,9 @@
       "total": 175.22,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "18/01",
@@ -964,7 +1065,9 @@
       "total": 162.86,
       "pl": 4.7,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "26/01",
@@ -976,7 +1079,9 @@
       "total": 258.85,
       "pl": 6.15,
       "posto": "São Sebastião",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "1/2",
@@ -988,7 +1093,9 @@
       "total": 163.61,
       "pl": 4.9,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "04/02",
@@ -1000,7 +1107,9 @@
       "total": 204.83,
       "pl": 6.37,
       "posto": "jetset",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "08/02",
@@ -1012,7 +1121,9 @@
       "total": 180.61,
       "pl": 4.9,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "11/2",
@@ -1024,7 +1135,9 @@
       "total": 155.97,
       "pl": 4.9,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "15/2",
@@ -1036,7 +1149,9 @@
       "total": 183.8,
       "pl": 4.9,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "21/2",
@@ -1048,7 +1163,9 @@
       "total": 153.38,
       "pl": 6.45,
       "posto": "JetSet",
-      "desc": ""
+      "desc": "",
+      "combC": "Etanol",
+      "misto": false
     },
     {
       "data": "26/2",
@@ -1060,7 +1177,9 @@
       "total": 256.33,
       "pl": 6.46,
       "posto": "Jetset",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     },
     {
       "data": "4/3",
@@ -1072,7 +1191,9 @@
       "total": 125.69,
       "pl": 4.9,
       "posto": "Pel",
-      "desc": ""
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
     },
     {
       "data": "5/3",
@@ -1084,8 +1205,10 @@
       "total": 166.35,
       "pl": 6.45,
       "posto": "",
-      "desc": ""
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     }
   ],
-  "savedAt": "2026-04-19T16:27:18.313Z"
+  "savedAt": "2026-04-20T16:41:20.413Z"
 }
