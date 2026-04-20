@@ -1179,9 +1179,8 @@
       "posto": "Jetset",
       "desc": "",
       "combC": "Misto",
-      "misto": true
+      "misto": true,
     },
-    {
   ],
   "savedAt": "2026-04-20T16:46:56.926Z"
 }
