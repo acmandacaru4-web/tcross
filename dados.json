@@ -1195,20 +1195,7 @@
       "combC": "Gasolina",
       "misto": false
     },
-    {
-      "data": "5/3",
-      "odo": 20020,
-      "km": 257,
-      "vol": 25.79,
-      "cons": 10,
-      "comb": "Gasolina",
-      "total": 166.35,
-      "pl": 6.45,
-      "posto": "",
-      "desc": "",
-      "combC": "Misto",
-      "misto": true
-    }
+   }
   ],
   "savedAt": "2026-04-20T17:11:41.074Z"
 }
