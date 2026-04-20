@@ -1179,8 +1179,36 @@
       "posto": "Jetset",
       "desc": "",
       "combC": "Misto",
-      "misto": true,
+      "misto": true
+    },
+    {
+      "data": "4/3",
+      "odo": 19763,
+      "km": 258,
+      "vol": 25.65,
+      "cons": 10.1,
+      "comb": "Etanol",
+      "total": 125.69,
+      "pl": 4.9,
+      "posto": "Pel",
+      "desc": "",
+      "combC": "Gasolina",
+      "misto": false
+    },
+    {
+      "data": "5/3",
+      "odo": 20020,
+      "km": 257,
+      "vol": 25.79,
+      "cons": 10,
+      "comb": "Gasolina",
+      "total": 166.35,
+      "pl": 6.45,
+      "posto": "",
+      "desc": "",
+      "combC": "Misto",
+      "misto": true
     }
   ],
-  "savedAt": "2026-04-20T16:46:56.926Z"
+  "savedAt": "2026-04-20T17:11:41.074Z"
 }
