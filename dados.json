@@ -163,12 +163,12 @@
     },
     {
       "data": "20/04",
-      "odo": 0,
+      "odo": 23000,
       "km": 0,
-      "vol": 0,
+      "vol": 50,
       "cons": 0,
       "comb": "Gasolina",
-      "total": 0,
+      "total": 280,
       "pl": 5.6,
       "posto": "",
       "desc": "",
@@ -1211,5 +1211,5 @@
       "misto": false
     }
   ],
-  "savedAt": "2026-04-20T17:33:25.676Z"
+  "savedAt": "2026-04-20T17:34:05.929Z"
 }
