@@ -20,7 +20,7 @@
       "km": 257,
       "vol": 25.79,
       "cons": 9.97,
-      "comb": "Etanol",
+      "comb": "Gasolina",
       "total": 166.35,
       "pl": 6.45,
       "posto": "Pel",
@@ -39,8 +39,8 @@
       "pl": 4.95,
       "posto": "Pel",
       "desc": "",
-      "misto": false,
-      "combC": "Etanol"
+      "misto": true,
+      "combC": "Misto"
     },
     {
       "data": "18/03",
@@ -53,8 +53,8 @@
       "pl": 4.95,
       "posto": "Pel",
       "desc": "",
-      "misto": false,
-      "combC": "Etanol"
+      "misto": true,
+      "combC": "Misto"
     },
     {
       "data": "25/03",
@@ -1210,5 +1210,5 @@
       "misto": true
     }
   ],
-  "savedAt": "2026-04-20T16:42:05.477Z"
+  "savedAt": "2026-04-20T16:42:18.381Z"
 }
