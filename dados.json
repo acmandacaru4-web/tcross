@@ -160,6 +160,21 @@
       "parcial": false,
       "misto": true,
       "combC": "Misto"
+    },
+    {
+      "data": "29/04",
+      "odo": 23215,
+      "km": 316,
+      "vol": 26.15,
+      "cons": 12.08,
+      "comb": "Gasolina",
+      "total": 184.88,
+      "pl": 7.07,
+      "posto": "",
+      "desc": "",
+      "parcial": false,
+      "combC": "Gasolina",
+      "misto": false
     }
   ],
   "config": {
@@ -310,6 +325,28 @@
       "mapUrl": "Trajeto compartilhado\nDe (-10.2115107,-36.8326762) até Praia do Robalo via BR-101.\n\n1h 59min (114 km)\n1h 59min no trânsito atual\n\n\n1. Siga em direção à R. Josias Teixeira Lima\n2. Vire à direita na R. Josias Teixeira Lima\n3. Vire à direita na Av. Pref. Nelson Melo\n4. Vire à esquerda\n5. Vire à direita na rampa de acesso para Rod. Prestes Maia/BR-101\n6. Pegue a Rod. Prestes Maia/BR-101\n7. Continue em frente para permanecer na BR-101\n8. Continue em frente para permanecer na BR-101\n9. Curva suave à esquerda\n10. Curva suave à direita em direção à BR-101\n11. Mantenha-se à direita para continuar na direção de BR-101\n12. Vire à esquerda na BR-101\n13. Curva suave à direita\n14. Vire à direita na BR-101\n15. Vire à direita\n16. Pegue a BR-101\n17. Mantenha-se à esquerda para continuar na BR-101/BR-235\n18. Curva suave à direita na rampa de acesso a Aeroporto/Praias/Linha Verde\n19. Continue em frente para permanecer na Av. Pres. Tancredo Neves\n20. Continue em frente na Av. Gov. Paulo Barreto de Menezes\n21. Use as duas faixas da esquerda para virar levemente à esquerda e acessar a Av. Antônio Alves/Av. Gov. Paulo Barreto de Menezes\n22. Na rotatória, pegue a 2ª saída para a Av. Rotary\n23. Saia da rotatória para  Av. Rotary\n24. Use qualquer faixa para virar à direita depois de Mcdonalds (à direita) para Av. Santos Dumont\n25. Na rotatória, pegue a 2ª saída para a Av. Inácio Barbosa\n26. Saia da rotatória para  Av. Inácio Barbosa\n27. Chegar ao local: Praia do Robalo\nPara o melhor trajeto no momento, acesse https://maps.app.goo.gl/xjLvrBpQ15ZAe23b9",
       "gasP": 7.12,
       "ethP": 5.05,
+      "gasKmL": 10.23,
+      "ethKmL": 8.07
+    },
+    {
+      "nome": "The roste coofee",
+      "dist": 0,
+      "freq": "semana",
+      "vezes": 0,
+      "mapUrl": "https://maps.app.goo.gl/pVgLh7f1VZTVDzsz5",
+      "gasP": 7.07,
+      "ethP": 5.6,
+      "gasKmL": 10.23,
+      "ethKmL": 8.07
+    },
+    {
+      "nome": "Porto Real do Colégio",
+      "dist": 15,
+      "freq": "semana",
+      "vezes": 0,
+      "mapUrl": "https://maps.app.goo.gl/AXq2gNAu2pgZZ8cc8",
+      "gasP": 7.07,
+      "ethP": 5.6,
       "gasKmL": 10.23,
       "ethKmL": 8.07
     }
@@ -1196,5 +1233,5 @@
       "misto": false
     }
   ],
-  "savedAt": "2026-04-20T17:37:29.112Z"
+  "savedAt": "2026-04-29T19:47:52.699Z"
 }
