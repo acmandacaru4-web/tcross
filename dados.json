@@ -163,12 +163,27 @@
     },
     {
       "data": "29/04",
-      "odo": 22899,
-      "km": 0,
+      "odo": 23215,
+      "km": 316,
       "vol": 26.15,
-      "cons": 0,
+      "cons": 12.08,
       "comb": "Gasolina",
       "total": 184.88,
+      "pl": 7.07,
+      "posto": "",
+      "desc": "",
+      "parcial": false,
+      "combC": "Gasolina",
+      "misto": false
+    },
+    {
+      "data": "03/05/2026",
+      "odo": 23622,
+      "km": 407,
+      "vol": 34.8,
+      "cons": 11.7,
+      "comb": "Gasolina",
+      "total": 246.04,
       "pl": 7.07,
       "posto": "",
       "desc": "",
@@ -1211,5 +1226,5 @@
       "misto": false
     }
   ],
-  "savedAt": "2026-05-04T17:53:59.564Z"
+  "savedAt": "2026-05-04T17:55:14.958Z"
 }
