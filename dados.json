@@ -175,6 +175,21 @@
       "parcial": false,
       "combC": "Gasolina",
       "misto": false
+    },
+    {
+      "data": "03/05/2026",
+      "odo": 23622,
+      "km": 407,
+      "vol": 34.8,
+      "cons": 11.7,
+      "comb": "Gasolina",
+      "total": 246.04,
+      "pl": 7.07,
+      "posto": "",
+      "desc": "",
+      "parcial": false,
+      "combC": "Gasolina",
+      "misto": false
     }
   ],
   "config": {
@@ -327,28 +342,6 @@
       "ethP": 5.05,
       "gasKmL": 10.23,
       "ethKmL": 8.07
-    },
-    {
-      "nome": "The roste coofee",
-      "dist": 0,
-      "freq": "semana",
-      "vezes": 0,
-      "mapUrl": "https://maps.app.goo.gl/pVgLh7f1VZTVDzsz5",
-      "gasP": 7.07,
-      "ethP": 5.6,
-      "gasKmL": 10.23,
-      "ethKmL": 8.07
-    },
-    {
-      "nome": "Porto Real do Colégio",
-      "dist": 15,
-      "freq": "semana",
-      "vezes": 0,
-      "mapUrl": "https://maps.app.goo.gl/AXq2gNAu2pgZZ8cc8",
-      "gasP": 7.07,
-      "ethP": 5.6,
-      "gasKmL": 10.23,
-      "ethKmL": 8.07
     }
   ],
   "postos": [
@@ -363,7 +356,7 @@
     },
     {
       "nome": "Posto Arthur Melo",
-      "gasP": 7.12,
+      "gasP": 7.42,
       "ethP": 5.6,
       "gasKmL": 10.2,
       "ethKmL": 9.3,
@@ -1233,5 +1226,5 @@
       "misto": false
     }
   ],
-  "savedAt": "2026-05-05T18:39:48.391Z"
+  "savedAt": "2026-05-10T00:40:50.793Z"
 }
