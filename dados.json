@@ -190,6 +190,21 @@
       "parcial": false,
       "combC": "Gasolina",
       "misto": false
+    },
+    {
+      "data": "10/05",
+      "odo": 24040,
+      "km": 418,
+      "vol": 34.77,
+      "cons": 12.02,
+      "comb": "Gasolina",
+      "total": 245.82,
+      "pl": 7.07,
+      "posto": "",
+      "desc": "",
+      "parcial": false,
+      "combC": "Gasolina",
+      "misto": false
     }
   ],
   "config": {
@@ -1226,5 +1241,5 @@
       "misto": false
     }
   ],
-  "savedAt": "2026-05-10T00:40:50.793Z"
+  "savedAt": "2026-05-11T10:55:30.278Z"
 }
