@@ -237,22 +237,7 @@
       "misto": false
     },
     {
-      "data": "27/05/2026",
-      "odo": 24756,
-      "km": 524,
-      "vol": 31.29,
-      "cons": 16.75,
-      "comb": "Gasolina",
-      "total": 221.22,
-      "pl": 7.07,
-      "posto": "",
-      "desc": "",
-      "parcial": false,
-      "combC": "Gasolina",
-      "misto": false
-    },
-    {
-      "data": "20/052026",
+      "data": "20/05/2026",
       "odo": 0,
       "km": 0,
       "vol": 15.17,
@@ -263,6 +248,36 @@
       "posto": "",
       "desc": "",
       "parcial": true,
+      "combC": "Gasolina",
+      "misto": false
+    },
+    {
+      "data": "27/05/2026",
+      "odo": 24756,
+      "km": 524,
+      "vol": 31.29,
+      "cons": 11.28,
+      "comb": "Gasolina",
+      "total": 221.22,
+      "pl": 7.07,
+      "posto": "",
+      "desc": "",
+      "parcial": false,
+      "combC": "Gasolina",
+      "misto": false
+    },
+    {
+      "data": "28/05/2026",
+      "odo": 24985,
+      "km": 229,
+      "vol": 18.495,
+      "cons": 12.38,
+      "comb": "Gasolina",
+      "total": 130.76,
+      "pl": 7.07,
+      "posto": "",
+      "desc": "",
+      "parcial": false,
       "combC": "Gasolina",
       "misto": false
     }
@@ -1301,5 +1316,5 @@
       "misto": false
     }
   ],
-  "savedAt": "2026-05-28T19:34:40.632Z"
+  "savedAt": "2026-05-28T19:35:49.115Z"
 }
